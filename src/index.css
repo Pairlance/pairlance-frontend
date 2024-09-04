@@ -27,6 +27,3 @@ box-shadow: none !important;
 .ant-select{
 outline: unset !important;
 }
-.ant-select-selection-search{
-  padding: 20px !important;
-}
