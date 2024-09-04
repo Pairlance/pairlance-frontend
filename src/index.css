@@ -11,3 +11,19 @@
 .difference{
   border: 3px solid rgba(52, 211, 153, 1)
 }
+.ant-select-selector{
+  padding: 13px !important;
+  border-radius: 16px !important;
+}
+.ant-select-selection-item{
+background-color: transparent !important;
+border-radius: 8px !important;
+font-size: 14px;
+color: #475367;
+line-height: 16.8px;
+font-family: 'lato';
+box-shadow: none !important;
+}
+.ant-select{
+outline: unset !important;
+}

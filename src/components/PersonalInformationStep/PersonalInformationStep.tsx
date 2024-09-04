@@ -1,98 +1,153 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
+// import NavBar from "../navBar/NavBar";
+// import Footer from "../footer/Footer";
+// import HeroBanner from "../common/HeroBanner";
+// import StepProgress from "../common/StepProgress";
 
-const PersonalInformationStep: React.FC = () => {
+interface PersonalInformationStepProps {
+  onNext: () => void;
+  onBack?: () => void;
+}
+
+const PersonalInformationStep: React.FC<PersonalInformationStepProps> = ({ onNext }) => {
+  const [fullName, setFullName] = useState("");
+  const [gender, setGender] = useState("");
+  const [phoneNumber, setPhoneNumber] = useState("");
+  const [email, setEmail] = useState("");
+  const [photo, setPhoto] = useState<File | null>(null);
+  const [isFormValid, setIsFormValid] = useState(false);
+
+  // Validate form
+  useEffect(() => {
+    setIsFormValid(!!fullName && !!gender && !!phoneNumber && !!email);
+  }, [fullName, gender, phoneNumber, email]);
+
+  const handlePhotoUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
+    if (e.target.files && e.target.files.length > 0) {
+      setPhoto(e.target.files[0]);
+    }
+  };
+
+  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    if (isFormValid) {
+      console.log("Form submitted with the following data:", {
+        fullName,
+        gender,
+        phoneNumber,
+        email,
+        photo,
+      });
+      onNext(); // Move to the next step
+    }
+  };
+
   return (
-    <div className="min-h-screen flex flex-col justify-center items-center bg-gray-50">
-      <div className="bg-white p-8 rounded-lg shadow-md w-[90%] max-w-lg">
-        {/* Step Indicator */}
-        <div className="flex justify-center items-center mb-6">
-          {[...Array(6)].map((_, index) => (
-            <React.Fragment key={index}>
-              <div
-                className={`rounded-full w-8 h-8 flex items-center justify-center text-white ${
-                  index === 1 ? "bg-blue-900" : "bg-gray-300"
-                }`}
-              >
-                {index + 1}
+    <>
+      {/* <NavBar /> */}
+      <div className="flex flex-col justify-center items-center" style={{ fontFamily: "Lato" }}>
+        
+
+        <div className="flex flex-col border border-[#D0D2D6] my-20 w-[700px] rounded-[16px] p-20 gap-10" style={{ fontFamily: "Lato" }}>
+         
+            <>
+              <div className="text-center mb-8">
+                <p className="text-[24px] font-bold text-[#374151] leading-[30.17px]" style={{ fontFamily: "Merriweather" }}>
+                  Personal Information
+                </p>
               </div>
-              {index < 5 && <div className="w-8 h-1 bg-gray-300"></div>}
-            </React.Fragment>
-          ))}
-        </div>
 
-        {/* Personal Information Section */}
-        <div className="text-center mb-8">
-          <h2 className="text-xl font-semibold text-gray-800">Personal Information</h2>
-        </div>
+              <div className="flex items-center justify-center gap-5">
+                <div>
+                  <img
+                    src={photo ? URL.createObjectURL(photo) : "/src/assets/profileholder.svg"} 
+                    alt="Profile"
+                    className="w-[120px] h-[120px] object-cover rounded-full"
+                  />
+                </div>
+                <div className="flex flex-col items-center mt-5">
+                  <label className="flex justify-center items-center text-[#1E3A8A] border border-[#1E3A8A] px-4 py-2 rounded-[16px] h-[54px] w-[168px] text-[18px] leading-[21.6px] cursor-pointer text-center">
+                    Upload Photo
+                    <input type="file" accept="image/*" className="hidden" onChange={handlePhotoUpload} />
+                  </label>
+                  <p className="text-[#374151] leading-[21.6px] text-[18px]">(Optional)</p>
+                </div>
+              </div>
 
-        {/* Profile Photo Upload */}
-        <div className="flex flex-col items-center mb-6">
-          <div className="w-24 h-24 mb-4 rounded-full overflow-hidden">
-            <img
-              src="https://via.placeholder.com/150" // Placeholder image
-              alt="Profile"
-              className="w-full h-full object-cover"
-            />
-          </div>
-          <button className="text-blue-600 bg-white border border-blue-600 px-4 py-2 rounded-lg">
-            Upload Photo
-          </button>
-          <p className="text-gray-500 mt-2">Optional</p>
-        </div>
+              <hr />
 
-        {/* Form Section */}
-        <form className="space-y-4">
-          <div className="flex flex-col">
-            <label className="text-gray-600 mb-1">Full Name</label>
-            <input
-              type="text"
-              className="p-2 border rounded-lg bg-gray-100 focus:outline-none focus:ring-2 focus:ring-blue-600"
-              placeholder="Jane Doe"
-            />
-          </div>
-          <div className="flex justify-between space-x-4">
-            <div className="flex flex-col w-1/2">
-              <label className="text-gray-600 mb-1">Gender</label>
-              <select className="p-2 border rounded-lg bg-gray-100 focus:outline-none focus:ring-2 focus:ring-blue-600">
-                <option>Female</option>
-                <option>Male</option>
-                <option>Other</option>
-              </select>
-            </div>
-            <div className="flex flex-col w-1/2">
-              <label className="text-gray-600 mb-1">Phone Number</label>
-              <input
-                type="text"
-                className="p-2 border rounded-lg bg-gray-100 focus:outline-none focus:ring-2 focus:ring-blue-600"
-                placeholder="0123456789"
-              />
-            </div>
-          </div>
-          <div className="flex flex-col">
-            <label className="text-gray-600 mb-1">Email Address</label>
-            <input
-              type="email"
-              className="p-2 border rounded-lg bg-gray-100 focus:outline-none focus:ring-2 focus:ring-blue-600"
-              placeholder="jane@example.com"
-            />
-          </div>
-          <div className="flex justify-between">
-            <button
-              type="button"
-              className="bg-white text-blue-600 border border-blue-600 px-4 py-2 rounded-lg"
-            >
-              Back
-            </button>
-            <button
-              type="submit"
-              className="bg-blue-900 text-white px-4 py-2 rounded-lg"
-            >
-              Next
-            </button>
-          </div>
-        </form>
+              {/* Form Section */}
+              <form className="flex flex-col gap-10" onSubmit={handleSubmit}>
+                <div className="flex flex-col">
+                  <label className="text-[#5F6774] font-semibold leading-[19.2px]">Full Name</label>
+                  <input
+                    type="text"
+                    className="p-[16px] border border-[#D0D2D6] rounded-[16px] outline-none h-[49px] w-[432px"
+                    placeholder="Jane Doe"
+                    required
+                    value={fullName}
+                    onChange={(e) => setFullName(e.target.value)}
+                  />
+                </div>
+                <div className="flex justify-between space-x-4">
+                  <div className="flex flex-col w-1/2">
+                    <label className="text-[#5F6774] font-semibold leading-[19.2px] mb-1">Gender</label>
+                    <select
+                      className="p-[16px] border border-[#D0D2D6] rounded-[16px] outline-none"
+                      value={gender}
+                      onChange={(e) => setGender(e.target.value)}
+                    >
+                      <option value="">Select gender</option>
+                      <option value="Female">Female</option>
+                      <option value="Male">Male</option>
+                      <option value="Other">Other</option>
+                    </select>
+                  </div>
+                  <div className="flex flex-col w-1/2">
+                    <label className="text-[#5F6774] font-semibold leading-[19.2px] mb-1">Phone Number</label>
+                    <input
+                      type="tel"
+                      className="p-[16px] border border-[#D0D2D6] rounded-[16px] outline-none h-[50px]"
+                      placeholder="0123456789"
+                      value={phoneNumber}
+                      onChange={(e) => setPhoneNumber(e.target.value)}
+                    />
+                  </div>
+                </div>
+                <div className="flex flex-col">
+                  <label className="text-gray-600 mb-1">Email Address</label>
+                  <input
+                    type="email"
+                    className="p-[16px] border border-[#D0D2D6] rounded-[16px] outline-none h-[50px]"
+                    placeholder="jane@example.com"
+                    value={email}
+                    onChange={(e) => setEmail(e.target.value)}
+                  />
+                </div>
+                <div className="flex justify-between">
+                  <button
+                    type="button"
+                    className="border border-[#1E3A8A] text-[18px] p-[16px] rounded-[16px] h-[54px] w-[195px] leading-[21.6px] font-semibold"
+                  >
+                    Back
+                  </button>
+                  <button
+                    type="submit"
+                    disabled={!isFormValid}
+                    className={`text-[18px] p-[16px] rounded-[16px] h-[54px] w-[195px] leading-[21.6px] font-semibold ${
+                      isFormValid ? "bg-[#1E3A8A] text-white" : "bg-[#B9C2DB] text-[#98A4C9]"
+                    }`}
+                  >
+                    Next
+                  </button>
+                </div>
+              </form>
+            </>
+          {/* )} */}
+        </div>
       </div>
-    </div>
+      {/* <Footer /> */}
+    </>
   );
 };
 

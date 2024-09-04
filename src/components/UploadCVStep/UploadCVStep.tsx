@@ -1,65 +1,217 @@
-import React from "react";
+import React, { useState } from "react";
 
-const UploadCVStep: React.FC = () => {
+interface UploadCVProps {
+  onNext: () => void;
+}
+const UploadCVStep: React.FC<UploadCVProps> = ({ onNext }) => {
+  const [selectedFile, setSelectedFile] = useState<File | null>(null);
+  const [uploadProgress, setUploadProgress] = useState<number>(0);
+  const [isUploading, setIsUploading] = useState<boolean>(false);
+  const [isUploadSuccessful, setIsUploadSuccessful] = useState<boolean>(false);
+
+  const handleDrop = (event: React.DragEvent<HTMLDivElement>) => {
+    event.preventDefault();
+    const file = event.dataTransfer.files[0];
+    if (
+      file &&
+      (file.type === "application/pdf" ||
+        file.type ===
+          "application/vnd.openxmlformats-officedocument.wordprocessingml.document")
+    ) {
+      startUpload(file);
+    } else {
+      alert("Please upload a PDF or DOCX file.");
+    }
+  };
+
+  const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const file = event.target.files?.[0];
+    if (
+      file &&
+      (file.type === "application/pdf" ||
+        file.type ===
+          "application/vnd.openxmlformats-officedocument.wordprocessingml.document")
+    ) {
+      startUpload(file);
+    } else {
+      alert("Please upload a PDF or DOCX file.");
+    }
+  };
+
+  const handleDragOver = (event: React.DragEvent<HTMLDivElement>) => {
+    event.preventDefault();
+  };
+
+  const startUpload = (file: File) => {
+    setSelectedFile(file);
+    setIsUploading(true);
+    setIsUploadSuccessful(false);
+
+    // Simulate an upload process with a timeout
+    const uploadSimulation = setInterval(() => {
+      setUploadProgress((prev) => {
+        if (prev >= 100) {
+          clearInterval(uploadSimulation);
+          setIsUploading(false);
+          setIsUploadSuccessful(true);
+          return 100;
+        }
+        return prev + 10;
+      });
+    }, 300);
+  };
+
+  const handleNext = () => {
+    if (isUploadSuccessful) {
+      onNext();
+    }
+  };
   return (
-    <div className="min-h-screen flex flex-col justify-center items-center bg-gray-50">
-      <div className="bg-white p-8 rounded-lg shadow-md w-[90%] max-w-lg">
-        {/* Step Indicator */}
-        <div className="text-center mb-6">
-          <h2 className="text-2xl font-semibold text-blue-900">
-            You're Just a Few Steps Away from Your Next Opportunity!
-          </h2>
-          <p className="text-gray-600 mt-2">
-            Upload your CV and complete your profile in a few simple steps to connect with top recruiters.
-          </p>
-        </div>
+    <>
+      <div
+        className=" flex flex-col justify-center items-center"
+        style={{ fontFamily: "lota" }}
+      >
+        <div className="flex flex-col items-center justify-center  rounded-lg w-[700px] h-[726px] my-10 border border-[#D0D2D6]">
+          <div
+            className="flex justify-center font-bold text-[24px] leading-[30.17px] text-[#000000]"
+            style={{ fontFamily: "Merriweather" }}
+          >
+            <p>Upload CV</p>
+          </div>
 
-        {/* Step Progress */}
-        <div className="flex justify-center items-center mb-8">
-          {[...Array(6)].map((_, index) => (
-            <React.Fragment key={index}>
-              <div className={`rounded-full w-8 h-8 flex items-center justify-center text-white ${index === 0 ? "bg-blue-900" : "bg-gray-300"}`}>
-                {index + 1}
-              </div>
-              {index < 5 && <div className="w-8 h-1 bg-gray-300"></div>}
-            </React.Fragment>
-          ))}
-        </div>
-
-        {/* Upload Section */}
-        <div className="bg-gray-100 p-6 rounded-lg border-dashed border-2 border-gray-300 text-center">
-          <h3 className="text-lg font-semibold text-gray-800 mb-4">Upload CV</h3>
-          <div className="flex flex-col items-center justify-center">
-            <div className="w-16 h-16 mb-4 text-blue-500">
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                className="h-full w-full"
-                fill="none"
-                viewBox="0 0 24 24"
-                stroke="currentColor"
-              >
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  strokeWidth="2"
-                  d="M4 16v-4a2 2 0 012-2h14m-7 2l-4-4m4 4l4-4m-4 4V4"
-                />
-              </svg>
+          <div
+            className="p-6 rounded-lg border-dashed border-[1.5px] border-[#D0D5DD] text-center w-[408px] m-10"
+            onDrop={handleDrop}
+            onDragOver={handleDragOver}
+            style={{ fontFamily: "Lato" }}
+          >
+            <div className="flex flex-col gap-10 items-center justify-center">
+              {!selectedFile && (
+                <>
+                  <div className="">
+                    <img src="/src/assets/file.svg" alt="File Upload Icon" />
+                  </div>
+                  <div className="flex flex-col font-normal">
+                    <p className="text-[18px] leading-[21.6px] w-[240px] text-[#5F6774]">
+                      Drag and drop to upload a file
+                    </p>
+                    <p className="text-[14px] leading-[16.8px] text-[#98A2B3]">
+                      PDF or DOCX
+                    </p>
+                  </div>
+                  <div className="flex justify-center items-center gap-2 text-[#98A2B3] text-[14px]">
+                    <img
+                      src="/src/assets/divider.svg"
+                      alt="divider"
+                      width={176}
+                      height={1}
+                    />
+                    <span className="leading-[16.8px]">OR</span>
+                    <img
+                      src="/src/assets/divider.svg"
+                      alt="divider"
+                      width={176}
+                      height={1}
+                    />
+                  </div>
+                  <input
+                    type="file"
+                    accept=".pdf,.docx"
+                    className="hidden"
+                    id="fileInput"
+                    onChange={handleFileChange}
+                  />
+                  <label
+                    htmlFor="fileInput"
+                    className="flex items-center justify-center border border-[#1E3A8A] p-4 h-[54px] w-[168px] rounded-[16px] cursor-pointer text-[#1E3A8A] text-[18px] leading-[21.6px]"
+                  >
+                    Browse Files
+                  </label>
+                </>
+              )}
+              {selectedFile && !isUploading && (
+                <div className="text-center">
+                  <div className="flex justify-center items-center">
+                    <div className="rounded-full bg-[#E7F9ED] p-2">
+                      <img
+                        src="/src/assets/uploadstate.svg"
+                        alt="uplao success"
+                        width={56}
+                        height={56}
+                      />
+                    </div>
+                  </div>
+                  <p className="text-[#1D2739] text-[14px] font-semibold leading-[20.3px] mt-4">
+                    Document Upload Successful
+                  </p>
+                  <p className="text-[#98A2B3] text-[12px] leading-[17.4px] font-normal mt-1">
+                    {selectedFile.name}
+                  </p>
+                  <div className="flex justify-center items-center gap-10 mt-6">
+                    <button className="flex flex-col items-center text-[#5F6774] text-[12px] leading-[14.4px] font-normal">
+                      <img
+                        src="/src/assets/trash.svg"
+                        alt="trash icon"
+                        width={24}
+                        height={24}
+                      />
+                      <span>Delete Document</span>
+                    </button>
+                    <button className="flex flex-col items-center text-[#5F6774] text-[12px] leading-[14.4px] font-normal">
+                      <img
+                        src="/src/assets/eyeoff.svg"
+                        alt="eyeoff"
+                        width={24}
+                        height={24}
+                      />
+                      <span>Preview Document</span>
+                    </button>
+                  </div>
+                </div>
+              )}
+              {selectedFile && isUploading && (
+                <div className="flex flex-col items-center">
+                  <img
+                    src="/src/assets/pdficon.svg"
+                    alt="PDF Icon"
+                    className="w-[41.07px] h-[44.8px] mb-4"
+                  />
+                  <div className="text-[#79808A] text-[18px] font-normal mb-2">
+                    {uploadProgress}%
+                  </div>
+                  <div className="w-[313px] rounded-full h-[6px] bg-[#C0F1DF]">
+                    <div
+                      className="bg-[#34D399] h-[6px] rounded-[16px]"
+                      style={{ width: `${uploadProgress}%` }}
+                    ></div>
+                  </div>
+                  <p className="text-[#374151] font-semibold text-[16px] leading-[19.2px] mt-2">
+                    Uploading Document...
+                  </p>
+                  <p className="text-[#98A2B3] text-[14px] font-normal leading-[16.8px]">
+                    {selectedFile.name}
+                  </p>
+                </div>
+              )}
             </div>
-            <p className="text-gray-600">Drag and drop to upload a file</p>
-            <p className="text-gray-500">PDF or DOCX</p>
-            <button className="mt-4 bg-blue-600 text-white px-6 py-2 rounded-lg">
-              Browse Files
+          </div>
+          <div>
+            <button
+              className={`w-[408px] h-[54px] p-4 rounded-[16px] ${
+                isUploadSuccessful
+                  ? "bg-[#1E3A8A] text-[#FFFFFF] cursor-pointer"
+                  : "bg-[#B9C2DB] text-[#98A4C9] cursor-not-allowed"
+              }`}
+              disabled={!isUploadSuccessful}
+              onClick={handleNext}
+            >
+              Next
             </button>
           </div>
         </div>
-
-        {/* Next Button */}
-        <button className="mt-8 w-full bg-blue-900 text-white px-4 py-2 rounded-lg">
-          Next
-        </button>
       </div>
-    </div>
+    </>
   );
 };
 
