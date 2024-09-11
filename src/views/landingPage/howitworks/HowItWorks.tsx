@@ -7,7 +7,7 @@ export const HowItWorks:React.FC = () => {
         <div className="flex flex-col justify-center text-center gap-5">
         <div className="flex justify-center items-center font-bold text-[36px]" style={{fontFamily:"Merriweather"}}>
           <img src="/src/assets/howitworks/Ellipse.svg" alt="" />
-          <p className="relative right-8"><span className="text-white">H</span>ow It Works</p>
+          <p className="relative right-8 top-4"><span className="text-white">H</span>ow It Works</p>
         </div>
        <div className="text-[#5F6774] text-[18px] font-normal text-center w-[1096px] mx-auto leading-[21.6px]">
        <p>Discover a seamless way to connect with top talent or your dream job. Our platform simplifies the hiring process, matching candidates with recruiters in just a few clicks</p>

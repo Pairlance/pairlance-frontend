@@ -46,40 +46,10 @@ const PersonalInformationStep: React.FC<PersonalInformationStepProps> = ({ onNex
     <>
       {/* <NavBar /> */}
       <div className="flex flex-col justify-center items-center" style={{ fontFamily: "Lato" }}>
-        {/* <div className="w-full">
-          <HeroBanner
-            backgroundImage="/src/assets/hero2.jpg"
-            title="You're Just a Few Steps Away from Your Next Opportunity!"
-            subtitle="Upload your CV and complete your profile in a few simple steps to connect with top recruiters."
-          />
-        </div> */}
-
-        {/* <div className="">
-          <StepProgress
-            currentStep={2} // Current step (1-indexed)
-            totalSteps={6} // Total number of steps
-            completedColor="#1E3A8A" // Background color for completed steps
-            upcomingColor="#FFFF" // Background color for upcoming steps
-            borderColor="#1E3A8A" // Static border color for all steps
-          />
-        </div> */}
+        
 
         <div className="flex flex-col border border-[#D0D2D6] my-20 w-[700px] rounded-[16px] p-20 gap-10" style={{ fontFamily: "Lato" }}>
-          {/* {isSubmitted ? (
-            <div className="text-center">
-              <h2 className="text-[24px] font-bold text-[#374151]" style={{ fontFamily: "Merriweather" }}>Pitch Your Message</h2>
-              <textarea
-                className="w-full h-[200px] p-[16px] border border-[#D0D2D6] rounded-[16px] outline-none mt-4"
-                placeholder="Write your pitch here..."
-              />
-              <button
-                type="button"
-                className="mt-6 bg-[#1E3A8A] text-white text-[18px] p-[16px] rounded-[16px] h-[54px] w-[195px] leading-[21.6px] font-semibold"
-              >
-                Submit Pitch
-              </button>
-            </div>
-          ) : ( */}
+         
             <>
               <div className="text-center mb-8">
                 <p className="text-[24px] font-bold text-[#374151] leading-[30.17px]" style={{ fontFamily: "Merriweather" }}>
@@ -90,7 +60,7 @@ const PersonalInformationStep: React.FC<PersonalInformationStepProps> = ({ onNex
               <div className="flex items-center justify-center gap-5">
                 <div>
                   <img
-                    src={photo ? URL.createObjectURL(photo) : "/src/assets/profileholder.svg"} // Display uploaded photo or placeholder
+                    src={photo ? URL.createObjectURL(photo) : "/src/assets/profileholder.svg"} 
                     alt="Profile"
                     className="w-[120px] h-[120px] object-cover rounded-full"
                   />
@@ -123,7 +93,7 @@ const PersonalInformationStep: React.FC<PersonalInformationStepProps> = ({ onNex
                   <div className="flex flex-col w-1/2">
                     <label className="text-[#5F6774] font-semibold leading-[19.2px] mb-1">Gender</label>
                     <select
-                      className="p-[16px] border border-[#D0D2D6] rounded-[16px] outline-none h-[50px]"
+                      className="p-[16px] border border-[#D0D2D6] rounded-[16px] outline-none"
                       value={gender}
                       onChange={(e) => setGender(e.target.value)}
                     >
@@ -136,7 +106,7 @@ const PersonalInformationStep: React.FC<PersonalInformationStepProps> = ({ onNex
                   <div className="flex flex-col w-1/2">
                     <label className="text-[#5F6774] font-semibold leading-[19.2px] mb-1">Phone Number</label>
                     <input
-                      type="number"
+                      type="tel"
                       className="p-[16px] border border-[#D0D2D6] rounded-[16px] outline-none h-[50px]"
                       placeholder="0123456789"
                       value={phoneNumber}

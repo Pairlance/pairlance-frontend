@@ -34,7 +34,7 @@ const FAQSection: React.FC = () => {
         <div className="text-2xl font-bold text-gray-800 mb-4">
           <div className="flex items-center justify-center">
             <div className="bg-blue-900 rounded-full w-[65px] h-[65px] flex items-center justify-center"></div>
-            <p className="relative right-6">
+            <p className="relative right-6 top-4">
               <span className="text-white text-[36px] font-bold">F</span>AQs
             </p>
           </div>
