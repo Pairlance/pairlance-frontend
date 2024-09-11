@@ -27,3 +27,12 @@ box-shadow: none !important;
 .ant-select{
 outline: unset !important;
 }
+.ant-modal-content{
+  padding: 0 !important;
+  top: 20px !important;
+}
+.shortlist .ant-modal-content{
+  top: 20rem !important;
+  /* height: 500px !important; */
+  margin-bottom: 40rem;
+}
