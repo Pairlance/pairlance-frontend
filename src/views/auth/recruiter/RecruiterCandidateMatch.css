@@ -1,0 +1,52 @@
+/* Style for the custom carousel arrows */
+.ant-carousel .slick-prev,
+.ant-carousel .slick-next {
+  /* background-color: red; */
+  /* border: 1px solid #1e3a8a; */
+  border-radius: 50%;
+  display: flex !important;
+  align-items: center;
+  justify-content: center;
+  padding: 10px;
+  color: #1e3a8a;
+  /* bottom: 20px; */
+}
+
+/* .ant-carousel .slick-prev:hover, .ant-carousel .slick-next:hover {
+  border-color: #1E3A8A; 
+  color: #1E3A8A;
+} */
+
+/* .ant-carousel .slick-prev:before, .ant-carousel .slick-next:before {
+    color: #1E3A8A;
+    font-size: 18px;
+  } */
+/* 
+.ant-carousel .slick-prev:hover:before, .ant-carousel .slick-next:hover:before {
+  color: #1E3A8A;
+} */
+
+.slick-slider button {
+  position: relative;
+  /* left: 80px !important; */
+  /* width: 50% !important; */
+}
+.slick-active {
+  display: hidden !important;
+}
+
+/* :where(.css-dev-only-do-not-override-14i19y2).ant-carousel {
+  background-color: red; 
+   width: 50%;
+} */
+
+.ant-carousel .slick-prev {
+  margin-right: 10rem !important;
+  /* display: flex !important;
+  padding-left: 10px !important; */
+}
+
+/* .ant-carousel .slick-next{
+  margin-left: 9rem;
+  
+}  */
