@@ -11,7 +11,7 @@ const KeyBenefits: React.FC = () => {
           <div className="flex items-center justify-center">
             <div className="bg-blue-900 rounded-full w-[65px] h-[65px] flex items-center justify-center"></div>
             <p
-              className="relative right-7"
+              className="relative right-7 top-4"
               style={{ fontFamily: "Merriweather" }}
             >
               <span className="text-white text-[36px] font-bold leading-[45.25px]">
