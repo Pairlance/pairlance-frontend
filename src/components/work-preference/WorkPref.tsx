@@ -4,9 +4,10 @@ import { useNavigate } from "react-router-dom";
 
 interface WorkPreferenceProps {
   onBack?: () => void;
+  onNext: (stepData?: any) => void;
 }
 
-const WorkPreferenceForm: React.FC<WorkPreferenceProps> = ({ onBack }) => {
+const WorkPreferenceForm: React.FC<WorkPreferenceProps> = ({ onBack, onNext }) => {
   const [workType, setWorkType] = useState<string[]>([]);
   const [employmentType, setEmploymentType] = useState<string[]>([]);
   const [salaryScale, setSalaryScale] = useState<string | undefined>(undefined);
@@ -39,28 +40,32 @@ const WorkPreferenceForm: React.FC<WorkPreferenceProps> = ({ onBack }) => {
     e.preventDefault();
     if (isFormValid) {
       message.success("Form submitted successfully!");
-      console.log("Form submitted with the following data:", {
-        workType,
-        employmentType,
-        salaryScale,
-      });
-      navigate("/");
+      const formData = { workType, employmentType, salaryScale };
+      console.log("Form submitted with the following data:", formData);
+      onNext(formData); // Pass data to parent
+      navigate("/"); // Navigate as needed
     } else {
       message.error("Please complete all required fields before submitting.");
     }
   };
 
   const salaryOptions = [
-    "Below $40,000",
-    "$40,000 - $60,000",
-    "$60,000 - $80,000",
-    "$80,000 - $100,000",
-    "Above $100,000",
+    "50,000 - 100,000",
+    "100,000 - 200,000",
+    "200,000 - 300,000",
+    "300,000 - 400,000",
+    "400,000 - 500,000",
+    "500,000 - 600,000",
+    "600,000 - 700,000",
+    "700,000 - 800,000",
+    "800,000 - 900,000",
+    "900,000 - 1,000,000",
+    "1,000,000+"
   ];
 
   return (
     <div
-      className="flex flex-col items-center justify-center rounded-lg w-[700px] h-[726px] gap-10 border border-[#D0D2D6]"
+      className="flex flex-col items-center justify-center rounded-lg lg:w-[700px] h-[726px] gap-10 lg:border border-[#D0D2D6]"
       style={{ fontFamily: "Lato" }}
     >
       <div
@@ -69,7 +74,7 @@ const WorkPreferenceForm: React.FC<WorkPreferenceProps> = ({ onBack }) => {
       >
         <p>Work Preference</p>
       </div>
-      <form className="flex flex-col gap-10" onSubmit={handleSubmit}>
+      <form className="flex flex-col gap-10 lg:w-[unset] w-[85%] mx-auto" onSubmit={handleSubmit}>
         {/* Work Type Section */}
         <div className="flex flex-col">
           <label className="text-[#5F6774] font-semibold leading-[19.2px] mb-2 text-[16px]">
@@ -99,12 +104,12 @@ const WorkPreferenceForm: React.FC<WorkPreferenceProps> = ({ onBack }) => {
             <label className="flex gap-3 items-center">
               <input
                 type="checkbox"
-                value="Onsite"
-                checked={workType.includes("Onsite")}
+                value="On-Site"
+                checked={workType.includes("On-Site")}
                 onChange={handleWorkTypeChange}
                 className="text-gray-600"
               />
-              Onsite
+              On-Site
             </label>
           </div>
         </div>

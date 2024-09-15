@@ -15,10 +15,11 @@ const ResumeModal: React.FC<ResumeModalProps> = ({ isOpen, toggleModal }) => {
       onCancel={toggleModal}
       footer={null}
       // width={600}
+      className='sm:w-full'
     >
       <div className="flex">
         {/* Left Side - Green Background */}
-        <div className="w-1/3 bg-green-800 p-6 text-white flex flex-col items-center">
+        <div className="lg:w-1/3 bg-green-800 p-6 text-white flex flex-col items-center">
           <img
             className="w-24 h-24 rounded-full mb-4"
             src="https://via.placeholder.com/150"
@@ -48,7 +49,7 @@ const ResumeModal: React.FC<ResumeModalProps> = ({ isOpen, toggleModal }) => {
         </div>
 
         {/* Right Side - White Background */}
-        <div className="w-2/3 p-6">
+        <div className="lg:w-2/3 p-6">
           <div className="flex justify-between items-center">
             <h2 className="text-2xl font-semibold">Profile</h2>
           </div>

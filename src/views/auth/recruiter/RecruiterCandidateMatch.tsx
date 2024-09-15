@@ -6,6 +6,7 @@ import MatchingHero from "../../../components/common/MatchingHero";
 import ResumeModal from "../../../components/matchingCards/ResumeModal";
 import ShortlistModal from "../../../components/matchingCards/ShortlistModal";
 import "./RecruiterCandidateMatch.css";
+import NavBar from "../../../components/navBar/NavBar";
 
 type Candidate = {
   id: number;
@@ -91,10 +92,11 @@ const RecruiterCandidateMatch: React.FC = () => {
 
   return (
     <>
-      <MatchingNavBar />
+      <div className="hidden lg:block"><MatchingNavBar /></div>
+      <div className="lg:hidden"><NavBar/></div>
       <MatchingHero />
       <div
-        className="flex flex-col w-[1030px] bg-[#F5F5F5] h-[100% mx-auto rounded-[16px] p-5 gap-5 mb-5"
+        className="flex flex-col lg:w-[1030px] lg:bg-[#F5F5F5] h-[100% mx-auto rounded-[16px] p-5 gap-5 mb-5"
         style={{ fontFamily: "Lato" }}
       >
         <div className="flex justify-end ">
@@ -146,7 +148,7 @@ const RecruiterCandidateMatch: React.FC = () => {
         </div>
 
         {/* Carousel Container */}
-        <div className="w-[60%] mx-auto h-[775px ">
+        <div className="lg:w-[60%] w-full mx-auto h-[775px lg:border-none border border-[#D0D2D6] rounded-[16px]">
           <Carousel arrows={true} className="">
             {candidates.map((candidate) => (
               <div
@@ -165,7 +167,7 @@ const RecruiterCandidateMatch: React.FC = () => {
                   </div>
                 </div>
 
-                <div className="mt-4 border-t-[1px]">
+                <div className="mt-4 lg:border-t-[1px]">
                   <h3 className="font-semibold text-gray-700">
                     Pitch/Summary:
                   </h3>
@@ -174,17 +176,17 @@ const RecruiterCandidateMatch: React.FC = () => {
                   </p>
                 </div>
 
-                <div className="flex justify-end items-end border-t-[1px] pt-10">
-                  <div className="flex gap-1 ">
+                <div className="flex lg:justify-end lg:items-end lg:border-t-[1px] pt-10">
+                  <div className="flex flex-col lg:flex-row lg:gap-1 gap-5  w-full lg:w-[unset]">
                     <button
                       onClick={toggleModal}
-                      className="flex justify-center items-center w-[168px] border border-[#1E3A8A] text-[#1E3A8A] text-[18px] px-[16px] rounded-[16px] h-[54px] leading-[21.6px]"
+                      className="flex justify-center items-center lg:w-[168px] border border-[#1E3A8A] text-[#1E3A8A] text-[18px] px-[16px] rounded-[16px] h-[54px] leading-[21.6px]"
                     >
                       Preview CV
                     </button>
                     <button
                       onClick={() => handleAddToShortlist(candidate)}
-                      className="flex justify-center items-center bg-[#1E3A8A] w-[168px] text-[#FFFFFF] text-[18px] px-[16px] rounded-[16px] h-[54px] leading-[21.6px]"
+                      className="flex justify-center items-center bg-[#1E3A8A] lg:w-[168px] w-full text-[#FFFFFF] text-[18px] px-[16px] rounded-[16px] h-[54px] leading-[21.6px]"
                     >
                       Add to Shortlist
                     </button>

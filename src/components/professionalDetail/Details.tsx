@@ -1,54 +1,44 @@
 import React, { useState, useEffect } from "react";
-// import { Select, Space } from "antd";
-// import type { SelectProps } from "antd";
-import Selection from "../common/Selection"
+import Selection from "../common/Selection";
+
 interface DetailsProps {
-  onNext: () => void;
+  onNext: (stepData?: any) => void;
   onBack?: () => void;
 }
 
 const Details: React.FC<DetailsProps> = ({ onNext, onBack }) => {
-  const [gender, setGender] = useState("");
-  const [phoneNumber, setPhoneNumber] = useState("");
+  const [selectedRoles, setSelectedRoles] = useState<string[]>([]);
+  const [yearsOfExperience, setYearsOfExperience] = useState("");
+  const [roleLevel, setRoleLevel] = useState("");
   const [isFormValid, setIsFormValid] = useState(false);
 
   useEffect(() => {
-    setIsFormValid(!!gender && !!phoneNumber);
-  }, [gender, phoneNumber]);
+    setIsFormValid(!!selectedRoles.length && !!yearsOfExperience && !!roleLevel);
+  }, [selectedRoles, yearsOfExperience, roleLevel]);
+
+  const handleRolesChange = (roles: string[]) => {
+    setSelectedRoles(roles);
+  };
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     if (isFormValid) {
       console.log("Form submitted with the following data:", {
-        gender,
-        phoneNumber,
+        selectedRoles,
+        yearsOfExperience,
+        roleLevel,
       });
-      onNext();
+      onNext({
+        selectedRoles,
+        yearsOfExperience,
+        roleLevel,
+      });
     }
   };
 
-  // const roles = [
-  //   "Data Analyst",
-  //   "Project Manager",
-  //   "Front-End Developer",
-  //   "Back-End Developer",
-  //   "UI/UX Designer",
-  //   "DevOps Engineer",
-  // ];
-
-  // Map the roles to Ant Design's Select options format
-  // const options: SelectProps["options"] = roles.map((role) => ({
-  //   label: role,
-  //   value: role,
-  // }));
-
-  // const handleChange = (value: string[]) => {
-  //   console.log(`selected ${value}`);
-  // };
-
   return (
     <div
-      className="flex flex-col items-center justify-center rounded-lg w-[700px] h-[726px] gap-10 border border-[#D0D2D6]"
+      className="flex flex-col items-center justify-center rounded-lg lg:w-[700px] h-[726px] gap-10 lg:border border-[#D0D2D6]"
       style={{ fontFamily: "lato" }}
     >
       <div
@@ -57,22 +47,12 @@ const Details: React.FC<DetailsProps> = ({ onNext, onBack }) => {
       >
         <p>Professional Details</p>
       </div>
-      <form className="flex flex-col gap-10" onSubmit={handleSubmit}>
+      <form className="flex flex-col gap-10 w-[85%] lg:w-[unset] mx-auto" onSubmit={handleSubmit}>
         <div className="flex flex-col">
           <label className="text-[#5F6774] font-semibold leading-[19.2px]">
             Preferred Job Roles/Titles
           </label>
-          {/* <Space style={{ width: "100%" }} direction="vertical">
-            <Select
-              mode="multiple"
-              allowClear
-              style={{ width: "100%" }}
-              placeholder="Please select roles"
-              onChange={handleChange}
-              options={options}
-            />
-          </Space> */}
-          <Selection/>
+          <Selection selectedRoles={selectedRoles} onChange={handleRolesChange} />
         </div>
 
         <div className="flex flex-col">
@@ -83,8 +63,8 @@ const Details: React.FC<DetailsProps> = ({ onNext, onBack }) => {
             type="number"
             className="p-[16px] border border-[#D0D2D6] rounded-[16px] outline-none"
             placeholder="Enter years of experience"
-            value={phoneNumber}
-            onChange={(e) => setPhoneNumber(e.target.value)}
+            value={yearsOfExperience}
+            onChange={(e) => setYearsOfExperience(e.target.value)}
           />
         </div>
 
@@ -94,13 +74,13 @@ const Details: React.FC<DetailsProps> = ({ onNext, onBack }) => {
           </label>
           <select
             className="p-[16px] border border-[#D0D2D6] rounded-[16px] outline-none"
-            value={gender}
-            onChange={(e) => setGender(e.target.value)}
+            value={roleLevel}
+            onChange={(e) => setRoleLevel(e.target.value)}
           >
             <option value="">Select level</option>
-            <option value="Female">Junior</option>
-            <option value="Male">Intermediate</option>
-            <option value="Other">Expert</option>
+            <option value="Beginner">Beginner</option>
+            <option value="Intermediate">Intermediate</option>
+            <option value="Expert">Expert</option>
           </select>
         </div>
 
@@ -115,7 +95,7 @@ const Details: React.FC<DetailsProps> = ({ onNext, onBack }) => {
           <button
             type="submit"
             disabled={!isFormValid}
-            className={`text-[18px] p-[16px] rounded-[16px] h-[54px] w-[195px] leading-[21.6px]font-semibold ${
+            className={`text-[18px] p-[16px] rounded-[16px] h-[54px] w-[195px] leading-[21.6px] font-semibold ${
               isFormValid
                 ? "bg-[#1E3A8A] text-white"
                 : "bg-[#B9C2DB] text-[#98A4C9]"

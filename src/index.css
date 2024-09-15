@@ -36,3 +36,17 @@ outline: unset !important;
   /* height: 500px !important; */
   margin-bottom: 40rem;
 }
+
+.ant-select-selection-overflow-item {
+  border: 1px solid #1E3A8A !important;
+  border-radius: 8px !important;
+}
+.ant-select-selection-overflow-item-suffix{
+  border: none !important;
+}
+.ant-select-selection-overflow {
+  gap: 5px;
+}
+.ant-select-focused:where(.css-dev-only-do-not-override-14i19y2).ant-select-outlined:not(.ant-select-disabled):not(.ant-select-customize-input):not(.ant-pagination-size-changer) .ant-select-selector {
+  border-color: white !important;  
+}

@@ -3,12 +3,12 @@ import React from "react";
 const KeyBenefits: React.FC = () => {
   return (
     <section
-      className="py-16 bg-white text-center w-[75%] mx-auto"
+      className="py-16 bg-white lg:text-center lg:w-[75% mx-auto px-5 lg:px-0"
       style={{ fontFamily: "lato" }}
     >
       <div className="container mx-auto">
         <div className="text-2xl font-bold text-gray-800 mb-4">
-          <div className="flex items-center justify-center">
+          <div className="flex lg:items-center lg:justify-center">
             <div className="bg-blue-900 rounded-full w-[65px] h-[65px] flex items-center justify-center"></div>
             <p
               className="relative right-7 top-4"
@@ -21,14 +21,15 @@ const KeyBenefits: React.FC = () => {
             </p>
           </div>
         </div>
-        <div className="flex justify-center text-gray-600 mb-12 text-[18px] text-center w-[1096px] mx-auto leading-[21.16px]">
+        <div className="flex justify-center text-gray-600 font-normal mb-12 lg:text-[18px] text-[14px] lg:text-center lg:w-[1086px] w-full mx-auto leading-[21.16px]">
           <p className="">
             Maximize your potential with a platform designed for both recruiters
             and job seekers. Effortlessly find the right fit, saving time and
             connecting talent with opportunity.
           </p>
         </div>
-        <div className="flex justify-between w-[95%] mx-auto">
+        
+        <div className="flex flex-col lg:flex-row justify-between lg:w-[1077px] mx-auto">
           <div className="w-[50%  text-left mb-8">
             <h3 className="text-lg font-semibold text-gray-800 mb-4 leading-[30.17px]">
               For Recruiters

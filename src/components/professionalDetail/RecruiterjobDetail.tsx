@@ -11,6 +11,7 @@ const RecruiterJobDetails: React.FC<RecruiterJobDetailsProps> = ({ onNext }) => 
   const [gender, setGender] = useState("");
   const [phoneNumber, setPhoneNumber] = useState("");
   const [isFormValid, setIsFormValid] = useState(false);
+  const [selectedRoles, setSelectedRoles] = useState<string[]>([]);
 
   useEffect(() => {
     setIsFormValid(!!gender && !!phoneNumber);
@@ -25,6 +26,9 @@ const RecruiterJobDetails: React.FC<RecruiterJobDetailsProps> = ({ onNext }) => 
       });
       onNext();
     }
+  };
+  const handleRolesChange = (roles: string[]) => {
+    setSelectedRoles(roles);
   };
 
   // const roles = [
@@ -48,7 +52,7 @@ const RecruiterJobDetails: React.FC<RecruiterJobDetailsProps> = ({ onNext }) => 
 
   return (
     <div
-      className="flex flex-col items-center justify-center rounded-lg w-[700px] h-[726px] gap-10 border border-[#D0D2D6]"
+      className="flex flex-col items-center justify-center rounded-lg lg:w-[700px] h-[726px] gap-10 lg:border border-[#D0D2D6]"
       style={{ fontFamily: "lato" }}
     >
       <div
@@ -57,7 +61,7 @@ const RecruiterJobDetails: React.FC<RecruiterJobDetailsProps> = ({ onNext }) => 
       >
         <p>Job Details</p>
       </div>
-      <form className="flex flex-col gap-10 w-[408PX] " onSubmit={handleSubmit}>
+      <form className="flex flex-col gap-10 w-[408PX] px-5 lg:px-[unset] mx-auto" onSubmit={handleSubmit}>
         <div className="flex flex-col">
           <label className="text-[#5F6774] font-semibold leading-[19.2px]">
           Job Title
@@ -72,7 +76,7 @@ const RecruiterJobDetails: React.FC<RecruiterJobDetailsProps> = ({ onNext }) => 
               options={options}
             />
           </Space> */}
-          <Selection/>
+          <Selection selectedRoles={selectedRoles} onChange={handleRolesChange}/>
         </div>
 
         <div className="flex flex-col">
