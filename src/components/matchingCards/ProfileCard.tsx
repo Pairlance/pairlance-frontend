@@ -26,7 +26,7 @@ const ProfileCard: React.FC<ProfileCardProps> = ({
 
   return (
     <div>
-      <div className="flex flex-col w-[95%] bg-[#F5F5F5] h-[100%] mx-auto rounded-[16px] p-5">
+      <div className="flex flex-col lg:w-[95%] bg-[#F5F5F5] h-[100%] mx-auto rounded-[16px] lg:p-5">
         <div className="flex justify-end z-10">
           <div
             className="relative top-0 right-0 mt-4 mr-4"

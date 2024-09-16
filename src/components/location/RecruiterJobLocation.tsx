@@ -57,7 +57,7 @@ const RecruiterJobLocation: React.FC<RecruiterJobLocation> = ({
 
   return (
     <div
-      className="flex flex-col items-center justify-center rounded-lg w-[700px] h-[726px] gap-10 border border-[#D0D2D6]"
+      className="flex flex-col items-center justify-center rounded-lg lg:w-[700px] h-[726px] gap-10 lg:border border-[#D0D2D6]"
       style={{ fontFamily: "Lato" }}
     >
       <div
@@ -66,7 +66,7 @@ const RecruiterJobLocation: React.FC<RecruiterJobLocation> = ({
       >
         <p>Gender & Location Preferences</p>
       </div>
-      <form className="flex flex-col gap-10" onSubmit={handleSubmit}>
+      <form className="flex flex-col gap-10 w-[95%] mx-auto" onSubmit={handleSubmit}>
         <div className="flex flex-col">
           <label className="text-[#5F6774] font-semibold leading-[19.2px]">
             Job Location(s)

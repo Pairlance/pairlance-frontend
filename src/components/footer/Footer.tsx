@@ -3,11 +3,11 @@
 const Footer: React.FC = () => {
   return (
     <footer
-      className="bg-[#0A2742] text-white py-8"
+      className="bg-[#0D183A] text-white py-8"
       style={{ fontFamily: "lato" }}
     >
-      <div className="container mx-auto w-[90%] flex flex-col md:flex-row justify-between items-center px-4">
-        <div className="flex flex-col items-center md:items-start">
+      <div className="container mx-auto lg:w-[90%] w-full flex flex-col-reverse md:flex-row justify-between lg:items-center px-4">
+        <div className="flex flex-col lg:items-center md:items-start">
           <div className="mb-4 flex" style={{fontFamily:"Georgia"}}>
             <img
               src="/src/assets/footer/brandlogo.svg"
@@ -38,19 +38,19 @@ const Footer: React.FC = () => {
 
         <div className="mt-8 md:mt-0">
           <h2 className="text-[24px] font-bold leading-[30.17px]" style={{fontFamily:"Merriweather"}}>Subscribe To Our Newsletter</h2>
-          <p className="text-[16px] mt-2 leading-[19px] font-normal text-[#E8E8E8] w-[530.08px]">
+          <p className="text-[16px] mt-2 leading-[19px] font-normal text-[#E8E8E8] lg:w-[530.08px]">
             Stay ahead of the curve - subscribe to our newsletter for insights
             and updates.
           </p>
-          <form className="mt-4 flex gap-5 text-[14px] leading-[16px]">
+          <form className="mt-4 flex flex-col lg:flex-row gap-5 text-[14px] leading-[16px]">
             <input
               type="email"
               placeholder="Enter email address"
-              className="p-1 rounded-lg text-[E5E7EB] bg-transparent border w-[285px] h-[49px]"
+              className="p-1 rounded-lg text-[E5E7EB] bg-transparent border lg:w-[285px] h-[49px]"
             />
             <button
               type="submit"
-              className="bg-white text-[#374151] p-[16px] rounded-[16px] font-semibold w-[196px] h-[54px]"
+              className="bg-white text-[#374151] p-[16px] rounded-[16px] font-semibold lg:w-[196px] h-[54px]"
             >
               Subscribe
             </button>

@@ -1,56 +1,72 @@
-import React, { useState } from 'react';
-import type { SelectProps } from 'antd';
+import React, { useState, useEffect } from 'react';
 import { Select, Space, Tooltip } from 'antd';
+import axios from 'axios';
+import type { SelectProps } from 'antd';
 
 interface ItemProps {
   value: string;
 }
 
-const values = [
-  "Data Analyst",
-  "Project Manager",
-  "Front-End Developer",
-  "Back-End Developer",
-  "UI/UX Designer",
-  "DevOps Engineer",
-];
+interface SelectionProps {
+  selectedRoles: string[];
+  onChange: (roles: string[]) => void;
+}
 
-const options: ItemProps[] = values.map(value => ({
-  value: value,
-}));
+const Selection: React.FC<SelectionProps> = ({ selectedRoles, onChange }) => {
+  const [options, setOptions] = useState<ItemProps[]>([]);
+  const [loading, setLoading] = useState<boolean>(true);
+  const [error, setError] = useState<string | null>(null);
 
-const sharedProps: SelectProps = {
-  mode: 'multiple',
-  style: { width: '100%' },
-  options,
-  placeholder: 'Select roles',
-  maxTagCount: 'responsive',
-};
+  useEffect(() => {
+    const fetchRoles = async () => {
+      try {
+        const response = await axios.get('https://pairlance.vercel.app/api/roles');
+        const roles = response.data.roles;
+        const fetchedOptions = roles.map((role: string) => ({ value: role }));
+        setOptions(fetchedOptions);
+        setLoading(false);
+      } catch (err) {
+        console.error('Error fetching roles:', err);
+        setError('Failed to load roles');
+        setLoading(false);
+      }
+    };
 
-const App: React.FC = () => {
-  const [value, setValue] = useState<string[]>([]);
+    fetchRoles();
+  }, []);
 
-  const selectProps: SelectProps = {
-    value,
-    onChange: setValue,
+  const handleChange = (value: string[]) => {
+    onChange(value);
+  };
+
+  const selectProps: SelectProps<string[]> = {
+    mode: 'multiple',
+    style: { width: '100%' },
+    options,
+    placeholder: loading ? 'Loading roles...' : 'Select roles',
+    maxTagCount: 'responsive',
+    disabled: loading || !!error,
+    value: selectedRoles,
+    onChange: handleChange,
+    maxTagPlaceholder: (value) => (
+      <Tooltip
+        overlayStyle={{ pointerEvents: 'none' }}
+        title={value.join(', ')}
+      >
+        +{value.length} more
+      </Tooltip>
+    ),
   };
 
   return (
     <Space direction="vertical" style={{ width: '100%' }}>
-      <Select
-        {...sharedProps}
-        {...selectProps}
-        maxTagPlaceholder={(value) => (
-          <Tooltip
-            overlayStyle={{ pointerEvents: 'none' }}
-            title={value.map(({ value }) => value).join(', ')}
-          >
-            +{value.length} more
-          </Tooltip>
-        )}
-      />
+      {error ? (
+        <p>{error}</p>
+      ) : (
+        <Select {...selectProps} />
+      )}
     </Space>
   );
 };
 
-export default App;
+export default Selection;

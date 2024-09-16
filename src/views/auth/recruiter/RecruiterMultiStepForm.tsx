@@ -73,7 +73,7 @@ const RecruiterMultiStepForm: React.FC = () => {
           />
         </div>
 
-        <div className="my-20 w-[700px]">
+        <div className="my-20 lg:w-[700px]">
           {renderStep()} {/* Render the current step */}
         </div>
       </div>

@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 
 interface PitchProps {
-  onNext: () => void;
+  onNext: (stepData?: any) => void;
   onBack?: () => void;
 }
 
@@ -32,15 +32,15 @@ export const Pitch: React.FC<PitchProps> = ({ onNext, onBack }) => {
   const isTyping = text.trim().length > 0;
 
   return (
-    <div className="flex flex-col items-center justify-center rounded-lg w-[700px] h-[726px] my-10 border border-[#D0D2D6]">
-      <div className="flex flex-col justify-center" style={{ fontFamily: "lota" }}>
+    <div className="flex flex-col items-center justify-center rounded-lg lg:w-[700px] lg:h-[726px] lg:my-10 lg:border border-[#D0D2D6]">
+      <div className="flex flex-col justify-center w-[85%] lg:w-[unset] mx-auto" style={{ fontFamily: "lota" }}>
         <div className="flex justify-center text-[24px] font-bold text-[#374151] leading-[30.17px]" style={{ fontFamily: "Merriweather" }}>
           <p>Write a Pitch</p>
         </div>
         <div className="flex flex-col">
           <label className="text-[16px] text-[#5F6774]">Pitch/Summary</label>
           <textarea
-            className="w-[424px] h-[231px] p-[16px] gap-10 border border-[#D0D2D6] rounded-[16px] outline-none mt-4"
+            className="lg:w-[424px] h-[231px] p-[16px] gap-10 border border-[#D0D2D6] rounded-[16px] outline-none mt-4"
             placeholder="Write a brief pitch highlighting your skills, experience, and what makes you a great fit for potential opportunities"
             value={text}
             onChange={handleChange}
@@ -62,7 +62,8 @@ export const Pitch: React.FC<PitchProps> = ({ onNext, onBack }) => {
 
           <button
             type="button"
-            onClick={onNext}
+            onClick={() => onNext({ text })}
+            disabled={!isTyping}
             className={`text-[18px] p-[16px] rounded-[16px] h-[54px] w-[191px] leading-[21.6px] font-semibold ${isTyping ? 'bg-[#1E3A8A] text-white' : 'bg-[#B9C2DB] text-[#98A4C9]'}`}
           >
             Next
