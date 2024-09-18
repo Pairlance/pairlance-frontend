@@ -39,15 +39,26 @@ const WorkPreferenceForm: React.FC<WorkPreferenceProps> = ({ onBack, onNext }) =
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     if (isFormValid) {
-      message.success("Form submitted successfully!");
-      const formData = { workType, employmentType, salaryScale };
+  
+      // Prepare the form data in the correct structure
+      const formData = { 
+        workType, 
+        employmentType, 
+        salaryScale 
+      };
+  
       console.log("Form submitted with the following data:", formData);
       onNext(formData); // Pass data to parent
-      navigate("/"); // Navigate as needed
+      
+      message.success("Form submitted successfully!");
+  
+      // If needed, navigate to another page or trigger other actions here
+      navigate("/"); 
     } else {
       message.error("Please complete all required fields before submitting.");
     }
   };
+  
 
   const salaryOptions = [
     "50,000 - 100,000",
