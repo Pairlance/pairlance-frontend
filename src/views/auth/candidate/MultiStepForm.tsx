@@ -9,42 +9,101 @@ import { Pitch } from "../../../components/pitch/Pitch";
 import Details from "../../../components/professionalDetail/Details";
 import JobLocationPref from "../../../components/location/JobLocationPref";
 import WorkPreferenceForm from "../../../components/work-preference/WorkPref";
-import axios from "axios"; // Assuming you're using axios for the submission
+import axios from "axios";
+
+// Define TypeScript interfaces for form data
+interface PersonalInfo {
+  full_name: string;
+  gender: string;
+  phone_number: string;
+  phoneNumber: string;
+  email: string;
+  image_url: string;
+  photo: string;
+}
+
+interface Details {
+  selectedRoles: string[];
+  years_of_experience: string;
+  yearsOfExperience: string;
+  role_level: string;
+  roleLevel: string;
+}
+
+interface LocationPref {
+  selectedLocations: string[];
+}
+
+interface WorkPref {
+  work_type: string[];
+  employment_type: string[];
+  salary_ranges: string;
+  workType:string;
+  salaryScale:string;
+  employmentType:string;
+}
+
+interface FormData {
+  cv: File | null;
+  personalInfo: PersonalInfo;
+  pitch: { text: string };
+  details: Details;
+  locationPref: LocationPref;
+  workPref: WorkPref;
+}
 
 const MultiStepForm: React.FC = () => {
   const [currentStep, setCurrentStep] = useState(1); // Track the current step
   const totalSteps = 6;
 
   // State to hold all form data
-  const [formData, setFormData] = useState({
+  const [formData, setFormData] = useState<FormData>({
     cv: null,
-    personalInfo: {},
-    pitch: "",
-    details: {},
-    locationPref: {},
-    workPref: {}
+    personalInfo: {
+      full_name: '',
+      gender: '',
+      phone_number: '',
+      email: '',
+      image_url: '',
+      phoneNumber: "",
+      photo: ""
+    },
+    pitch: { text: '' },
+    details: {
+      selectedRoles: [], years_of_experience: '', role_level: '', roleLevel: '',
+      yearsOfExperience: ""
+    },
+    locationPref: { selectedLocations: [] },
+    workPref: {
+      workType: "",
+      salaryScale: "",
+      employmentType: "",
+      work_type: [],
+      employment_type: [],
+      salary_ranges: ""
+    }
   });
 
   // Handle data update for each step
   const updateFormData = (stepData: any, step: number) => {
     switch (step) {
       case 1:
-        setFormData({ ...formData, cv: stepData });
+        setFormData(prevState => ({ ...prevState, cv: stepData }));
         break;
       case 2:
-        setFormData({ ...formData, personalInfo: stepData });
+        setFormData(prevState => ({ ...prevState, personalInfo: stepData }));
         break;
       case 3:
-        setFormData({ ...formData, pitch: stepData });
+        setFormData(prevState => ({ ...prevState, pitch: stepData }));
         break;
       case 4:
-        setFormData({ ...formData, details: stepData });
+        setFormData(prevState => ({ ...prevState, details: stepData }));
         break;
       case 5:
-        setFormData({ ...formData, locationPref: stepData });
+        setFormData(prevState => ({ ...prevState, locationPref: stepData }));
         break;
       case 6:
-        setFormData({ ...formData, workPref: stepData });
+        setFormData(prevState => ({ ...prevState, workPref: stepData }));
         break;
       default:
         break;
@@ -54,41 +113,49 @@ const MultiStepForm: React.FC = () => {
   // Function to handle submission of all data
   const handleSubmit = async () => {
     try {
-      const formDataToSend = new FormData();
-      
-      // Append each property of formData to FormData
-      for (const [key, value] of Object.entries(formData)) {
-        if (value instanceof File) {
-          formDataToSend.append(key, value);
-        } else if (typeof value === 'object') {
-          formDataToSend.append(key, JSON.stringify(value)); // Convert objects to JSON strings
-        } else {
-          formDataToSend.append(key, value as string);
-        }
-      }
+      const formDataToSend = {
+        cv_url: formData.cv, // Handle file data properly
+        full_name: formData.personalInfo.full_name || '',
+        gender: formData.personalInfo.gender || '',
+        email: formData.personalInfo.email || '',
+        image_url: formData.personalInfo.photo || '',
+        phone_number: formData.personalInfo.phoneNumber || '',
+        summary_pitch: formData.pitch.text || '',
+        years_of_experience: formData.details.yearsOfExperience || '',
+        role_level: formData.details.roleLevel || '',
+        work_type: formData.workPref.workType || [], // Include work_type data
+        employment_type: formData.workPref.employmentType, // Include employment_type data
+        salary_ranges: formData.workPref.salaryScale
+        || '', // Include salary_ranges data
+        job_locations: formData.locationPref.selectedLocations || [],
+        job_roles: formData.details.selectedRoles || [],
+      };
+      console.log("detail sent:", formDataToSend);
   
-      await axios.post("https://pairlance.vercel.app/api/upload-candidate", formDataToSend, {
+      // Send the data to the API
+      const response = await axios.post("https://pairlance.vercel.app/api/upload-candidate", formDataToSend, {
         headers: {
-          'Content-Type': 'multipart/form-data'
+          'Content-Type': 'application/json'
         }
       });
   
-      console.log("Form data submitted successfully!");
+      console.log("Form data submitted successfully!", response.data);
     } catch (error) {
       console.error("Error submitting form data", error);
     }
   };
-  
 
   // Function to move to the next step
   const handleNext = (stepData: any) => {
-    console.log('Current Step Data:', stepData); 
+    console.log('Current Step Data:', stepData);
     updateFormData(stepData, currentStep);
     if (currentStep < totalSteps) {
       setCurrentStep(currentStep + 1);
     } else {
-      // On final step, submit all data
       handleSubmit();
+      // On final step, submit all data
+      console.log('Final Form Data before submission:', formData);
+      
     }
   };
 

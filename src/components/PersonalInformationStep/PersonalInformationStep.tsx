@@ -7,43 +7,41 @@ interface PersonalInformationStepProps {
 }
 
 const PersonalInformationStep: React.FC<PersonalInformationStepProps> = ({ onNext, onBack }) => {
-  const [fullName, setFullName] = useState("");
+  const [full_name, setFullName] = useState("");
   const [gender, setGender] = useState("");
   const [phoneNumber, setPhoneNumber] = useState("");
   const [email, setEmail] = useState("");
   const [photo, setPhoto] = useState<File | null>(null);
-  // const [photoUrl, setPhotoUrl] = useState<string | null>(null);
   const [isFormValid, setIsFormValid] = useState(false);
   const [phoneError, setPhoneError] = useState("");
 
   // Validate form
   useEffect(() => {
-    const phoneRegex = /^[0-9]{10,15}$/; // Adjust as needed
+    const phoneRegex = /^[0-9]{10,15}$/;
     setIsFormValid(
-      !!fullName && !!gender && phoneRegex.test(phoneNumber) && !!email
+      !!full_name && !!gender && phoneRegex.test(phoneNumber) && !!email
     );
-  }, [fullName, gender, phoneNumber, email]);
+  }, [full_name, gender, phoneNumber, email]);
 
   // Upload photo to Cloudinary
   const uploadPhoto = async (file: File) => {
     const formData = new FormData();
     formData.append("file", file);
-    formData.append("upload_preset", "pairlance"); // Replace with your Cloudinary upload preset
-  
+    formData.append("upload_preset", "pairlance");
+
     try {
       const response = await axios.post(
         "https://api.cloudinary.com/v1_1/dahhmqvix/upload",
         formData
       );
       const uploadedUrl = response.data.secure_url;
-      console.log("Uploaded Photo URL:", uploadedUrl); // Log the full URL
+      console.log("Uploaded Photo URL:", uploadedUrl);
       return uploadedUrl; // Return the URL of the uploaded image
     } catch (error) {
       console.error("Error uploading photo:", error);
       return null;
     }
   };
-  
 
   const handlePhotoUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
     if (e.target.files && e.target.files.length > 0) {
@@ -61,15 +59,15 @@ const PersonalInformationStep: React.FC<PersonalInformationStepProps> = ({ onNex
       }
 
       console.log("Form submitted with the following data:", {
-        fullName,
+        full_name,
         gender,
         phoneNumber,
         email,
         photo: uploadedPhotoUrl,
       });
-      
+
       onNext({
-        fullName,
+        full_name,
         gender,
         phoneNumber,
         email,
@@ -128,7 +126,7 @@ const PersonalInformationStep: React.FC<PersonalInformationStepProps> = ({ onNex
               className="p-[16px] border border-[#D0D2D6] rounded-[16px] outline-none h-[49px] lg:w-[432px]"
               placeholder="Jane Doe"
               required
-              value={fullName}
+              value={full_name}
               onChange={(e) => setFullName(e.target.value)}
             />
           </div>
