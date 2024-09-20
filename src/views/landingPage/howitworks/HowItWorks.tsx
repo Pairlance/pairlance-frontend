@@ -1,3 +1,7 @@
+import groups from "../../../assets/howitworks/groups.svg"
+import uploadicon from "../../../assets/howitworks/uploadicon.svg"
+import posticon from "../../../assets/howitworks/posticon.svg"
+import swipicon from "../../../assets/howitworks/swipeicon.svg"
 export const HowItWorks: React.FC = () => {
   return (
     <>
@@ -15,7 +19,7 @@ export const HowItWorks: React.FC = () => {
               <span className="text-white">H</span>ow It Works
             </p>
           </div>
-          <div className="text-[#5F6774] lg:text-[18px] text-[14px] font-normal lg:text-center lg:w-[1096px] md:w-[358px] mx-auto lg:leading-[21.6px] leading-[16.8px] px-4 lg:px-0">
+          <div className="text-[#5F6774] lg:text-[18px] text-[14px] font-normal lg:text-center xl:w-[1096px] lg:w-[1036px] md:w-[358px mx-auto lg:leading-[21.6px] leading-[16.8px] px-4 lg:px-0">
             <p>
               Discover a seamless way to connect with top talent or your dream
               job. Our platform simplifies the hiring process, matching
@@ -26,10 +30,10 @@ export const HowItWorks: React.FC = () => {
 
         <div className="flex flex-col-reverse lg:flex-row gap-20 items-center pr-5 lg:pr-0">
           <div className="flex items-center lg:w-[55%]">
-            <div className="bg-[#1E3A8A] lg:w-[20%] w-[135px] lg:h-[264px] h-[80px]"></div>
+            <div className="bg-[#1E3A8A] lg:w-[20%] w-[135px] md:w-[226px] lg:h-[264px] h-[80px]"></div>
             <div>
               <img
-                src="/src/assets/howitworks/groups.svg"
+                src={groups}
                 alt="groups"
                 width={600}
                 height={512}
@@ -40,7 +44,7 @@ export const HowItWorks: React.FC = () => {
           <div className="flex flex-col gap-10 text-[#5F6774] text-[16px] lg:w-[30%] px-5 lg:px-0">
             <div className="flex flex-col gap-2">
               <div className="flex items-center gap-3 text-[18px] font-bold">
-                <img src="/src/assets/howitworks/uploadicon.svg" alt="" />
+                <img src={uploadicon} alt="upload-icon" />
                 <p>Upload Your CV (Candidates)</p>
               </div>
               <p>
@@ -51,7 +55,7 @@ export const HowItWorks: React.FC = () => {
 
             <div className="flex flex-col gap-2">
               <div className="flex items-center gap-3 text-[18px] font-bold">
-                <img src="/src/assets/howitworks/posticon.svg" alt="" />
+                <img src={posticon} alt="post-icon" />
                 <p>Post a Job (Recruiters)</p>
               </div>
               <p>
@@ -62,7 +66,7 @@ export const HowItWorks: React.FC = () => {
 
             <div className="flex flex-col gap-2">
               <div className="flex items-center gap-3 text-[18px] font-bold">
-                <img src="/src/assets/howitworks/swipeicon.svg" alt="" />
+                <img src={swipicon} alt="swipe-icon" />
                 <p>Swipe and Match</p>
               </div>
               <p className="w-[342px">

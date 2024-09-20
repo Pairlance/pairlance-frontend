@@ -15,18 +15,18 @@ import axios from "axios";
 interface PersonalInfo {
   full_name: string;
   gender: string;
-  phone_number: string;
+  // phone_number: string;
   phoneNumber: string;
   email: string;
-  image_url: string;
+  // image_url: string;
   photo: string;
 }
 
 interface Details {
   selectedRoles: string[];
-  years_of_experience: string;
+  // years_of_experience: string;
   yearsOfExperience: string;
-  role_level: string;
+  // role_level: string;
   roleLevel: string;
 }
 
@@ -35,12 +35,12 @@ interface LocationPref {
 }
 
 interface WorkPref {
-  work_type: string[];
-  employment_type: string[];
-  salary_ranges: string;
-  workType:string;
-  salaryScale:string;
-  employmentType:string;
+  // work_type: string[];
+  // employment_type: string[];
+  // salary_ranges: string;
+  workType: string;
+  salaryScale: string;
+  employmentType: string;
 }
 
 interface FormData {
@@ -60,53 +60,83 @@ const MultiStepForm: React.FC = () => {
   const [formData, setFormData] = useState<FormData>({
     cv: null,
     personalInfo: {
-      full_name: '',
-      gender: '',
-      phone_number: '',
-      email: '',
-      image_url: '',
+      full_name: "",
+      gender: "",
+      // phone_number: "",
+      email: "",
+      // image_url: "",
       phoneNumber: "",
-      photo: ""
+      photo: "",
     },
-    pitch: { text: '' },
+    pitch: { text: "" },
     details: {
-      selectedRoles: [], years_of_experience: '', role_level: '', roleLevel: '',
-      yearsOfExperience: ""
+      selectedRoles: [],
+      // years_of_experience: "",
+      // role_level: "",
+      roleLevel: "",
+      yearsOfExperience: "",
     },
     locationPref: { selectedLocations: [] },
     workPref: {
+      // work_type: [],
+      // employment_type: [],
+      // salary_ranges: "",
       workType: "",
       salaryScale: "",
       employmentType: "",
-      work_type: [],
-      employment_type: [],
-      salary_ranges: ""
-    }
+    },
   });
+
+  // Function to move to the next step
+  const handleNext = async (stepData?: any): Promise<boolean> => {
+    try {
+      // Ensure form data is updated with current step's data
+      console.log("Current Step Data:", stepData);
+      updateFormData(stepData, currentStep);
+
+      if (currentStep < totalSteps) {
+        // Move to the next step
+        setCurrentStep(currentStep + 1);
+        return true;
+      } else {
+        // On the final step, submit all data
+        await handleSubmit(); // Wait for form submission to complete
+        console.log("Form submitted successfully");
+        // Add navigation or success message logic here
+        return true;
+      }
+    } catch (error) {
+      console.error("Submission failed", error);
+      return false;
+    }
+  };
 
   // Handle data update for each step
   const updateFormData = (stepData: any, step: number) => {
-    switch (step) {
-      case 1:
-        setFormData(prevState => ({ ...prevState, cv: stepData }));
-        break;
-      case 2:
-        setFormData(prevState => ({ ...prevState, personalInfo: stepData }));
-        break;
-      case 3:
-        setFormData(prevState => ({ ...prevState, pitch: stepData }));
-        break;
-      case 4:
-        setFormData(prevState => ({ ...prevState, details: stepData }));
-        break;
-      case 5:
-        setFormData(prevState => ({ ...prevState, locationPref: stepData }));
-        break;
-      case 6:
-        setFormData(prevState => ({ ...prevState, workPref: stepData }));
-        break;
-      default:
-        break;
+    setFormData((prevState) => {
+      switch (step) {
+        case 1:
+          return { ...prevState, cv: stepData };
+        case 2:
+          return { ...prevState, personalInfo: stepData };
+        case 3:
+          return { ...prevState, pitch: stepData };
+        case 4:
+          return { ...prevState, details: stepData };
+        case 5:
+          return { ...prevState, locationPref: stepData };
+        case 6:
+          return { ...prevState, workPref: stepData };
+        default:
+          return prevState;
+      }
+    });
+  };
+
+  // Function to move to the previous step
+  const handleBack = () => {
+    if (currentStep > 1) {
+      setCurrentStep(currentStep - 1);
     }
   };
 
@@ -115,54 +145,39 @@ const MultiStepForm: React.FC = () => {
     try {
       const formDataToSend = {
         cv_url: formData.cv, // Handle file data properly
-        full_name: formData.personalInfo.full_name || '',
-        gender: formData.personalInfo.gender || '',
-        email: formData.personalInfo.email || '',
-        image_url: formData.personalInfo.photo || '',
-        phone_number: formData.personalInfo.phoneNumber || '',
-        summary_pitch: formData.pitch.text || '',
-        years_of_experience: formData.details.yearsOfExperience || '',
-        role_level: formData.details.roleLevel || '',
+        full_name: formData.personalInfo.full_name || "",
+        gender: formData.personalInfo.gender || "",
+        email: formData.personalInfo.email || "",
+        image_url: formData.personalInfo.photo || "",
+        phone_number: formData.personalInfo.phoneNumber || "",
+        summary_pitch: formData.pitch.text || "",
+        years_of_experience: formData.details.yearsOfExperience || "",
+        role_level: formData.details.roleLevel || "",
         work_type: formData.workPref.workType || [], // Include work_type data
         employment_type: formData.workPref.employmentType, // Include employment_type data
-        salary_ranges: formData.workPref.salaryScale
-        || '', // Include salary_ranges data
+        salary_ranges: formData.workPref.salaryScale || "", // Include salary_ranges data
         job_locations: formData.locationPref.selectedLocations || [],
         job_roles: formData.details.selectedRoles || [],
       };
-      console.log("detail sent:", formDataToSend);
-  
+
+      console.log("Detail sent:", formDataToSend);
+
       // Send the data to the API
-      const response = await axios.post("https://pairlance.vercel.app/api/upload-candidate", formDataToSend, {
-        headers: {
-          'Content-Type': 'application/json'
+      const response = await axios.post(
+        "https://pairlance.vercel.app/api/upload-candidate",
+        formDataToSend,
+        {
+          headers: {
+            "Content-Type": "application/json",
+          },
         }
-      });
-  
+      );
+
       console.log("Form data submitted successfully!", response.data);
+      return true; // Indicate that the submission was successful
     } catch (error) {
       console.error("Error submitting form data", error);
-    }
-  };
-
-  // Function to move to the next step
-  const handleNext = (stepData: any) => {
-    console.log('Current Step Data:', stepData);
-    updateFormData(stepData, currentStep);
-    if (currentStep < totalSteps) {
-      setCurrentStep(currentStep + 1);
-    } else {
-      handleSubmit();
-      // On final step, submit all data
-      console.log('Final Form Data before submission:', formData);
-      
-    }
-  };
-
-  // Function to move to the previous step
-  const handleBack = () => {
-    if (currentStep > 1) {
-      setCurrentStep(currentStep - 1);
+      throw error; // Rethrow the error to handle it in handleNext
     }
   };
 
@@ -178,7 +193,9 @@ const MultiStepForm: React.FC = () => {
       case 1:
         return <UploadCVStep onNext={handleNext} />;
       case 2:
-        return <PersonalInformationStep onNext={handleNext} onBack={handleBack} />;
+        return (
+          <PersonalInformationStep onNext={handleNext} onBack={handleBack} />
+        );
       case 3:
         return <Pitch onNext={handleNext} onBack={handleBack} />;
       case 4:
@@ -188,14 +205,19 @@ const MultiStepForm: React.FC = () => {
       case 6:
         return <WorkPreferenceForm onNext={handleNext} onBack={handleBack} />;
       default:
-        return <PersonalInformationStep onNext={handleNext} onBack={handleBack} />;
+        return (
+          <PersonalInformationStep onNext={handleNext} onBack={handleBack} />
+        );
     }
   };
 
   return (
     <>
       <NavBar />
-      <div className="flex flex-col justify-center items-center" style={{ fontFamily: "Lato" }}>
+      <div
+        className="flex flex-col justify-center items-center"
+        style={{ fontFamily: "Lato" }}
+      >
         <div className="w-full">
           <HeroBanner
             backgroundImage="/src/assets/hero2.jpg"

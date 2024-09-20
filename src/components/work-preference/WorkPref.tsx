@@ -4,7 +4,7 @@ import { useNavigate } from "react-router-dom";
 
 interface WorkPreferenceProps {
   onBack?: () => void;
-  onNext: (stepData?: any) => void;
+  onNext: (stepData?: any) => Promise<boolean>; // Assume onNext returns a promise indicating success
 }
 
 const WorkPreferenceForm: React.FC<WorkPreferenceProps> = ({ onBack, onNext }) => {
@@ -12,6 +12,7 @@ const WorkPreferenceForm: React.FC<WorkPreferenceProps> = ({ onBack, onNext }) =
   const [employmentType, setEmploymentType] = useState<string[]>([]);
   const [salaryScale, setSalaryScale] = useState<string | undefined>(undefined);
   const [isFormValid, setIsFormValid] = useState(false);
+  const [isSubmitting, setIsSubmitting] = useState(false); // New state for managing submission
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -36,30 +37,42 @@ const WorkPreferenceForm: React.FC<WorkPreferenceProps> = ({ onBack, onNext }) =
     setSalaryScale(e.target.value);
   };
 
-  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    if (isFormValid) {
-  
-      // Prepare the form data in the correct structure
-      const formData = { 
-        workType, 
-        employmentType, 
-        salaryScale 
-      };
-  
-      console.log("Form submitted with the following data:", formData);
-      onNext(formData); // Pass data to parent
-      
-      message.success("Form submitted successfully!");
-  
-      // If needed, navigate to another page or trigger other actions here
-      navigate("/"); 
-    } else {
-      message.error("Please complete all required fields before submitting.");
-    }
-  };
-  
 
+    if (isFormValid) {
+        setIsSubmitting(true); // Disable submit button while submitting
+
+        // Ensure all state fields are up to date
+        const formData = {
+            workType,
+            employmentType,
+            salaryScale,
+        };
+
+        console.log("Form Data to be sent: ", formData); // Log data for debugging
+
+        try {
+            // Call the onNext function and wait for its success response
+            const isSuccessful = await onNext(formData);
+
+            if (isSuccessful) {
+                message.success("Form submitted successfully!");
+                navigate("/"); // Navigate only after successful submission
+            } else {
+                message.error("Failed to submit the form. Please try again.");
+            }
+        } catch (error) {
+            message.error("An error occurred during submission.");
+        } finally {
+            setIsSubmitting(false); // Re-enable the button after submission
+        }
+    } else {
+        message.error("Please complete all required fields before submitting.");
+    }
+};
+
+  
   const salaryOptions = [
     "50,000 - 100,000",
     "100,000 - 200,000",
@@ -206,14 +219,14 @@ const WorkPreferenceForm: React.FC<WorkPreferenceProps> = ({ onBack, onNext }) =
           </button>
           <button
             type="submit"
-            disabled={!isFormValid}
+            disabled={!isFormValid || isSubmitting}
             className={`text-[18px] p-[16px] rounded-[16px] h-[54px] w-[195px] leading-[21.6px] font-semibold ${
-              isFormValid
+              isFormValid && !isSubmitting
                 ? "bg-[#1E3A8A] text-white"
                 : "bg-[#B9C2DB] text-[#98A4C9]"
             }`}
           >
-            Submit
+            {isSubmitting ? "Submitting..." : "Submit"}
           </button>
         </div>
       </form>
