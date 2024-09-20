@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import axios from "axios";
 
 interface UploadCVProps {
-  onNext: (stepData?: any) => void;
+  onNext: (stepData?: string) => void;
 }
 
 const UploadCVStep: React.FC<UploadCVProps> = ({ onNext }) => {
