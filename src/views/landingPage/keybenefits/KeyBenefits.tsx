@@ -21,7 +21,7 @@ const KeyBenefits: React.FC = () => {
             </p>
           </div>
         </div>
-        <div className="flex justify-center text-gray-600 font-normal mb-12 lg:text-[18px] text-[14px] lg:text-center xl:w-[1086px] lg:w-[1016px] w-full mx-auto leading-[21.16px]">
+        <div className="flex justify-center text-gray-600 font-normal mb-12 lg:text-[18px] text-[14px] lg:text-center xl:w-[1086px] lg:w-[1016px w-full mx-auto leading-[21.16px]">
           <p className="">
             Maximize your potential with a platform designed for both recruiters
             and job seekers. Effortlessly find the right fit, saving time and
