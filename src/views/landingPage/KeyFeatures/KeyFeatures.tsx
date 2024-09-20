@@ -27,40 +27,40 @@ const KeyFeatures: React.FC = () => {
           </p>
         </div>
         <div className="flex flex-col lg:flex lg:flex-row justify-center gap-5 xl:w-[1240px] mx-auto md:grid md:grid-cols-2">
-          <div className="bg-[#E9EBF3] p-6 rounded-lg shadow-md md:w-[362px] xl:w-[389.33px] text-left">
+          <div className="bg-[#E9EBF3] p-6 rounded-lg shadow-md md:w-[362px xl:w-[389.33px] text-left">
             <div className="flex items-center mb-2 gap-1">
               <img src="/src/assets/keybenefits/star.svg" alt="star" />
               <h3 className="text-lg font-semibold text-gray-800">
                 Automatic Matching
               </h3>
             </div>
-            <p className="text-[#5F6774] lg:text-[16px] text-[14px] font-normal lg:leading-[19.2px] leading-[16.8px] md:w-[325px]">
+            <p className="text-[#5F6774] lg:text-[16px] text-[14px] font-normal lg:leading-[19.2px] leading-[16.8px] md:w-[325px">
               Save time with our smart algorithm that automatically matches you
               with the best candidates or jobs based on your preferences and
               requirements.
             </p>
           </div>
-          <div className="bg-[#E9EBF3] p-6 rounded-lg shadow-md md:w-[362px] xl:w-[389.33px] text-left">
+          <div className="bg-[#E9EBF3] p-6 rounded-lg shadow-md md:w-[362px xl:w-[389.33px] text-left">
             <div className="flex items-center mb-2 gap-1">
               <img src="/src/assets/keybenefits/star.svg" alt="star" />
               <h3 className="text-lg font-semibold text-gray-800">
                 Swipe Functionality
               </h3>
             </div>
-            <p className="text-[#5F6774] lg:text-[16px] text-[14px] font-normal lg:leading-[19.2px] leading-[16.8px] md:w-[325px]">
+            <p className="text-[#5F6774] lg:text-[16px] text-[14px] font-normal lg:leading-[19.2px] leading-[16.8px] md:w-[325px">
               Easily browse through potential candidates or job listings with
               our intuitive swipe feature, making your search quick and
               efficient.
             </p>
           </div>
-          <div className="bg-[#E9EBF3] p-6 rounded-lg shadow-md md:w-[362px] xl:w-[389.33px] text-left">
+          <div className="bg-[#E9EBF3] p-6 rounded-lg shadow-md md:w-[362px xl:w-[389.33px] text-left">
             <div className="flex items-center mb-2 gap-1">
               <img src="/src/assets/keybenefits/star.svg" alt="star" />
               <h3 className="text-lg font-semibold text-gray-800">
                 No Sign-Up Needed
               </h3>
             </div>
-            <p className="text-[#5F6774] lg:text-[16px] text-[14px] font-normal lg:leading-[19.2px] leading-[16.8px] md:w-[325px]">
+            <p className="text-[#5F6774] lg:text-[16px] text-[14px] font-normal lg:leading-[19.2px] leading-[16.8px] md:w-[325px">
               Start exploring job opportunities or finding top talent instantly,
               without the hassle of creating an account or logging in.
             </p>
