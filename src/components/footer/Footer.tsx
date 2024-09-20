@@ -6,16 +6,16 @@ const Footer: React.FC = () => {
       className="bg-[#0D183A] text-white py-8"
       style={{ fontFamily: "lato" }}
     >
-      <div className="container mx-auto lg:w-[90%] w-full flex flex-col-reverse md:flex-row justify-between lg:items-center px-4">
-        <div className="flex flex-col lg:items-center md:items-start">
-          <div className="mb-4 flex" style={{fontFamily:"Georgia"}}>
+      <div className="container mx-auto lg:w-[90%] w-full flex flex-col-reverse lg:flex-row justify-between lg:items-center px-4 gap-5 xl:gap-0">
+        <div className="flex flex-col lg:items-center md:items-start gap-5 xl:gap-0">
+          <div className="mb-4 flex items-center" style={{fontFamily:"Georgia"}}>
             <img
               src="/src/assets/footer/brandlogo.svg"
               alt="Brand logo"
               width={45}
               height={64}
             />
-            <h1 className="text-xl font-bold leading-[32.05px]">PairLance</h1>
+            <h1 className="text-xl font-bold leading-[32.05px] mt-2">PairLance</h1>
           </div>
           <div className="flex space-x-4">
             <img src="/src/assets/footer/facebook.svg" alt="" />
@@ -36,7 +36,7 @@ const Footer: React.FC = () => {
           <p className="text-[16px] leading-[19.2px] font-normal mt-2 text-[#FFFFFF]">support@pairlance.com</p>
         </div>
 
-        <div className="mt-8 md:mt-0">
+        <div className="mt-8 lg:mt-0 flex flex-col gap-5 xl:gap-0">
           <h2 className="text-[24px] font-bold leading-[30.17px]" style={{fontFamily:"Merriweather"}}>Subscribe To Our Newsletter</h2>
           <p className="text-[16px] mt-2 leading-[19px] font-normal text-[#E8E8E8] lg:w-[530.08px]">
             Stay ahead of the curve - subscribe to our newsletter for insights

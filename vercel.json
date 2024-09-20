@@ -1,0 +1,9 @@
+{
+  "version": 1,
+  "builds": [
+    { "src": "vite.config.ts", "use": "@vercel/static-build" }
+  ],
+  "rewrites": [
+    { "source": "/(.*)", "destination": "/" }
+  ]
+}

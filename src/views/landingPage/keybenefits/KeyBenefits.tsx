@@ -3,7 +3,7 @@ import React from "react";
 const KeyBenefits: React.FC = () => {
   return (
     <section
-      className="py-16 bg-white lg:text-center lg:w-[75% mx-auto px-5 lg:px-0"
+      className="py-16 bg-white lg:text-center xl:w-[75% mx-auto px-5 lg:px-0"
       style={{ fontFamily: "lato" }}
     >
       <div className="container mx-auto">
@@ -21,7 +21,7 @@ const KeyBenefits: React.FC = () => {
             </p>
           </div>
         </div>
-        <div className="flex justify-center text-gray-600 font-normal mb-12 lg:text-[18px] text-[14px] lg:text-center lg:w-[1086px] w-full mx-auto leading-[21.16px]">
+        <div className="flex justify-center text-gray-600 font-normal mb-12 lg:text-[18px] text-[14px] lg:text-center xl:w-[1086px] lg:w-[1016px] w-full mx-auto leading-[21.16px]">
           <p className="">
             Maximize your potential with a platform designed for both recruiters
             and job seekers. Effortlessly find the right fit, saving time and
@@ -29,7 +29,7 @@ const KeyBenefits: React.FC = () => {
           </p>
         </div>
         
-        <div className="flex flex-col lg:flex-row justify-between lg:w-[1077px] mx-auto">
+        <div className="flex flex-col lg:flex-row justify-between xl:w-[1077px] mx-auto">
           <div className="w-[50%  text-left mb-8">
             <h3 className="text-lg font-semibold text-gray-800 mb-4 leading-[30.17px]">
               For Recruiters

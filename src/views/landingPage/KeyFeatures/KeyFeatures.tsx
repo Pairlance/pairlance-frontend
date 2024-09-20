@@ -19,15 +19,15 @@ const KeyFeatures: React.FC = () => {
             </p>
           </div>
         </div>
-        <div className="flex justify-center text-gray-600 font-normal mb-12 lg:text-[18px] text-[14px] lg:text-center lg:w-[1086px] md:w-[362px] mx-auto leading-[21.16px]">
+        <div className="flex justify-center text-gray-600 font-normal mb-12 lg:text-[18px] text-[14px] lg:text-center xl:w-[1086px] lg:w-[1016px] md:w-[362px mx-auto leading-[21.16px]">
           <p>
             Explore the powerful features designed to enhance your job search
             and recruitment experience. Find the perfect match with our
             intuitive tools and easy-to-use platform.
           </p>
         </div>
-        <div className="flex flex-col lg:flex-row justify-center gap-5 lg:w-[1240px] mx-auto">
-          <div className="bg-[#E9EBF3] p-6 rounded-lg shadow-md md:w-[362px] lg:w-[389.33px] text-left">
+        <div className="flex flex-col lg:flex lg:flex-row justify-center gap-5 xl:w-[1240px] mx-auto md:grid md:grid-cols-2">
+          <div className="bg-[#E9EBF3] p-6 rounded-lg shadow-md md:w-[362px] xl:w-[389.33px] text-left">
             <div className="flex items-center mb-2 gap-1">
               <img src="/src/assets/keybenefits/star.svg" alt="star" />
               <h3 className="text-lg font-semibold text-gray-800">
@@ -40,7 +40,7 @@ const KeyFeatures: React.FC = () => {
               requirements.
             </p>
           </div>
-          <div className="bg-[#E9EBF3] p-6 rounded-lg shadow-md md:w-[362px] lg:w-[389.33px] text-left">
+          <div className="bg-[#E9EBF3] p-6 rounded-lg shadow-md md:w-[362px] xl:w-[389.33px] text-left">
             <div className="flex items-center mb-2 gap-1">
               <img src="/src/assets/keybenefits/star.svg" alt="star" />
               <h3 className="text-lg font-semibold text-gray-800">
@@ -53,7 +53,7 @@ const KeyFeatures: React.FC = () => {
               efficient.
             </p>
           </div>
-          <div className="bg-[#E9EBF3] p-6 rounded-lg shadow-md md:w-[362px] lg:w-[389.33px] text-left">
+          <div className="bg-[#E9EBF3] p-6 rounded-lg shadow-md md:w-[362px] xl:w-[389.33px] text-left">
             <div className="flex items-center mb-2 gap-1">
               <img src="/src/assets/keybenefits/star.svg" alt="star" />
               <h3 className="text-lg font-semibold text-gray-800">

@@ -1,3 +1,4 @@
+import grpup from "../../../assets/hero/group.svg"
 export const Hero: React.FC = () => {
   return (
     <div
@@ -72,8 +73,8 @@ export const Hero: React.FC = () => {
 
       <div className="flex flex-col mt-40">
         <div className="bg-[url('/src/assets/hero/background.svg')] bg-no-repeat bg-contain flex justify-center h-[254px]"></div>{" "}
-        <div className="flex justify-center h-[254px relative lg:bottom-[470px] bottom-[397px] -mb-[397px]   lg:-mb-[400px]">
-          <img src="/src/assets/hero/group.svg" alt="representatives" />
+        <div className="flex justify-center h-[254px relative xl:bottom-[470px]  lg:bottom-[527px] lg:-mb-[527px] md:bottom-[519px] md:-mb-[519px] bottom-[397px] -mb-[397px]   xl:-mb-[400px]">
+          <img src={grpup} alt="representatives" />
           {/* <img src="/src/assets/hero/receptionist.svg" alt="representatives" />
       <img src="/src/assets/hero/helmetwoman.svg" alt="representatives" />     <img src="/src/assets/her/designer.svg" alt="representatives" /> */}
         </div>{" "}

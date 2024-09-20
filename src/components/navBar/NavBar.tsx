@@ -33,7 +33,7 @@ const NavBar: React.FC = () => {
         </div>
 
         {/* Hamburger Icon for Mobile */}
-        <div className="md:hidden">
+        <div className="lg:hidden">
           <button onClick={toggleMenu} className="text-gray-800 focus:outline-none">
             <svg
               className="w-8 h-8"
@@ -52,7 +52,7 @@ const NavBar: React.FC = () => {
         </div>
 
         {/* Nav Links for Desktop */}
-        <div className="hidden md:flex items-center space-x-4 gap-4 font-normal text-[18px] leading-[21.6px]">
+        <div className="hidden lg:flex items-center space-x-4 gap-4 font-normal text-[18px] leading-[21.6px]">
           <a
             href="/"
             className={`${location.pathname === '/' ? 'text-blue-900' : 'text-gray-600'} hover:text-blue-700`}
@@ -74,7 +74,7 @@ const NavBar: React.FC = () => {
         </div>
 
         {/* Contact Us Button */}
-        <div className="hidden md:block">
+        <div className="hidden lg:block">
           <button className="p-[16px] w-[196px] h-[54px] bg-[#1E3A8A] text-white rounded-[16px] font-semibold text-[18px] leading-[21.6px]">
             Contact Us
           </button>
