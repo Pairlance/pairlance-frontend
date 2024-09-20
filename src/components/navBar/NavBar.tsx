@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import logo from "../../assets/navbar/logo.svg"
 
 const NavBar: React.FC = () => {
   const [isOpen, setIsOpen] = useState(false);
@@ -25,7 +26,8 @@ const NavBar: React.FC = () => {
         <div className="flex items-center space-x-2 text-[#374151]" style={{ fontFamily: 'Georgia' }}>
           {/* Logo */}
           <div className="flex items-center">
-            <img src="/src/assets/navbar/logo.svg" alt="Brand logo" width={45} height={64} />
+            {/* <img src="/src/assets/navbar/logo.svg" alt="Brand logo" width={45} height={64} /> */}
+            <img src={logo} alt="brand logo" width={45} height={64}/>
             <span className="text-[28.2px] font-bold leading-[32.05px]">PairLance</span>
           </div>
         </div>
