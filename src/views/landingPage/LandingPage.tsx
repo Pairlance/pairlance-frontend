@@ -1,5 +1,3 @@
-// import PersonalInformationStep from "../../components/PersonalInformationStep/PersonalInformationStep";
-// import UploadCVStep from "../../components/UploadCVStep/UploadCVStep";
 import Footer from "../../components/footer/Footer";
 import NavBar from "../../components/navBar/NavBar";
 import FAQSection from "./faqs/Faqs";
@@ -16,8 +14,6 @@ const LandingPage: React.FC = () => {
       <HowItWorks/>
       <KeyFeatures/>
       <KeyBenefits/>
-      {/* <UploadCVStep/> */}
-      {/* <PersonalInformationStep/> */}
       <FAQSection/>
       <Footer/>
     </div>

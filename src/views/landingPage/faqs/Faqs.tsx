@@ -27,19 +27,19 @@ const FAQSection: React.FC = () => {
 
   return (
     <section
-      className="text-center w-[80%] mx-auto my-28"
+      className="text-center lg:w-[80%] mx-auto lg:my-5 px-4 lg:px-0"
       style={{ fontFamily: "lato" }}
     >
       <div className="container mx-auto">
         <div className="text-2xl font-bold text-gray-800 mb-4">
-          <div className="flex items-center justify-center">
+          <div className="flex lg:items-center lg:justify-center">
             <div className="bg-blue-900 rounded-full w-[65px] h-[65px] flex items-center justify-center"></div>
-            <p className="relative right-6">
+            <p className="relative right-6 top-4">
               <span className="text-white text-[36px] font-bold">F</span>AQs
             </p>
           </div>
         </div>
-        <p className="text-gray-600 mb-12">
+        <p className="text-gray-600 mb-12 text-start lg:text-center">
           Find answers to the most common questions about using PairLance. Learn
           how to get the most out of your experience on our platform.
         </p>
@@ -55,17 +55,31 @@ const FAQSection: React.FC = () => {
             ))}
           </div>
         </div>
-        <p className="text-[#000000] font-normal mt-8  text-[18px] leading-[21.6px]">
-          If you have any further questions or need additional support, feel
-          free to reach out to us at <br />
-          <a
-            href="mailto:support@pairlance.com"
-            className="text-[#1E3A8A] font-semibold"
-          >
-            support@pairlance.com
-          </a>
-          . We're here to help!
-        </p>
+        <div className="flex justify-center items-center text-[#000000] font-normal mt-8  lg:text-[18px] text-[12px] lg:leading-[21.6px] leading-[14.4px] text-center lg:w-[902px] md:w-[362px] mx-auto">
+          <p className="hidden lg:block">
+            {" "}
+            If you have any further questions or need additional support, feel
+            free to reach out to us at <br />
+            <a
+              href="mailto:support@pairlance.com"
+              className="text-[#1E3A8A] font-semibold"
+            >
+              support@pairlance.com
+            </a>
+            . We're here to help!
+          </p>
+          <p className="block lg:hidden">
+            If you have any further questions or need additional support, feel
+            free to reach out to us at{" "}
+            <a
+              href="mailto:support@pairlance.com"
+              className="text-[#1E3A8A] font-semibold"
+            >
+              support@pairlance.com
+            </a>{" "}
+            We're here to <br /> help!
+          </p>
+        </div>
       </div>
     </section>
   );

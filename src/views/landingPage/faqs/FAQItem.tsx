@@ -16,9 +16,9 @@ const FAQItem: React.FC<FAQItemProps> = ({ question, answer }) => {
       onClick={() => setIsOpen(!isOpen)}
      style={{fontFamily:"lato"}}>
       <div className="flex justify-between items-center">
-        <h3 className="font-normal text-[#374151] text-center text-[18px] leading-[21.6px]">
+        <p className="font-normal text-[#374151] lg:text-center text-start lg:text-[18px] text-[14px] lg:leading-[21.6px] leading-[16.8px]">
           {question}
-        </h3>
+        </p>
         <span
           className={`transform transition-transform ${
             isOpen ? "rotate-45" : ""

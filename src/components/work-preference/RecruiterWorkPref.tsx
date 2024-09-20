@@ -2,12 +2,13 @@ import React, { useState, useEffect } from "react";
 import { message } from "antd";
 import { useNavigate } from "react-router-dom";
 
-interface WorkPreferenceProps {
+interface RecruiterWorkPreferenceProps {
   onBack?: () => void;
-  onNext: (stepData?: any) => void;
 }
 
-const WorkPreferenceForm: React.FC<WorkPreferenceProps> = ({ onBack, onNext }) => {
+const RecruiterWorkPreferenceForm: React.FC<RecruiterWorkPreferenceProps> = ({
+  onBack,
+}) => {
   const [workType, setWorkType] = useState<string[]>([]);
   const [employmentType, setEmploymentType] = useState<string[]>([]);
   const [salaryScale, setSalaryScale] = useState<string | undefined>(undefined);
@@ -20,15 +21,15 @@ const WorkPreferenceForm: React.FC<WorkPreferenceProps> = ({ onBack, onNext }) =
 
   const handleWorkTypeChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const value = e.target.value;
-    setWorkType(prev => 
-      prev.includes(value) ? prev.filter(item => item !== value) : [...prev, value]
+    setWorkType((prev) =>
+      prev.includes(value) ? prev.filter((item) => item !== value) : [...prev, value]
     );
   };
 
   const handleEmploymentTypeChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const value = e.target.value;
-    setEmploymentType(prev => 
-      prev.includes(value) ? prev.filter(item => item !== value) : [...prev, value]
+    setEmploymentType((prev) =>
+      prev.includes(value) ? prev.filter((item) => item !== value) : [...prev, value]
     );
   };
 
@@ -39,39 +40,24 @@ const WorkPreferenceForm: React.FC<WorkPreferenceProps> = ({ onBack, onNext }) =
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     if (isFormValid) {
-  
-      // Prepare the form data in the correct structure
-      const formData = { 
-        workType, 
-        employmentType, 
-        salaryScale 
-      };
-  
-      console.log("Form submitted with the following data:", formData);
-      onNext(formData); // Pass data to parent
-      
       message.success("Form submitted successfully!");
-  
-      // If needed, navigate to another page or trigger other actions here
-      navigate("/"); 
+      console.log("Form submitted with the following data:", {
+        workType,
+        employmentType,
+        salaryScale,
+      });
+      navigate("/matching");
     } else {
       message.error("Please complete all required fields before submitting.");
     }
   };
-  
 
   const salaryOptions = [
-    "50,000 - 100,000",
-    "100,000 - 200,000",
-    "200,000 - 300,000",
-    "300,000 - 400,000",
-    "400,000 - 500,000",
-    "500,000 - 600,000",
-    "600,000 - 700,000",
-    "700,000 - 800,000",
-    "800,000 - 900,000",
-    "900,000 - 1,000,000",
-    "1,000,000+"
+    "Below $40,000",
+    "$40,000 - $60,000",
+    "$60,000 - $80,000",
+    "$80,000 - $100,000",
+    "Above $100,000",
   ];
 
   return (
@@ -83,9 +69,9 @@ const WorkPreferenceForm: React.FC<WorkPreferenceProps> = ({ onBack, onNext }) =
         className="flex justify-center font-bold text-center text-[24px] leading-[30.17px] text-[#374151]"
         style={{ fontFamily: "Merriweather" }}
       >
-        <p>Work Preference</p>
+        <p>Work Specifications</p>
       </div>
-      <form className="flex flex-col gap-10 lg:w-[unset] w-[85%] mx-auto" onSubmit={handleSubmit}>
+      <form className="flex flex-col gap-10 w-[95%] mx-auto" onSubmit={handleSubmit}>
         {/* Work Type Section */}
         <div className="flex flex-col">
           <label className="text-[#5F6774] font-semibold leading-[19.2px] mb-2 text-[16px]">
@@ -115,12 +101,12 @@ const WorkPreferenceForm: React.FC<WorkPreferenceProps> = ({ onBack, onNext }) =
             <label className="flex gap-3 items-center">
               <input
                 type="checkbox"
-                value="On-Site"
-                checked={workType.includes("On-Site")}
+                value="Onsite"
+                checked={workType.includes("Onsite")}
                 onChange={handleWorkTypeChange}
                 className="text-gray-600"
               />
-              On-Site
+              Onsite
             </label>
           </div>
         </div>
@@ -187,7 +173,7 @@ const WorkPreferenceForm: React.FC<WorkPreferenceProps> = ({ onBack, onNext }) =
             <option value="" disabled>
               Select Salary Scale
             </option>
-            {salaryOptions.map(option => (
+            {salaryOptions.map((option) => (
               <option key={option} value={option}>
                 {option}
               </option>
@@ -197,7 +183,7 @@ const WorkPreferenceForm: React.FC<WorkPreferenceProps> = ({ onBack, onNext }) =
 
         {/* Buttons Section */}
         <div className="flex justify-between gap-5">
-          <button 
+          <button
             type="button"
             onClick={onBack}
             className="border border-[#1E3A8A] text-[18px] p-[16px] rounded-[16px] h-[54px] w-[195px] leading-[21.6px] font-semibold"
@@ -213,7 +199,7 @@ const WorkPreferenceForm: React.FC<WorkPreferenceProps> = ({ onBack, onNext }) =
                 : "bg-[#B9C2DB] text-[#98A4C9]"
             }`}
           >
-            Submit
+            Save and Proceed
           </button>
         </div>
       </form>
@@ -221,4 +207,4 @@ const WorkPreferenceForm: React.FC<WorkPreferenceProps> = ({ onBack, onNext }) =
   );
 };
 
-export default WorkPreferenceForm;
+export default RecruiterWorkPreferenceForm;

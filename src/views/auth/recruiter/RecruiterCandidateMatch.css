@@ -1,0 +1,34 @@
+/* Style for the custom carousel arrows */
+.ant-carousel .slick-prev,
+.ant-carousel .slick-next {
+  /* background-color: red; */
+  /* border: 1px solid #1e3a8a; */
+  border-radius: 50%;
+  display: flex !important;
+  align-items: center;
+  justify-content: center;
+  padding: 10px;
+  color: #1e3a8a;
+  /* bottom: 20px; */
+}
+
+
+.slick-slider button {
+  position: relative;
+  /* left: 80px !important; */
+  /* width: 50% !important; */
+}
+.slick-active {
+  display: hidden !important;
+}
+
+.ant-carousel .slick-prev {
+  margin-right: 10rem !important;
+  /* display: flex !important;
+  padding-left: 10px !important; */
+}
+
+/* .ant-carousel .slick-next{
+  margin-left: 9rem;
+  
+}  */
