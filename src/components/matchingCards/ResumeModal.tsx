@@ -11,7 +11,7 @@ const ResumeModal: React.FC<ResumeModalProps> = ({ isOpen, toggleModal }) => {
     <Modal
       title=""
       width="44%"
-      visible={isOpen}
+      open={isOpen}
       onCancel={toggleModal}
       footer={null}
       // width={600}

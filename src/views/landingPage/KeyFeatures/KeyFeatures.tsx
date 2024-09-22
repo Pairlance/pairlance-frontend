@@ -1,4 +1,5 @@
 import React from "react";
+import { star } from "../../../assets";
 
 const KeyFeatures: React.FC = () => {
   return (
@@ -29,7 +30,7 @@ const KeyFeatures: React.FC = () => {
         <div className="flex flex-col lg:flex lg:flex-row justify-center gap-5 xl:w-[1240px] mx-auto md:grid md:grid-cols-2">
           <div className="bg-[#E9EBF3] p-6 rounded-lg shadow-md md:w-[362px xl:w-[389.33px] text-left">
             <div className="flex items-center mb-2 gap-1">
-              <img src="/src/assets/keybenefits/star.svg" alt="star" />
+              <img src={star} alt="star" />
               <h3 className="text-lg font-semibold text-gray-800">
                 Automatic Matching
               </h3>
@@ -42,7 +43,7 @@ const KeyFeatures: React.FC = () => {
           </div>
           <div className="bg-[#E9EBF3] p-6 rounded-lg shadow-md md:w-[362px xl:w-[389.33px] text-left">
             <div className="flex items-center mb-2 gap-1">
-              <img src="/src/assets/keybenefits/star.svg" alt="star" />
+            <img src={star} alt="star" />
               <h3 className="text-lg font-semibold text-gray-800">
                 Swipe Functionality
               </h3>
@@ -55,7 +56,7 @@ const KeyFeatures: React.FC = () => {
           </div>
           <div className="bg-[#E9EBF3] p-6 rounded-lg shadow-md md:w-[362px xl:w-[389.33px] text-left">
             <div className="flex items-center mb-2 gap-1">
-              <img src="/src/assets/keybenefits/star.svg" alt="star" />
+            <img src={star} alt="star" />
               <h3 className="text-lg font-semibold text-gray-800">
                 No Sign-Up Needed
               </h3>

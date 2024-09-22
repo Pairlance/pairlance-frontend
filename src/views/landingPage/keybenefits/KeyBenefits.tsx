@@ -1,4 +1,5 @@
 import React from "react";
+import { primecheckcircle } from "../../../assets";
 
 const KeyBenefits: React.FC = () => {
   return (
@@ -38,7 +39,7 @@ const KeyBenefits: React.FC = () => {
               <div className="flex flex-col gap-2">
                 <div className="flex items-center gap-1">
                   <img
-                    src="src/assets/keybenefits/primecheckcircle.svg"
+                    src={primecheckcircle}
                     alt="primecheckcircle"
                     width={24}
                     height={24}
@@ -54,7 +55,7 @@ const KeyBenefits: React.FC = () => {
               <div className="flex flex-col gap-2">
                 <div className="flex gap-1 items-center">
                   <img
-                    src="src/assets/keybenefits/primecheckcircle.svg"
+                    src={primecheckcircle}
                     alt="primecheckcircle"
                     width={24}
                     height={24}
@@ -70,7 +71,7 @@ const KeyBenefits: React.FC = () => {
               <div className="flex flex-col gap-2">
                 <div className="flex gap-1 items-center">
                   <img
-                    src="src/assets/keybenefits/primecheckcircle.svg"
+                    src={primecheckcircle}
                     alt="primecheckcircle"
                     width={24}
                     height={24}
@@ -93,7 +94,7 @@ const KeyBenefits: React.FC = () => {
               <div className="flex flex-col gap-2">
                 <div className="flex items-center">
                   <img
-                    src="src/assets/keybenefits/primecheckcircle.svg"
+                    src={primecheckcircle}
                     alt="primecheckcircle"
                     width={24}
                     height={24}
@@ -110,7 +111,7 @@ const KeyBenefits: React.FC = () => {
               <div className="flex flex-col gap-2">
                 <div className="flex gap-1 items-center">
                   <img
-                    src="src/assets/keybenefits/primecheckcircle.svg"
+                    src={primecheckcircle}
                     alt="primecheckcircle"
                     width={24}
                     height={24}
@@ -127,7 +128,7 @@ const KeyBenefits: React.FC = () => {
               <div className="flex flex-col gap-2">
                 <div className="flex gap-1">
                   <img
-                    src="src/assets/keybenefits/primecheckcircle.svg"
+                    src={primecheckcircle}
                     alt="primecheckcircle"
                     width={24}
                     height={24}

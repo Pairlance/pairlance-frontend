@@ -1,4 +1,6 @@
+import { branlogo, facebook, instagram, linkedin, twitter } from "../../assets";
 // import React from "react";
+twitter
 
 const Footer: React.FC = () => {
   return (
@@ -10,7 +12,7 @@ const Footer: React.FC = () => {
         <div className="flex flex-col lg:items-center md:items-start gap-5 xl:gap-0">
           <div className="mb-4 flex items-center" style={{fontFamily:"Georgia"}}>
             <img
-              src="/src/assets/footer/brandlogo.svg"
+              src={branlogo}
               alt="Brand logo"
               width={45}
               height={64}
@@ -18,15 +20,15 @@ const Footer: React.FC = () => {
             <h1 className="text-xl font-bold leading-[32.05px] mt-2">PairLance</h1>
           </div>
           <div className="flex space-x-4">
-            <img src="/src/assets/footer/facebook.svg" alt="" />
+            <img src={facebook} alt="" />
             <a href="#" className="text-white">
-              <img src="/src/assets/footer/instagram.svg" alt="" />
+              <img src={instagram} alt="" />
             </a>
             <a href="#" className="text-white">
-              <img src="/src/assets/footer/twitter.svg" alt="" />
+              <img src={twitter} alt="twitter-icon" />
             </a>
             <a href="#" className="text-white">
-              <img src="/src/assets/footer/linkedin.svg" alt="" />
+              <img src={linkedin} alt="linked icon" />
             </a>
           </div>
         </div>

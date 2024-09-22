@@ -20,8 +20,9 @@ const JobLocationPref: React.FC<DetailsProps> = ({ onNext, onBack }) => {
 
   useEffect(() => {
     const fetchLocations = async () => {
+      const apiUrl = import.meta.env.VITE_BASE_URL;
       try {
-        const response = await axios.get("https://pairlance.vercel.app/api/locations");
+        const response = await axios.get(`${apiUrl}/api/locations`);
         setLocations(response.data.locations);
         setLoading(false);
       } catch (error) {

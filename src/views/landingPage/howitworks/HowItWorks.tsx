@@ -2,6 +2,7 @@ import groups from "../../../assets/howitworks/groups.svg"
 import uploadicon from "../../../assets/howitworks/uploadicon.svg"
 import posticon from "../../../assets/howitworks/posticon.svg"
 import swipicon from "../../../assets/howitworks/swipeicon.svg"
+import { howitworks } from "../../../assets";
 export const HowItWorks: React.FC = () => {
   return (
     <>
@@ -14,7 +15,7 @@ export const HowItWorks: React.FC = () => {
             className="flex lg:justify-center lg:items-center font-bold text-[36px] pl-4 lg:pl-0"
             style={{ fontFamily: "Merriweather" }}
           >
-            <img src="/src/assets/howitworks/Ellipse.svg" alt="" />
+            <img src={howitworks} alt="" />
             <p className="relative right-8 top-4 text-[#374151] text-[36px]"  style={{ fontFamily: "Merriweather" }}>
               <span className="text-white">H</span>ow It Works
             </p>
