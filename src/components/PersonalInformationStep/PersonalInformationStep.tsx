@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
+import { profileholder } from "../../assets";
 
 interface PersonalInformationStepProps {
   onNext: (stepData?: any) => void;
@@ -101,7 +102,7 @@ const PersonalInformationStep: React.FC<PersonalInformationStepProps> = ({ onNex
         <div className="flex items-center justify-center gap-5">
           <div>
             <img
-              src={photo ? URL.createObjectURL(photo) : "/src/assets/profileholder.svg"}
+              src={photo ? URL.createObjectURL(photo) : profileholder}
               alt="Profile"
               className="w-[120px] h-[120px] object-cover rounded-full"
             />

@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import axios from "axios";
+import { divider, uploadicon } from "../../assets";
 
 interface UploadCVProps {
   onNext: (stepData?: string) => void;
@@ -95,7 +96,7 @@ const UploadCVStep: React.FC<UploadCVProps> = ({ onNext }) => {
               {!selectedFile && (
                 <>
                   <div className="">
-                    <img src="/src/assets/file.svg" alt="File Upload Icon" />
+                    <img src={uploadicon} alt="File Upload Icon" />
                   </div>
                   <div className="flex flex-col font-normal">
                     <p className="text-[18px] leading-[21.6px] w-[240px] text-[#5F6774]">
@@ -104,9 +105,9 @@ const UploadCVStep: React.FC<UploadCVProps> = ({ onNext }) => {
                     <p className="text-[14px] leading-[16.8px] text-[#98A2B3]">PDF or DOCX</p>
                   </div>
                   <div className="flex justify-center items-center gap-2 text-[#98A2B3] text-[14px]">
-                    <img src="/src/assets/divider.svg" alt="divider" width={176} height={1}  className="hidden lg:block"/>
+                    <img src={divider} alt="divider" width={176} height={1}  className="hidden lg:block"/>
                     <span className="leading-[16.8px]">OR</span> 
-                    <img src="/src/assets/divider.svg" alt="divider" width={176} height={1}  className="hidden lg:block"/>
+                    <img src={divider} alt="divider" width={176} height={1}  className="hidden lg:block"/>
                   </div>
                   <input type="file" accept=".pdf,.docx" className="hidden" id="fileInput" onChange={handleFileChange} />
                   <label
