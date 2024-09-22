@@ -142,6 +142,7 @@ const MultiStepForm: React.FC = () => {
 
   // Function to handle submission of all data
   const handleSubmit = async () => {
+    const apiUrl = import.meta.env.VITE_BASE_URL;
     try {
       const formDataToSend = {
         cv_url: formData.cv, // Handle file data properly
@@ -164,7 +165,7 @@ const MultiStepForm: React.FC = () => {
 
       // Send the data to the API
       const response = await axios.post(
-        "https://pairlance.vercel.app/api/upload-candidate",
+        `${apiUrl}/api/upload-candidate`,
         formDataToSend,
         {
           headers: {

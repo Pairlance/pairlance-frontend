@@ -1,16 +1,21 @@
 import React, { useState, useEffect } from "react";
 import { Modal, message } from "antd";
 import { useNavigate } from 'react-router-dom';
+import { Candidate } from "../../types";
 
-type Candidate = {
-  id: number;
-  name: string;
-  role: string;
-  imageUrl: string;
-};
+
+
+// type Candidate = {
+//   full_name: string;
+//   image_url: string | undefined;
+//   id: number;
+//   name: string;
+//   role: string;
+//   imageUrl: string;
+// };
 
 type ShortlistModalProps = {
-  isVisible: boolean;
+  isOpen: boolean;
   toggleModal: () => void;
   shortlist: Candidate[];
   onDeleteCandidate: (candidateId: number) => void;
@@ -18,7 +23,7 @@ type ShortlistModalProps = {
 };
 
 const ShortlistModal: React.FC<ShortlistModalProps> = ({
-  isVisible,
+  isOpen,
   toggleModal,
   shortlist,
   onDeleteCandidate,
@@ -87,7 +92,7 @@ const ShortlistModal: React.FC<ShortlistModalProps> = ({
 
   return (
     <Modal
-      visible={isVisible}
+      open={isOpen}
       onCancel={toggleModal}
       footer={null}
       className="max-w-lg mx-auto rounded-lg overflow-hidden flex flex-col shortlist"
@@ -113,9 +118,9 @@ const ShortlistModal: React.FC<ShortlistModalProps> = ({
       {/* Shortlist Items */}
       <div className="px-4 pb-4 max-h-72 overflow-y-auto flex flex-col gap-10">
         {shortlist.length > 0 ? (
-          shortlist.map((candidate) => (
+          shortlist.map((candidate, index) => (
             <div
-              key={candidate.id}
+            key={index} 
               className="flex items-center justify-between py-2 border-b"
             >
               <div className="flex items-center gap-2">
@@ -129,14 +134,14 @@ const ShortlistModal: React.FC<ShortlistModalProps> = ({
                 </div>
                 <img
                   className="w-10 h-10 rounded-full"
-                  src={candidate.imageUrl}
+                  src={candidate.image_url}
                   alt="Profile"
                 />
                 <div className="ml-4">
                   <h3 className="text-sm font-medium text-gray-700">
-                    {candidate.name}
+                    {candidate.full_name}
                   </h3>
-                  <p className="text-xs text-gray-500">{candidate.role}</p>
+                  <p className="text-xs text-gray-500">{candidate.job_roles.join(", ")}</p>
                 </div>
               </div>
               <div className="flex items-center">
@@ -155,7 +160,7 @@ const ShortlistModal: React.FC<ShortlistModalProps> = ({
       </div>
 
       {/* Submit Button */}
-      <div className="p-4 border-t justify-end">
+      <div className="p-4  justify-end">
         <div className="flex justify-end">
           <button
             onClick={handleSubmit}
