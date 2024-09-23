@@ -149,6 +149,7 @@ const PersonalInformationStep: React.FC<PersonalInformationStepProps> = ({ onNex
                 type="tel"
                 className="p-[16px] border border-[#D0D2D6] rounded-[16px] outline-none h-[50px]"
                 placeholder="0123456789"
+                required
                 value={phoneNumber}
                 onChange={(e) => {
                   setPhoneNumber(e.target.value);
@@ -161,11 +162,13 @@ const PersonalInformationStep: React.FC<PersonalInformationStepProps> = ({ onNex
           <div className="flex flex-col">
             <label className="text-gray-600 mb-1">Email Address</label>
             <input
+            id="email"
               type="email"
               className="p-[16px] border border-[#D0D2D6] rounded-[16px] outline-none h-[50px]"
               placeholder="jane@example.com"
               value={email}
               onChange={(e) => setEmail(e.target.value)}
+              required
             />
           </div>
           <div className="flex justify-between gap-5">

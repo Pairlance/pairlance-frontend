@@ -19,8 +19,9 @@ const Selection: React.FC<SelectionProps> = ({ selectedRoles, onChange }) => {
 
   useEffect(() => {
     const fetchRoles = async () => {
+      const apiUrl = import.meta.env.VITE_BASE_URL;
       try {
-        const response = await axios.get('https://pairlance.vercel.app/api/roles');
+        const response = await axios.get(`${apiUrl}/api/roles`);
         const roles = response.data.roles;
         const fetchedOptions = roles.map((role: string) => ({ value: role }));
         setOptions(fetchedOptions);
