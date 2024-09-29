@@ -23,7 +23,7 @@ const StepProgress: React.FC<StepProgressProps> = ({
 }) => {
   return (
     <div className="flex flex-col gap-3 mt-6">
-      <div className="text-[18px] leading-[21.6px] font-normal text-[#374151]">
+      <div className="text-[18px] leading-[21.6px] font-normal text-[#374151] flex justify-center">
         <p>
           Step {currentStep} of {totalSteps}
         </p>

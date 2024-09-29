@@ -50,7 +50,7 @@ const WorkPreferenceForm: React.FC<WorkPreferenceProps> = ({ onBack, onNext }) =
             salaryScale,
         };
 
-        console.log("Form Data to be sent: ", formData); // Log data for debugging
+        // console.log("Form Data to be sent: ", formData); // Log data for debugging
 
         try {
             // Call the onNext function and wait for its success response
@@ -213,7 +213,7 @@ const WorkPreferenceForm: React.FC<WorkPreferenceProps> = ({ onBack, onNext }) =
         </div>
 
         {/* Buttons Section */}
-        <div className="flex justify-between gap-5">
+        <div className="flex justify-center gap-5">
           <button 
             type="button"
             onClick={onBack}

@@ -1,13 +1,6 @@
 import React, { useState } from "react";
-import { Modal, Button } from "antd";
-import {
-  divider,
-  eyeoff,
-  pdficon,
-  trash,
-  uploadicon,
-  uploadstate,
-} from "../../assets";
+import { Modal } from "antd";
+import { divider, eyeoff, pdficon, trash, uploadicon, uploadstate } from "../../assets";
 
 interface UploadCVProps {
   onNext: (fileData?: File) => void;
@@ -27,7 +20,7 @@ const UploadCVStep: React.FC<UploadCVProps> = ({ onNext }) => {
     if (isValidFileType(file)) {
       handleFileSelection(file);
     } else {
-      alert("Please upload a PDF or DOCX file.");
+      alert("Please upload a PDF file.");
     }
   };
 
@@ -36,7 +29,7 @@ const UploadCVStep: React.FC<UploadCVProps> = ({ onNext }) => {
     if (file && isValidFileType(file)) {
       handleFileSelection(file);
     } else {
-      alert("Please upload a PDF or DOCX file.");
+      alert("Please upload a PDF file.");
     }
   };
 
@@ -44,13 +37,9 @@ const UploadCVStep: React.FC<UploadCVProps> = ({ onNext }) => {
     event.preventDefault();
   };
 
+  // Only allow PDF files
   const isValidFileType = (file: File | undefined): file is File => {
-    return (
-      file !== undefined &&
-      (file.type === "application/pdf" ||
-        file.type ===
-          "application/vnd.openxmlformats-officedocument.wordprocessingml.document")
-    );
+    return file !== undefined && file.type === "application/pdf";
   };
 
   const handleFileSelection = (file: File) => {
@@ -74,7 +63,7 @@ const UploadCVStep: React.FC<UploadCVProps> = ({ onNext }) => {
 
   const handleNext = () => {
     if (isUploadSuccessful && selectedFile) {
-      console.log("Submitting file:", selectedFile);
+      // console.log("Submitting file:", selectedFile);
       onNext(selectedFile);
     }
   };
@@ -130,7 +119,7 @@ const UploadCVStep: React.FC<UploadCVProps> = ({ onNext }) => {
                       Drag and drop to upload a file
                     </p>
                     <p className="text-[14px] leading-[16.8px] text-[#98A2B3]">
-                      PDF or DOCX
+                      Only PDF files are allowed
                     </p>
                   </div>
                   <div className="flex justify-center items-center gap-2 text-[#98A2B3] text-[14px]">
@@ -152,7 +141,7 @@ const UploadCVStep: React.FC<UploadCVProps> = ({ onNext }) => {
                   </div>
                   <input
                     type="file"
-                    accept=".pdf,.docx"
+                    accept=".pdf"
                     className="hidden"
                     id="fileInput"
                     onChange={handleFileChange}
@@ -184,10 +173,10 @@ const UploadCVStep: React.FC<UploadCVProps> = ({ onNext }) => {
                     {selectedFile.name}
                   </p>
                   <div className="flex justify-center items-center gap-10 my-6">
-                    <Button
+                    <button
                       onClick={handleDelete}
                       className="flex flex-col items-center text-[#5F6774] text-[12px] leading-[14.4px] font-normal"
-                      type="text"
+                      title="click to remove file"
                     >
                       <img
                         src={trash}
@@ -196,15 +185,15 @@ const UploadCVStep: React.FC<UploadCVProps> = ({ onNext }) => {
                         height={24}
                       />
                       <span>Delete Document</span>
-                    </Button>
-                    <Button
+                    </button>
+                    <button
                       onClick={handlePreview}
                       className="flex flex-col items-center text-[#5F6774] text-[12px] leading-[14.4px] font-normal"
-                      type="text"
+                      title="click to preview the file"
                     >
                       <img src={eyeoff} alt="eyeoff" width={24} height={24} />
                       <span>Preview Document</span>
-                    </Button>
+                    </button>
                   </div>
                 </div>
               )}
@@ -246,20 +235,18 @@ const UploadCVStep: React.FC<UploadCVProps> = ({ onNext }) => {
       </div>
 
       <Modal
-        open={modalVisible}
-        onCancel={closeModal}
-        footer={null}
-        // width={800}
-        className="w-[50%]"
-      >
-        <iframe
-          src={`${fileURL}#toolbar=0`}
-          width="100%"
-          height="500px"
-          // frameBorder="0"
-          style={{ border: "none" }}
-        />
-      </Modal>
+  open={modalVisible}
+  onCancel={closeModal}
+  footer={null}
+  className="w-[50%]" // Adjusts the width using Tailwind
+>
+  <iframe
+    src={`${fileURL}#toolbar=0`} // Embed the file URL and hide the toolbar
+    width="100%"
+    height="500px"
+    style={{ border: "none" }} // No border on the iframe
+  />
+</Modal>
     </>
   );
 };
