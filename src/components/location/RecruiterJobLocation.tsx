@@ -24,8 +24,9 @@ const RecruiterJobLocation: React.FC<RecruiterJobLocationProps> = ({
 
   useEffect(() => {
     const fetchLocations = async () => {
+      const apiUrl = import.meta.env.VITE_BASE_URL;
       try {
-        const response = await axios.get("https://pairlance.vercel.app/api/locations");
+        const response = await axios.get(`${apiUrl}/api/locations`);
         setLocations(response.data.locations);
         setLoading(false);
       } catch (error) {
@@ -38,11 +39,11 @@ const RecruiterJobLocation: React.FC<RecruiterJobLocationProps> = ({
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     if (isFormValid) {
-      console.log("Form submitted with the following data:", {
-        selectedLocations,
-        gender,
-      });
-      await onNext({ selectedLocations, gender }); // Pass data to onNext
+      // console.log("Form submitted with the following data:", {
+      //   selectedLocations,
+      //   gender,
+      // });
+      await onNext({ selectedLocations, gender }); 
     }
   };
 
@@ -60,8 +61,8 @@ const RecruiterJobLocation: React.FC<RecruiterJobLocationProps> = ({
       <div className="flex justify-center font-bold text-center text-[24px] leading-[30.17px] text-[#374151]" style={{ fontFamily: "Merriweather" }}>
         <p>Gender & Location Preferences</p>
       </div>
-      <form className="flex flex-col gap-10 w-[95%] lg:w-[unset] mx-auto" onSubmit={handleSubmit}>
-        <div className="flex flex-col">
+      <form className="flex flex-col gap-6 w-[90%] xl:w-[55%] lg:w-[unset] mx-auto" onSubmit={handleSubmit}>
+        <div className="flex flex-col gap-2">
           <label className="text-[#5F6774] font-semibold leading-[19.2px]">Job Location(s)</label>
           <Space style={{ width: "100%" }} direction="vertical">
             <Select
@@ -75,7 +76,7 @@ const RecruiterJobLocation: React.FC<RecruiterJobLocationProps> = ({
             />
           </Space>
         </div>
-        <div className="flex flex-col w-full">
+        <div className="flex flex-col w-full gap-2">
           <label className="text-[#5F6774] font-semibold leading-[19.2px] mb-1">Gender</label>
           <select
             className="p-[16px] border border-[#D0D2D6] rounded-[16px] outline-none"
@@ -88,7 +89,7 @@ const RecruiterJobLocation: React.FC<RecruiterJobLocationProps> = ({
           </select>
         </div>
 
-        <div className="flex justify-between gap-5">
+        <div className="flex justify-center gap-5">
           <button type="button" onClick={onBack} className="border border-[#1E3A8A] text-[18px] p-[16px] rounded-[16px] h-[54px] w-[195px] leading-[21.6px] font-semibold">
             Back
           </button>

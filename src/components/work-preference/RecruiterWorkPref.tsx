@@ -19,6 +19,7 @@ const RecruiterWorkPreferenceForm: React.FC<RecruiterWorkPreferenceProps> = ({
   const [employmentType, setEmploymentType] = useState<string[]>([]);
   const [salaryScale, setSalaryScale] = useState<string | undefined>(undefined);
   const [isFormValid, setIsFormValid] = useState(false);
+  const [isSubmitting, setIsSubmitting] = useState(false);
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -53,6 +54,7 @@ const RecruiterWorkPreferenceForm: React.FC<RecruiterWorkPreferenceProps> = ({
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+    setIsSubmitting(true);
     if (isFormValid) {
       try {
         const data = { workType, employmentType, salaryScale };
@@ -61,13 +63,12 @@ const RecruiterWorkPreferenceForm: React.FC<RecruiterWorkPreferenceProps> = ({
 
           if (response) {
             message.success("Form submitted successfully!");
-
-            // Adding a small delay to ensure the success message is visible before navigation
             setTimeout(() => {
               navigate("/matching", { state: { candidates: response } });
-            }, 1000); // Delay of 1 second
+            }, 1000);
           }
         }
+        setIsSubmitting(false);
       } catch (error) {
         message.error("Failed to submit the form. Please try again.");
       }
@@ -92,7 +93,7 @@ const RecruiterWorkPreferenceForm: React.FC<RecruiterWorkPreferenceProps> = ({
 
   return (
     <div
-      className="flex flex-col items-center justify-center rounded-lg lg:w-[700px] h-[726px] gap-10 lg:border border-[#D0D2D6]"
+      className="flex flex-col items-center justify-center rounded-lg lg:w-[700px] lg:h-[726px] gap-10 lg:border border-[#D0D2D6]"
       style={{ fontFamily: "Lato" }}
     >
       <div
@@ -224,16 +225,16 @@ const RecruiterWorkPreferenceForm: React.FC<RecruiterWorkPreferenceProps> = ({
             Back
           </button>
           <button
-            type="submit"
-            disabled={!isFormValid}
-            className={`text-[18px] p-[16px] rounded-[16px] h-[54px] w-[195px] leading-[21.6px] font-semibold ${
-              isFormValid
-                ? "bg-[#1E3A8A] text-white"
-                : "bg-[#B9C2DB] text-[#98A4C9]"
-            }`}
-          >
-            Save and Proceed
-          </button>
+        type="submit"
+        disabled={!isFormValid || isSubmitting}
+        className={`text-[18px] p-[16px] rounded-[16px] h-[54px] w-[195px] leading-[21.6px] font-semibold ${
+          isFormValid
+            ? "bg-[#1E3A8A] text-white"
+            : "bg-[#B9C2DB] text-[#98A4C9]"
+        }`}
+      >
+        {isSubmitting ? "Saving..." : "Save and Proceed"}
+      </button>
         </div>
       </form>
     </div>

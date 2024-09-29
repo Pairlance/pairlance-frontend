@@ -14,6 +14,9 @@ importers:
       axios:
         specifier: ^1.7.7
         version: 1.7.7
+      pdf-preview:
+        specifier: ^0.9.8
+        version: 0.9.8
       react:
         specifier: ^18.3.1
         version: 18.3.1
@@ -654,6 +657,9 @@ packages:
     peerDependencies:
       vite: ^4.2.0 || ^5.0.0
 
+  '@vue/compiler-sfc@2.7.16':
+    resolution: {integrity: sha512-KWhJ9k5nXuNtygPU7+t1rX6baZeqOYLEforUPjgNDBnLicfHCoi48H87Q8XyLZOrNNsmhuwKqtpDQWjEFe6Ekg==}
+
   acorn-jsx@5.3.2:
     resolution: {integrity: sha512-rq9s+JNhf0IChjtDXxllJ7g41oZk5SlXtp0LHwyA5cejwn7vKmKp4pPri6YEePv2PU65sAsegbXtIinmDFDXgQ==}
     peerDependencies:
@@ -839,6 +845,10 @@ packages:
 
   dlv@1.1.3:
     resolution: {integrity: sha512-+HlytyjlPKnIG8XuRG8WvmBP8xs8P71y+SKKS6ZXWoEgLuePxtDoUEiH7WkdePWrQ5JBpE6aoVqfZfJUQkjXwA==}
+
+  dommatrix@1.0.3:
+    resolution: {integrity: sha512-l32Xp/TLgWb8ReqbVJAFIvXmY7go4nTxxlWiAFyhoQw9RKEOHBZNnyGvJWqDVSPmq3Y9HlM4npqF/T6VMOXhww==}
+    deprecated: dommatrix is no longer maintained. Please use @thednp/dommatrix.
 
   eastasianwidth@0.2.0:
     resolution: {integrity: sha512-I88TYZWc9XiYHRQ4/3c5rjjfgkjhLyW2luGIheGERbNQ6OY7yTybanSpDXZa8y7VUP9YmDcYa+eyq4ca7iLqWA==}
@@ -1236,6 +1246,17 @@ packages:
     resolution: {integrity: sha512-Xa4Nw17FS9ApQFJ9umLiJS4orGjm7ZzwUrwamcGQuHSzDyth9boKDaycYdDcZDuqYATXw4HFXgaqWTctW/v1HA==}
     engines: {node: '>=16 || 14 >=14.18'}
 
+  pdf-preview@0.9.8:
+    resolution: {integrity: sha512-HF3cGvph5VaYJZoNNTDCl6vqWiTllr7oO8IGudVih1N/chlcYZoc6NbeaScSwo4ErR75EE6D7BUfDpUuGGeQBw==}
+
+  pdfjs-dist@2.16.105:
+    resolution: {integrity: sha512-J4dn41spsAwUxCpEoVf6GVoz908IAA3mYiLmNxg8J9kfRXc2jxpbUepcP0ocp0alVNLFthTAM8DZ1RaHh8sU0A==}
+    peerDependencies:
+      worker-loader: ^3.0.8
+    peerDependenciesMeta:
+      worker-loader:
+        optional: true
+
   picocolors@1.0.1:
     resolution: {integrity: sha512-anP1Z8qwhkbmu7MFP5iTt+wQKXgwzf7zTyGlcdzabySa9vd0Xt392U0rVmz9poOaBj0uHJKyyo9/upk0HrEQew==}
 
@@ -1295,6 +1316,11 @@ packages:
   prelude-ls@1.2.1:
     resolution: {integrity: sha512-vkcDPrRZo1QZLbn5RLGPpg/WmIQ65qoWWhcGKf/b5eplkkarX0m9z8ppCat4mlOqUsWpyNuYgO3VRyrYHSzX5g==}
     engines: {node: '>= 0.8.0'}
+
+  prettier@2.8.8:
+    resolution: {integrity: sha512-tdN8qQGvNjw4CHbY+XXk0JgCXn9QiF21a55rBe5LJAU+kDyC4WQn4+awm2Xfk2lQMk5fKup9XgzTZtGkjBdP9Q==}
+    engines: {node: '>=10.13.0'}
+    hasBin: true
 
   proxy-from-env@1.1.0:
     resolution: {integrity: sha512-D+zkORCbA9f1tdWRK0RaCR3GPv50cMxcrz4X8k5LTSUD1Dkw47mKJEZQNunItRTkWwgtaUSo1RVFRIG9ZXiFYg==}
@@ -1627,6 +1653,10 @@ packages:
     resolution: {integrity: sha512-itJW8lvSA0TXEphiRoawsCksnlf8SyvmFzIhltqAHluXd88pkCd+cXJVHTDwdCr0IzwptSm035IHQktUu1QUMg==}
     engines: {node: '>=0.10.0'}
 
+  source-map@0.6.1:
+    resolution: {integrity: sha512-UjgapumWlbMhkBgzT7Ykc5YXUT46F0iKu8SGXq0bcwP5dz/h0Plj6enJqjz1Zbq2l5WaqYnrVbwWOWMyF3F47g==}
+    engines: {node: '>=0.10.0'}
+
   string-convert@0.2.1:
     resolution: {integrity: sha512-u/1tdPl4yQnPBjnVrmdLo9gtuLvELKsAoRapekWggdiQNvvvum+jYF329d84NAa660KQw7pB2n36KrIKVoXa3A==}
 
@@ -1772,6 +1802,14 @@ packages:
         optional: true
       terser:
         optional: true
+
+  vue@2.7.16:
+    resolution: {integrity: sha512-4gCtFXaAA3zYZdTp5s4Hl2sozuySsgz4jy1EnpBHNfpMa9dK1ZCG7viqBPCwXtmgc8nHqUsAu3G4gtmXkkY3Sw==}
+    deprecated: Vue 2 has reached EOL and is no longer actively maintained. See https://v2.vuejs.org/eol/ for more details.
+
+  web-streams-polyfill@3.3.3:
+    resolution: {integrity: sha512-d2JWLCivmZYTSIoge9MsgFCZrt571BikcWGYkjC1khllbTeDlGqZ2D8vD8E/lJa8WGWbb7Plm8/XJYV7IJHZZw==}
+    engines: {node: '>= 8'}
 
   which@2.0.2:
     resolution: {integrity: sha512-BLI3Tl1TW3Pvl70l3yq3Y64i+awpwXqsGBYWkkqMtnbXgrMD+yj7rhW0kuEDxzJaYXGjEW5ogapKNMEKNMjibA==}
@@ -2390,6 +2428,14 @@ snapshots:
     transitivePeerDependencies:
       - supports-color
 
+  '@vue/compiler-sfc@2.7.16':
+    dependencies:
+      '@babel/parser': 7.25.6
+      postcss: 8.4.42
+      source-map: 0.6.1
+    optionalDependencies:
+      prettier: 2.8.8
+
   acorn-jsx@5.3.2(acorn@8.12.1):
     dependencies:
       acorn: 8.12.1
@@ -2614,6 +2660,8 @@ snapshots:
   didyoumean@1.2.2: {}
 
   dlv@1.1.3: {}
+
+  dommatrix@1.0.3: {}
 
   eastasianwidth@0.2.0: {}
 
@@ -2993,6 +3041,18 @@ snapshots:
       lru-cache: 10.4.3
       minipass: 7.1.2
 
+  pdf-preview@0.9.8:
+    dependencies:
+      pdfjs-dist: 2.16.105
+      vue: 2.7.16
+    transitivePeerDependencies:
+      - worker-loader
+
+  pdfjs-dist@2.16.105:
+    dependencies:
+      dommatrix: 1.0.3
+      web-streams-polyfill: 3.3.3
+
   picocolors@1.0.1: {}
 
   picomatch@2.3.1: {}
@@ -3039,6 +3099,9 @@ snapshots:
       source-map-js: 1.2.0
 
   prelude-ls@1.2.1: {}
+
+  prettier@2.8.8:
+    optional: true
 
   proxy-from-env@1.1.0: {}
 
@@ -3461,6 +3524,8 @@ snapshots:
 
   source-map-js@1.2.0: {}
 
+  source-map@0.6.1: {}
+
   string-convert@0.2.1: {}
 
   string-width@4.2.3:
@@ -3599,6 +3664,13 @@ snapshots:
     optionalDependencies:
       '@types/node': 22.5.5
       fsevents: 2.3.3
+
+  vue@2.7.16:
+    dependencies:
+      '@vue/compiler-sfc': 2.7.16
+      csstype: 3.1.3
+
+  web-streams-polyfill@3.3.3: {}
 
   which@2.0.2:
     dependencies:

@@ -32,14 +32,14 @@ const PersonalInformationStep: React.FC<PersonalInformationStepProps> = ({ onNex
 
     try {
       const response = await axios.post(
-        "https://api.cloudinary.com/v1_1/dahhmqvix/upload",
+        "https://api.cloudinary.com/v1_1/dvwmkgnzz/upload",
         formData
       );
       const uploadedUrl = response.data.secure_url;
       console.log("Uploaded Photo URL:", uploadedUrl);
       return uploadedUrl; // Return the URL of the uploaded image
     } catch (error) {
-      console.error("Error uploading photo:", error);
+      // console.error("Error uploading photo:", error);
       return null;
     }
   };
@@ -59,13 +59,13 @@ const PersonalInformationStep: React.FC<PersonalInformationStepProps> = ({ onNex
         uploadedPhotoUrl = await uploadPhoto(photo);
       }
 
-      console.log("Form submitted with the following data:", {
-        full_name,
-        gender,
-        phoneNumber,
-        email,
-        photo: uploadedPhotoUrl,
-      });
+      // console.log("Form submitted with the following data:", {
+      //   full_name,
+      //   gender,
+      //   phoneNumber,
+      //   email,
+      //   photo: uploadedPhotoUrl,
+      // });
 
       onNext({
         full_name,
@@ -78,21 +78,26 @@ const PersonalInformationStep: React.FC<PersonalInformationStepProps> = ({ onNex
   };
 
   const validatePhoneNumber = (value: string) => {
-    const phoneRegex = /^[0-9]{10,15}$/; // Adjust as needed
-    if (!phoneRegex.test(value)) {
-      setPhoneError("Invalid phone number");
+    const phoneRegex = /^[0-9]{10,15}$/; // Regex for valid phone number length
+  
+    // Only show error if the user has started typing (value is not empty)
+    if (value && !phoneRegex.test(value)) {
+      setPhoneError("Please enter a valid phone number");
     } else {
-      setPhoneError("");
+      setPhoneError(""); // Clear error if the phone number is valid or empty
     }
   };
-
+  
   useEffect(() => {
     validatePhoneNumber(phoneNumber);
   }, [phoneNumber]);
+  
+  
+  
 
   return (
     <div className="flex flex-col justify-center items-center" style={{ fontFamily: "Lato" }}>
-      <div className="flex flex-col lg:border border-[#D0D2D6] lg:my-20 lg:w-[700px] w-[95%] rounded-[16px] lg:p-20 gap-10 mx-auto" style={{ fontFamily: "Lato" }}>
+      <div className="flex flex-col lg:border border-[#D0D2D6] lg:my-20 lg:w-[700px] xl:w-[95%] w-full rounded-[16px] lg:p-20 p-5 gap-10 mx-auto" style={{ fontFamily: "Lato" }}>
         <div className="text-center mb-8">
           <p className="text-[24px] font-bold text-[#374151] leading-[30.17px]" style={{ fontFamily: "Merriweather" }}>
             Personal Information
@@ -124,7 +129,7 @@ const PersonalInformationStep: React.FC<PersonalInformationStepProps> = ({ onNex
             <label className="text-[#5F6774] font-semibold leading-[19.2px]">Full Name</label>
             <input
               type="text"
-              className="p-[16px] border border-[#D0D2D6] rounded-[16px] outline-none h-[49px] lg:w-[432px]"
+              className="p-[16px] border border-[#D0D2D6] rounded-[16px] outline-none h-[49px]"
               placeholder="Jane Doe"
               required
               value={full_name}
@@ -172,18 +177,18 @@ const PersonalInformationStep: React.FC<PersonalInformationStepProps> = ({ onNex
               required
             />
           </div>
-          <div className="flex justify-between gap-5">
+          <div className="flex justify-center gap-5">
             <button
               type="button"
               onClick={onBack}
-              className="border border-[#1E3A8A] text-[18px] p-[16px] rounded-[16px] h-[54px] w-[195px] leading-[21.6px] font-semibold"
+              className="border border-[#1E3A8A] text-[18px] p-[16px] rounded-[16px] h-[54px] w-[50%] leading-[21.6px] font-semibold"
             >
               Back
             </button>
             <button
               type="submit"
               disabled={!isFormValid}
-              className={`text-[18px] p-[16px] rounded-[16px] h-[54px] w-[195px] leading-[21.6px] font-semibold ${
+              className={`text-[18px] p-[16px] rounded-[16px] h-[54px] w-[50%] leading-[21.6px] font-semibold ${
                 isFormValid ? "bg-[#1E3A8A] text-white" : "bg-[#B9C2DB] text-[#98A4C9]"
               }`}
             >

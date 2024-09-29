@@ -9,6 +9,12 @@ import howitworks from "./howitworks/Ellipse.svg"
 import uploadicon from "./file.svg"
 import divider from "./divider.svg"
 import profileholder from "./profileholder.svg"
+import trash from "./trash.svg";
+import eyeoff from "./eyeoff.svg";
+import pdficon from "./pdficon.svg";
+import uploadstate from "./uploadstate.svg";
+import goodtick from "./goodtick.svg";
+import burger from "./bugger.svg";
 
 
-export{twitter,linkedin,facebook,branlogo,instagram,star,primecheckcircle,howitworks,uploadicon,divider,profileholder}
+export{twitter,linkedin,facebook,branlogo,instagram,star,primecheckcircle,howitworks,uploadicon,divider,profileholder,trash,eyeoff,pdficon, uploadstate,goodtick,burger}

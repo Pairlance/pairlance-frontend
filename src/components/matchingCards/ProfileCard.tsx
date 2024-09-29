@@ -6,7 +6,7 @@ interface ProfileCardProps {
   role: string;
   summary: string;
   imageUrl: string;
-  onNext: () => void; // New prop for preview
+  onNext: () => void; 
   onShortlist: () => void;
 }
 
@@ -112,7 +112,7 @@ const ProfileCard: React.FC<ProfileCardProps> = ({
             </div>
           </div>
         </div>
-        <ResumeModal isOpen={isModalOpen} toggleModal={toggleModal} />
+        <ResumeModal isOpen={isModalOpen} toggleModal={toggleModal} candidate={null} />
       </div>
     </div>
   );

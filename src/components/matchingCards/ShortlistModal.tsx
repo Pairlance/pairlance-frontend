@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import { Modal, message } from "antd";
 import { useNavigate } from 'react-router-dom';
 import { Candidate } from "../../types";
+import { trash } from "../../assets";
 
 
 
@@ -20,6 +21,7 @@ type ShortlistModalProps = {
   shortlist: Candidate[];
   onDeleteCandidate: (candidateId: number) => void;
   onSubmitShortlist: (selectedCandidates: number[]) => Promise<void>;
+  recruiterId: string;
 };
 
 const ShortlistModal: React.FC<ShortlistModalProps> = ({
@@ -28,6 +30,7 @@ const ShortlistModal: React.FC<ShortlistModalProps> = ({
   shortlist,
   onDeleteCandidate,
   onSubmitShortlist,
+  recruiterId,
 }) => {
   const [selectAll, setSelectAll] = useState(false);
   const [selectedCandidates, setSelectedCandidates] = useState<Set<number>>(
@@ -35,6 +38,7 @@ const ShortlistModal: React.FC<ShortlistModalProps> = ({
   );
   const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
+  
 
   useEffect(() => {
     // Update selectAll checkbox state based on selectedCandidates
@@ -78,17 +82,46 @@ const ShortlistModal: React.FC<ShortlistModalProps> = ({
   const handleSubmit = async () => {
     setLoading(true);
     try {
-      await onSubmitShortlist(Array.from(selectedCandidates));
-      message.success("Shortlist submitted successfully!");
+      // console.log('Selected Candidates:', selectedCandidates);
+      // console.log('Shortlist:', shortlist);
+  
+      
+      const selectedCandidateCVs = shortlist
+        .filter(candidate => selectedCandidates.has(candidate.id))
+        .map(candidate => candidate.resume_url);
+  
+      const selectedCandidateIds = shortlist
+        .filter(candidate => selectedCandidates.has(candidate.id))
+        .map(candidate => candidate.id);
+  
+      
+      // console.log('Selected Candidate CVs:', selectedCandidateCVs);
+      // console.log('Selected Candidate IDs:', selectedCandidateIds);
+      if (selectedCandidateIds.length === 0) {
+        console.warn('No selected candidates found.');
+      }
+  
+      const selectedCandidatesArray = Array.from(selectedCandidates); // Assuming selectedCandidates is a Set
+      await onSubmitShortlist(selectedCandidatesArray);
+      navigate('/email', {
+        state: {
+          cvUrls: selectedCandidateCVs,
+          candidateIds: selectedCandidateIds,
+          recruiterId: recruiterId, 
+        },
+      });
       setSelectedCandidates(new Set());
       toggleModal();
-      navigate('/email');
     } catch (error) {
+      // console.error('Error in handleSubmit:', error);
       message.error("Failed to submit shortlist. Please try again.");
     } finally {
       setLoading(false);
     }
   };
+  
+  
+  
 
   return (
     <Modal
@@ -98,10 +131,10 @@ const ShortlistModal: React.FC<ShortlistModalProps> = ({
       className="max-w-lg mx-auto rounded-lg overflow-hidden flex flex-col shortlist"
       style={{ top: 20 }}
     >
-      {/* Header */}
+      
       <div className="flex justify-between items-center p-4 border-b pt-10">
         <h2 className="text-xl font-semibold">Shortlist</h2>
-        {/* Select All */}
+        
         <div className="flex justify-end items-center p-4">
           <label className="text-sm text-gray-600 flex items-center">
             Select All
@@ -115,7 +148,6 @@ const ShortlistModal: React.FC<ShortlistModalProps> = ({
         </div>
       </div>
 
-      {/* Shortlist Items */}
       <div className="px-4 pb-4 max-h-72 overflow-y-auto flex flex-col gap-10">
         {shortlist.length > 0 ? (
           shortlist.map((candidate, index) => (
@@ -129,7 +161,7 @@ const ShortlistModal: React.FC<ShortlistModalProps> = ({
                     type="button"
                     onClick={() => handleDelete(candidate.id)}
                   >
-                    <img src="/src/assets/trash.svg" alt="" />
+                    <img src={trash} alt="trash icon" />
                   </button>
                 </div>
                 <img
@@ -158,8 +190,6 @@ const ShortlistModal: React.FC<ShortlistModalProps> = ({
           <p>No candidates shortlisted yet.</p>
         )}
       </div>
-
-      {/* Submit Button */}
       <div className="p-4  justify-end">
         <div className="flex justify-end">
           <button

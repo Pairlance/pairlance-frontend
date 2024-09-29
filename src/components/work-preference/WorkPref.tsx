@@ -57,10 +57,14 @@ const WorkPreferenceForm: React.FC<WorkPreferenceProps> = ({ onBack, onNext }) =
             const isSuccessful = await onNext(formData);
 
             if (isSuccessful) {
+
+              setTimeout(() => {
                 message.success("Form submitted successfully!");
                 navigate("/"); // Navigate only after successful submission
+              }, 2500);
+                
             } else {
-                message.error("Failed to submit the form. Please try again.");
+                // message.error("Failed to submit the form. Please try again.");
             }
         } catch (error) {
             message.error("An error occurred during submission.");

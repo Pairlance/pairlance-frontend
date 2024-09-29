@@ -13,14 +13,12 @@ const RecruiterJobDetails: React.FC<RecruiterJobDetailsProps> = ({ onNext }) => 
   const [selectedRoles, setSelectedRoles] = useState<string[]>([]);
 
   useEffect(() => {
-    // Form validation: ensures all fields are filled
     setIsFormValid(!!role_level && !!yearsOfExperience && selectedRoles.length > 0);
   }, [role_level, yearsOfExperience, selectedRoles]);
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     if (isFormValid) {
-      // Pass the form data up to the parent component
       onNext({
         role_level,
         yearsOfExperience,
@@ -35,7 +33,7 @@ const RecruiterJobDetails: React.FC<RecruiterJobDetailsProps> = ({ onNext }) => 
 
   return (
     <div
-      className="flex flex-col items-center justify-center rounded-lg lg:w-[700px] h-[726px] gap-10 lg:border border-[#D0D2D6]"
+      className="flex flex-col items-center justify-center rounded-lg lg:w-[700px] w-full h-[726px] gap-10 lg:border border-[#D0D2D6]"
       style={{ fontFamily: "lato" }}
     >
       <div
@@ -70,7 +68,7 @@ const RecruiterJobDetails: React.FC<RecruiterJobDetailsProps> = ({ onNext }) => 
             Role Level
           </label>
           <select
-            className="p-[16px] border border-[#D0D2D6] rounded-[16px] outline-none"
+            className="p-[16px] border border-[#D0D2D6] bg-white rounded-[16px] outline-none"
             value={role_level}
             onChange={(e) => setRoleLevel(e.target.value)}
           >
