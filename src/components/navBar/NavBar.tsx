@@ -22,15 +22,16 @@ const NavBar: React.FC = () => {
 
   return (
     <nav className=" z-50 sticky top-0">
-      <div className="flex items-center justify-between md:h-[108px] h-[70px] px-5 md:px-20 bg-white shadow-md  z-50">
+      <div className="flex items-center justify-between md:h-[108px] h-[40px] px-5 md:px-20 bg-white shadow-md  z-50">
         <div
           className="flex items-center space-x-2 text-[#374151]"
           style={{ fontFamily: "Georgia" }}
         >
           {/* Logo */}
           <div className="flex items-center">
-            <img src={logo} alt="brand logo" width={45} height={64} />
-            <span className="text-[28.2px] font-bold leading-[32.05px]">
+            <img src={logo} alt="brand logo" width={45} height={64} className="hidden lg:block"/>
+            <img src={logo} alt="brand logo" width={22.5} height={32} className="block lg:hidden"/>
+            <span className="xl:text-[28.2px] font-bold leading-[32.05px]">
               PairLance
             </span>
           </div>
