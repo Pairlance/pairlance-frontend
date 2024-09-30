@@ -161,7 +161,7 @@ const PersonalInformationStep: React.FC<PersonalInformationStepProps> = ({
                 Gender
               </label>
               <select
-                className="p-[16px] border bg-[#ffff] rounded-[16px] h-[54px] h-[53px] outline-none"
+                className="p-[16px] border bg-[#ffff] rounded-[16px] h-[54px] outline-none"
                 value={gender}
                 onChange={(e) => setGender(e.target.value)}
               >

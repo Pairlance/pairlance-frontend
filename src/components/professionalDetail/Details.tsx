@@ -64,29 +64,38 @@ const Details: React.FC<DetailsProps> = ({ onNext, onBack }) => {
         </div>
 
         <div className="flex flex-col">
-          <label className="text-[#5F6774] font-semibold leading-[19.2px] mb-1">
-            Number of Years of Experience
-          </label>
-          <select
-            className="p-[16px] border bg-[#ffff] rounded-[16px] h-[54px] outline-none"
-            value={yearsOfExperience}
-            onChange={(e) => setYearsOfExperience(e.target.value)}
-          >
-            <option value="">Select years</option>
-            {Array.from({ length: 50 }, (_, i) => i + 1).map((year) => (
-              <option key={year} value={year}>
-                {year}
-              </option>
-            ))}
-          </select>
-        </div>
+  <label className="text-[#5F6774] font-semibold leading-[19.2px] mb-1">
+    Number of Years of Experience
+  </label>
+  <select
+    className={`p-[16px] border bg-[#ffff] rounded-[16px] h-[54px] outline-none ${
+      !yearsOfExperience ? "text-[#79808A] text-opacity-[0.3] text-[14px]" : "text-black"
+    }`}
+    value={yearsOfExperience}
+    onChange={(e) => setYearsOfExperience(e.target.value)}
+  >
+    <option value="" disabled hidden>
+      Select years
+    </option>
+    {Array.from({ length: 10 }, (_, i) => i + 1).map((year) => (
+      <option key={year} value={year}>
+        {year}
+      </option>
+    ))}
+  </select>
+</div>
+
+
+
 
         <div className="flex flex-col">
           <label className="text-[#5F6774] font-semibold leading-[19.2px] mb-1">
             Role Leve
           </label>
           <select
-            className="p-[16px] border border-[#D0D2D6] rounded-[16px] bg-white h-[54px] outline-none"
+           className={`p-[16px] border bg-[#ffff] rounded-[16px] h-[54px] outline-none ${
+            !roleLevel ? "text-[#79808A] text-opacity-[0.3] text-[14px]" : "text-[#000]"
+          }`}
             value={roleLevel}
             onChange={(e) => setRoleLevel(e.target.value)}
           >

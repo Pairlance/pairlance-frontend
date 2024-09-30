@@ -51,7 +51,7 @@ const Selection: React.FC<SelectionProps> = ({ selectedRoles, onChange }) => {
     onChange: handleChange,
     maxTagPlaceholder: (value) => (
       <Tooltip
-        overlayStyle={{ pointerEvents: 'none' }}
+        overlayStyle={{ pointerEvents: 'none'}}
         title={value.join(', ')}
       >
         +{value.length} more
