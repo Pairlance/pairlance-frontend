@@ -199,7 +199,7 @@ const WorkPreferenceForm: React.FC<WorkPreferenceProps> = ({ onBack, onNext }) =
           <select
             value={salaryScale}
             onChange={handleSalaryScaleChange}
-            className="border border-[#D0D2D6] rounded-[16px] p-[16px] outline-none"
+            className="border bg-[#ffff] rounded-[16px] p-[16px] h-[54px] outline-none"
           >
             <option value="" disabled>
               Select Salary Scale
