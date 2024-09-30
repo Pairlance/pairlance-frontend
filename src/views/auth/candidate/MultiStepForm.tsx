@@ -10,6 +10,7 @@ import Details from "../../../components/professionalDetail/Details";
 import JobLocationPref from "../../../components/location/JobLocationPref";
 import WorkPreferenceForm from "../../../components/work-preference/WorkPref";
 import axios from "axios";
+import { message } from "antd";
 
 // Define TypeScript interfaces for form data
 interface PersonalInfo {
@@ -56,31 +57,23 @@ const MultiStepForm: React.FC = () => {
   const [currentStep, setCurrentStep] = useState(1); // Track the current step
   const totalSteps = 6;
 
-  // State to hold all form data
   const [formData, setFormData] = useState<FormData>({
     cv: null,
     personalInfo: {
       full_name: "",
       gender: "",
-      // phone_number: "",
       email: "",
-      // image_url: "",
       phoneNumber: "",
       photo: "",
     },
     pitch: { text: "" },
     details: {
       selectedRoles: [],
-      // years_of_experience: "",
-      // role_level: "",
       roleLevel: "",
       yearsOfExperience: "",
     },
     locationPref: { selectedLocations: [] },
     workPref: {
-      // work_type: [],
-      // employment_type: [],
-      // salary_ranges: "",
       workType: "",
       salaryScale: "",
       employmentType: "",
@@ -90,23 +83,19 @@ const MultiStepForm: React.FC = () => {
   // Function to move to the next step
   const handleNext = async (stepData?: any): Promise<boolean> => {
     try {
-      // Ensure form data is updated with current step's data
-      console.log("Current Step Data:", stepData);
+      // console.log("Current Step Data:", stepData);
       updateFormData(stepData, currentStep);
 
       if (currentStep < totalSteps) {
-        // Move to the next step
         setCurrentStep(currentStep + 1);
         return true;
       } else {
-        // On the final step, submit all data
         await handleSubmit(); // Wait for form submission to complete
-        console.log("Form submitted successfully");
-        // Add navigation or success message logic here
+        // console.log("Form submitted successfully");
         return true;
       }
     } catch (error) {
-      console.error("Submission failed", error);
+      // console.error("Submission failed", error);
       return false;
     }
   };
@@ -143,48 +132,101 @@ const MultiStepForm: React.FC = () => {
   // Function to handle submission of all data
   const handleSubmit = async () => {
     const apiUrl = import.meta.env.VITE_BASE_URL;
+  
     try {
-      const formDataToSend = {
-        cv_url: formData.cv, // Handle file data properly
-        full_name: formData.personalInfo.full_name || "",
-        gender: formData.personalInfo.gender || "",
-        email: formData.personalInfo.email || "",
-        image_url: formData.personalInfo.photo || "",
-        phone_number: formData.personalInfo.phoneNumber || "",
-        summary_pitch: formData.pitch.text || "",
-        years_of_experience: formData.details.yearsOfExperience || "",
-        role_level: formData.details.roleLevel || "",
-        work_type: formData.workPref.workType || [], // Include work_type data
-        employment_type: formData.workPref.employmentType, // Include employment_type data
-        salary_ranges: formData.workPref.salaryScale || "", // Include salary_ranges data
-        job_locations: formData.locationPref.selectedLocations || [],
-        job_roles: formData.details.selectedRoles || [],
-      };
-
-      console.log("Detail sent:", formDataToSend);
-
-      // Send the data to the API
-      const response = await axios.post(
+      const formDataToSend = new FormData();
+  
+      // Validation check for missing fields before appending to FormData
+      if (!formData.personalInfo.full_name) {
+        throw new Error("Full name is required");
+      }
+      if (!formData.personalInfo.gender) {
+        throw new Error("Gender is required");
+      }
+      if (!formData.personalInfo.email) {
+        throw new Error("Email is required");
+      }
+      if (!formData.personalInfo.photo) {
+        throw new Error("Profile picture is required");
+      }
+      if (!formData.personalInfo.phoneNumber) {
+        throw new Error("Phone number is required");
+      }
+      if (!formData.pitch.text) {
+        throw new Error("Summary pitch is required");
+      }
+      if (!formData.details.yearsOfExperience) {
+        throw new Error("Years of experience is required");
+      }
+      if (!formData.details.roleLevel) {
+        throw new Error("Role level is required");
+      }
+  
+      
+      if (formData.cv) {
+        formDataToSend.append("resume_url", formData.cv); 
+      }
+  
+      
+      formDataToSend.append("full_name", formData.personalInfo.full_name);
+      formDataToSend.append("gender", formData.personalInfo.gender);
+      formDataToSend.append("email", formData.personalInfo.email);
+      formDataToSend.append("image_url", formData.personalInfo.photo); // Profile picture
+      formDataToSend.append("phone_number", formData.personalInfo.phoneNumber);
+      formDataToSend.append("summary_pitch", formData.pitch.text);
+      formDataToSend.append("years_of_experience", formData.details.yearsOfExperience);
+      formDataToSend.append("role_level", formData.details.roleLevel);
+  
+      
+      formDataToSend.append("work_type", JSON.stringify(formData.workPref.workType || []));
+      formDataToSend.append("employment_type", JSON.stringify(formData.workPref.employmentType || []));
+      formDataToSend.append("salary_range", formData.workPref.salaryScale || "");
+      formDataToSend.append("job_locations", JSON.stringify(formData.locationPref.selectedLocations || []));
+      formDataToSend.append("job_roles", JSON.stringify(formData.details.selectedRoles || []));
+  
+      
+      // for (const [key, value] of formDataToSend.entries()) {
+      //   console.log(`${key}:`, value); 
+      // }
+  
+      
+       await axios.post(
         `${apiUrl}/api/upload-candidate`,
         formDataToSend,
         {
           headers: {
-            "Content-Type": "application/json",
+            "Content-Type": "multipart/form-data", 
           },
         }
       );
-
-      console.log("Form data submitted successfully!", response.data);
-      return true; // Indicate that the submission was successful
-    } catch (error) {
-      console.error("Error submitting form data", error);
-      throw error; // Rethrow the error to handle it in handleNext
+  
+      // console.log("Form data submitted successfully!", response.data);
+      return true;
+    } catch (error: any) {
+      // console.error("Error submitting form data", error);
+  
+      if (error.response && error.response.data && error.response.data.errors) {
+        const serverErrors = error.response.data.errors;
+  
+        Object.keys(serverErrors).forEach((field) => {
+          message.error(`${field}: ${serverErrors[field]}`);
+        });
+      } else if (error.message) {
+      } else {
+        message.error("An unexpected error occurred");
+      }
+  
+      throw error; 
     }
   };
+  
+  
+  
+  
 
   // Function to handle step click
   const handleStepClick = (step: number) => {
-    console.log(`Step clicked: ${step}`);
+    // console.log(`Step clicked: ${step}`);
     setCurrentStep(step);
   };
 
@@ -234,12 +276,12 @@ const MultiStepForm: React.FC = () => {
             completedColor="#1E3A8A"
             upcomingColor="#FFFF"
             borderColor="#1E3A8A"
-            onStepClick={handleStepClick} // Make steps clickable
+            onStepClick={handleStepClick} 
           />
         </div>
 
         <div className="my-20 lg:w-[700px]">
-          {renderStep()} {/* Render the current step */}
+          {renderStep()} 
         </div>
       </div>
       <Footer />

@@ -38,7 +38,7 @@ const Details: React.FC<DetailsProps> = ({ onNext, onBack }) => {
 
   return (
     <div
-      className="flex flex-col items-center justify-center rounded-lg lg:w-[700px] h-[726px] gap-10 lg:border border-[#D0D2D6]"
+      className="flex flex-col items-center justify-center rounded-lg lg:w-[700px] xl:h-[726px] gap-10 lg:border border-[#D0D2D6]"
       style={{ fontFamily: "lato" }}
     >
       <div
@@ -70,10 +70,10 @@ const Details: React.FC<DetailsProps> = ({ onNext, onBack }) => {
 
         <div className="flex flex-col">
           <label className="text-[#5F6774] font-semibold leading-[19.2px] mb-1">
-            Role Level
+            Role Leve
           </label>
           <select
-            className="p-[16px] border border-[#D0D2D6] rounded-[16px] outline-none"
+            className="p-[16px] border border-[#D0D2D6] rounded-[16px] bg-white outline-none"
             value={roleLevel}
             onChange={(e) => setRoleLevel(e.target.value)}
           >

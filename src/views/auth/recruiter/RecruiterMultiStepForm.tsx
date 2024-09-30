@@ -62,7 +62,7 @@ const RecruiterMultiStepForm: React.FC = () => {
   };
 
   const handleDataSubmit = async (data: any): Promise<void> => {
-    console.log(`Data at Step ${currentStep}:`, data);
+    // console.log(`Data at Step ${currentStep}:`, data);
 
     switch (currentStep) {
       case 1:
@@ -76,7 +76,7 @@ const RecruiterMultiStepForm: React.FC = () => {
               job_roles: data.selectedRoles,
             },
           };
-          console.log("Updated FormData after Step 1:", updatedData);
+          // console.log("Updated FormData after Step 1:", updatedData);
           return updatedData;
         });
         break;
@@ -90,7 +90,7 @@ const RecruiterMultiStepForm: React.FC = () => {
               gender: data.gender,
             },
           };
-          console.log("Updated FormData after Step 2:", updatedData);
+          // console.log("Updated FormData after Step 2:", updatedData);
           return updatedData;
         });
         break;
@@ -105,7 +105,7 @@ const RecruiterMultiStepForm: React.FC = () => {
               salaryScale: data.salaryScale || "",
             },
           };
-          console.log("Updated FormData after Step 3:", updatedData);
+          // console.log("Updated FormData after Step 3:", updatedData);
           return updatedData;
         });
 
@@ -119,11 +119,10 @@ const RecruiterMultiStepForm: React.FC = () => {
           work_type: data.workType || formData.workPreferences.workType,
           employment_type:
             data.employmentType || formData.workPreferences.employmentType,
-          salary_ranges: data.salaryScale || formData.workPreferences.salaryScale,
-          email: "mathias@gmail.com", // Hardcoded email for testing
+          salary_range: data.salaryScale || formData.workPreferences.salaryScale,
         };
 
-        console.log("Final submission data:", submissionData);
+        // console.log("Final submission data:", submissionData);
 
         await handleSubmit(submissionData);
         return; // Prevent further actions after submission
@@ -134,10 +133,11 @@ const RecruiterMultiStepForm: React.FC = () => {
     handleNext();
   };
 
-  const handleSubmit = async (submissionData: any) => {
-    console.log("Sending data to API:", submissionData);
-    const apiUrl = import.meta.env.VITE_BASE_URL;
 
+  const handleSubmit = async (submissionData: any) => {
+    // console.log("Sending data to API:", submissionData);
+    const apiUrl = import.meta.env.VITE_BASE_URL;
+  
     try {
       const response = await axios.post(
         `${apiUrl}/api/match-recruiter`,
@@ -148,29 +148,53 @@ const RecruiterMultiStepForm: React.FC = () => {
           },
         }
       );
-      console.log("API response:", response.data);
-
-      // Display success message
-      message.success("Form submitted successfully! Redirecting...", 2); // Show success for 2 seconds
-
-      // Delay the navigation to /matching by 2.5 seconds
-      setTimeout(() => {
-        const candidates = response.data.data.candidates; // Access candidates array
-        console.log(candidates); // Log to check the structure
-        navigate("/matching", {
-          state: {
-            candidates: candidates, // Pass candidates to matching page
-          },
-        });
-      }, 2500);
+  
+      // console.log("API response:", response.data);
+      const recruiterId = response.data?.data?.recruiterId;
+      
+  
+      // Assuming the API response contains a field like `success` or `candidates`
+      const candidates = response.data?.data?.candidates || [];
+  
+      if (candidates.length > 0) {
+        // Candidates were matched, show success message and navigate
+        message.success("Candidates matched! Redirecting...", 2); // Show success message for 2 seconds
+  
+        // Delay the navigation to /matching by 2.5 seconds
+        setTimeout(() => {
+          navigate("/matching", {
+            state: {
+              candidates: candidates, 
+              recruiterId:recruiterId,
+            },
+          });
+        }, 2500);
+      } else {
+        // No candidates matched, show an appropriate message but do not navigate
+        message.warning("No candidates matched your criteria.");
+      }
     } catch (error) {
-      const axiosError = error as AxiosError;
-      console.error(
-        "API submission error:",
-        axiosError.response?.data || axiosError.message
-      );
+      const axiosError = error as AxiosError<{ message: string }>; // Add type definition to AxiosError
+  
+      // console.error(
+      //   "API submission error:",
+      //   axiosError.response?.data || axiosError.message
+      // );
+  
+      // Safely access the error message from the API response
+      const errorMessage = axiosError.response?.data?.message || "An error occurred during submission.";
+  
+      // Display error message
+      message.error(errorMessage);
     }
   };
+  
+   // Function to handle step click
+   const handleStepClick = (step: number) => {
+    // console.log(`Step clicked: ${step}`);
+    setCurrentStep(step);
+  };
+  
 
   const renderStep = () => {
     switch (currentStep) {
@@ -196,7 +220,7 @@ const RecruiterMultiStepForm: React.FC = () => {
     <>
       <NavBar />
       <div
-        className="flex flex-col justify-center items-center"
+        className="flex flex-col justify-center items-center "
         style={{ fontFamily: "Lato" }}
       >
         <HeroBanner
@@ -204,13 +228,16 @@ const RecruiterMultiStepForm: React.FC = () => {
           title="You're One Step Closer to Finding the Perfect Candidate!"
           subtitle="Complete the quick job details form to start matching with qualified candidates tailored to your needs"
         />
-        <StepProgress
+       <div className="flex justify-center">
+       <StepProgress
           currentStep={currentStep}
           totalSteps={totalSteps}
           completedColor="#1E3A8A"
           upcomingColor="#FFFF"
           borderColor="#1E3A8A"
+          onStepClick={handleStepClick}
         />
+       </div>
         <div className="my-20 lg:w-[700px]">{renderStep()}</div>
       </div>
       <Footer />

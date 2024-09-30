@@ -1,4 +1,6 @@
-import grpup from "../../../assets/hero/group.svg"
+import { Link } from "react-router-dom";
+import grpup from "../../../assets/hero/group.svg";
+
 export const Hero: React.FC = () => {
   return (
     <div
@@ -61,13 +63,24 @@ export const Hero: React.FC = () => {
           className="flex flex-col lg:flex-row lg:gap-4 gap-8  justify-center items-center"
           style={{ fontFamily: "lato" }}
         >
-          <button className="flex justify-center w-[292px] h-[54px] p-[16px] rounded-[16px] text-[#FFFFFF] bg-[#1E3A8A] font-semibold text-[18px]">
-            Find Candidates Now!
-          </button>
+          <Link to="/recruiter">
+            <button
+              title="Click to Find Matching Candidates for Your Job Openings"
+              className="flex justify-center w-[292px] h-[54px] p-[16px] rounded-[16px] text-[#FFFFFF] bg-[#1E3A8A] font-semibold text-[18px]"
+            >
+              Find Candidates Now!
+            </button>
+          </Link>
 
-          <button className="flex justify-center w-[292px] h-[54px] p-[16px] rounded-[16px] border border-[#1E3A8A] text-[#1E3A8A]">
-            Upload Your CV
-          </button>
+          <Link to="/candidate">
+            {" "}
+            <button
+              title="Click to Upload Your CV for Job Opportunities"
+              className="flex justify-center w-[292px] h-[54px] p-[16px] rounded-[16px] border border-[#1E3A8A] text-[#1E3A8A]"
+            >
+              Upload Your CV
+            </button>
+          </Link>
         </div>
       </div>
 
@@ -79,7 +92,6 @@ export const Hero: React.FC = () => {
       <img src="/src/assets/hero/helmetwoman.svg" alt="representatives" />     <img src="/src/assets/her/designer.svg" alt="representatives" /> */}
         </div>{" "}
       </div>
-      
     </div>
   );
 };
