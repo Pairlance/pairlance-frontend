@@ -81,7 +81,7 @@ const RecruiterJobLocation: React.FC<RecruiterJobLocationProps> = ({
           <select
             // className="p-[16px] border bg-[#ffff] rounded-[16px] h-[54px] outline-none"
             className={`p-[16px] border bg-[#ffff] rounded-[16px] h-[54px] outline-none ${
-              !gender ? "text-[#79808A] text-opacity-[0.3] text-[14px]" : "text-[#000]"
+              !gender ? "text-[#5F6774] text-[14px]" : "text-[#000]"
             }`}
             value={gender}
             onChange={(e) => setGender(e.target.value)}

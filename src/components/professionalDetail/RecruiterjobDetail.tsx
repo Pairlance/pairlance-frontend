@@ -71,7 +71,7 @@ const RecruiterJobDetails: React.FC<RecruiterJobDetailsProps> = ({
           <select
             // className="p-[16px] border bg-[#ffff] rounded-[16px] outline-none h-[54px]"
             className={`p-[16px] border bg-[#ffff] rounded-[16px] h-[54px] outline-none ${
-              !yearsOfExperience ? "text-[#79808A] text-opacity-[0.3] text-[14px]" : "text-[#000]"
+              !yearsOfExperience ? "text-[#5F6774] text-[14px]" : "text-[#000]"
             }`}
             value={yearsOfExperience}
             onChange={(e) => setYearsOfExperience(e.target.value)}
@@ -92,7 +92,7 @@ const RecruiterJobDetails: React.FC<RecruiterJobDetailsProps> = ({
           <select
             // className="p-[16px] border border-[#D0D2D6] bg-white rounded-[16px] h-[54px] outline-none"
             className={`p-[16px] border bg-[#ffff] rounded-[16px] h-[54px] outline-none ${
-              !role_level ? "text-[#79808A] text-opacity-[0.3] text-[14px]" : "text-[#000]"
+              !role_level ? "text-[#79808A] text-[14px]" : "text-[#000]"
             }`}
             value={role_level}
             onChange={(e) => setRoleLevel(e.target.value)}

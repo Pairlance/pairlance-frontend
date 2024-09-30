@@ -45,13 +45,16 @@ const EmailSubmissionForm = () => {
             setTimeout(() =>{
                 setIsModalVisible(true); 
                 setEmail("");
-                setLoading(false);
             }, 1000);
+            setLoading(false);
         } else {
+          
             throw new Error("Unexpected response from server"); 
         }
+        
 
     } catch (error: any) {
+      setLoading(false);
         message.error("Submission failed. Please try again."); 
         // console.error("Submission failed:", error.response?.data || error.message);
     }

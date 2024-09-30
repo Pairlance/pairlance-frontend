@@ -161,7 +161,10 @@ const PersonalInformationStep: React.FC<PersonalInformationStepProps> = ({
                 Gender
               </label>
               <select
-                className="p-[16px] border bg-[#ffff] rounded-[16px] h-[54px] outline-none"
+                // className="p-[16px] border bg-[#ffff] rounded-[16px] h-[54px] outline-none"
+                className={`p-[16px] border bg-[#ffff] rounded-[16px] h-[54px] outline-none ${
+                  !gender ? "text-[#5F6774] text-[16px] text-opacity-60" : "text-black"
+                }`}
                 value={gender}
                 onChange={(e) => setGender(e.target.value)}
               >
@@ -176,7 +179,7 @@ const PersonalInformationStep: React.FC<PersonalInformationStepProps> = ({
               </label>
               <input
                 type="tel"
-                className="p-[16px] border border-[#D0D2D6] rounded-[16px] outline-none"
+                className="p-[16px] border bg-[#ffff] rounded-[16px] outline-none"
                 placeholder="0123456789"
                 required
                 value={phoneNumber}
@@ -195,7 +198,7 @@ const PersonalInformationStep: React.FC<PersonalInformationStepProps> = ({
             <input
               id="email"
               type="email"
-              className="p-[16px] border border-[#D0D2D6] rounded-[16px] outline-none h-[50px]"
+              className="p-[16px] border bg-[#ffff] rounded-[16px] outline-none h-[50px]"
               placeholder="jane@example.com"
               value={email}
               onChange={(e) => setEmail(e.target.value)}

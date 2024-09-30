@@ -69,7 +69,7 @@ const Details: React.FC<DetailsProps> = ({ onNext, onBack }) => {
   </label>
   <select
     className={`p-[16px] border bg-[#ffff] rounded-[16px] h-[54px] outline-none ${
-      !yearsOfExperience ? "text-[#79808A] text-opacity-[0.3] text-[14px]" : "text-black"
+      !yearsOfExperience ? "text-[#79808A] text-[14px] text-opacity-60" : "text-black"
     }`}
     value={yearsOfExperience}
     onChange={(e) => setYearsOfExperience(e.target.value)}
@@ -90,11 +90,11 @@ const Details: React.FC<DetailsProps> = ({ onNext, onBack }) => {
 
         <div className="flex flex-col">
           <label className="text-[#5F6774] font-semibold leading-[19.2px] mb-1">
-            Role Leve
+            Role Level
           </label>
           <select
            className={`p-[16px] border bg-[#ffff] rounded-[16px] h-[54px] outline-none ${
-            !roleLevel ? "text-[#79808A] text-opacity-[0.3] text-[14px]" : "text-[#000]"
+            !roleLevel ? "text-[#79808A] text-[14px] text-opacity-60" : "text-[#000]"
           }`}
             value={roleLevel}
             onChange={(e) => setRoleLevel(e.target.value)}
