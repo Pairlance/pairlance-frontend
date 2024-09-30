@@ -68,7 +68,7 @@ const Details: React.FC<DetailsProps> = ({ onNext, onBack }) => {
             Number of Years of Experience
           </label>
           <select
-            className="p-[16px] border border-[#D0D2D6] rounded-[16px] outline-none"
+            className="p-[16px] border bg-[#ffff] rounded-[16px] h-[54px] outline-none"
             value={yearsOfExperience}
             onChange={(e) => setYearsOfExperience(e.target.value)}
           >
@@ -86,7 +86,7 @@ const Details: React.FC<DetailsProps> = ({ onNext, onBack }) => {
             Role Leve
           </label>
           <select
-            className="p-[16px] border border-[#D0D2D6] rounded-[16px] bg-white outline-none"
+            className="p-[16px] border border-[#D0D2D6] rounded-[16px] bg-white h-[54px] outline-none"
             value={roleLevel}
             onChange={(e) => setRoleLevel(e.target.value)}
           >
