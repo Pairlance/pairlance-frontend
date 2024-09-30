@@ -258,7 +258,7 @@ const MultiStepForm: React.FC = () => {
     <>
       <NavBar />
       <div
-        className="flex flex-col justify-center items-center"
+        className="flex flex-col lg:justify-center lg:items-center"
         style={{ fontFamily: "Lato" }}
       >
         <div className="w-full">

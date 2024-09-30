@@ -2,18 +2,26 @@ import React, { useState, useEffect } from "react";
 import Selection from "../common/Selection";
 
 interface RecruiterJobDetailsProps {
-  onNext: (data: { role_level: string; yearsOfExperience: string; selectedRoles: string[] }) => void;
+  onNext: (data: {
+    role_level: string;
+    yearsOfExperience: string;
+    selectedRoles: string[];
+  }) => void;
   onBack?: () => void;
 }
 
-const RecruiterJobDetails: React.FC<RecruiterJobDetailsProps> = ({ onNext }) => {
+const RecruiterJobDetails: React.FC<RecruiterJobDetailsProps> = ({
+  onNext,
+}) => {
   const [role_level, setRoleLevel] = useState("");
   const [yearsOfExperience, setYearsOfExperience] = useState("");
   const [isFormValid, setIsFormValid] = useState(false);
   const [selectedRoles, setSelectedRoles] = useState<string[]>([]);
 
   useEffect(() => {
-    setIsFormValid(!!role_level && !!yearsOfExperience && selectedRoles.length > 0);
+    setIsFormValid(
+      !!role_level && !!yearsOfExperience && selectedRoles.length > 0
+    );
   }, [role_level, yearsOfExperience, selectedRoles]);
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
@@ -33,7 +41,7 @@ const RecruiterJobDetails: React.FC<RecruiterJobDetailsProps> = ({ onNext }) => 
 
   return (
     <div
-      className="flex flex-col items-center justify-center rounded-lg lg:w-[700px] w-full h-[726px] gap-10 lg:border border-[#D0D2D6]"
+      className="flex flex-col items-center justify-center rounded-lg lg:w-[700px] w-full lg:h-[726px] gap-10 lg:border border-[#D0D2D6]"
       style={{ fontFamily: "lato" }}
     >
       <div
@@ -42,25 +50,36 @@ const RecruiterJobDetails: React.FC<RecruiterJobDetailsProps> = ({ onNext }) => 
       >
         <p>Job Details</p>
       </div>
-      <form className="flex flex-col gap-10 w-[408PX] px-5 lg:px-[unset] mx-auto" onSubmit={handleSubmit}>
+      <form
+        className="flex flex-col gap-10 lg:w-[408PX] w-[22em] px-5 lg:px-[unset] mx-auto"
+        onSubmit={handleSubmit}
+      >
         <div className="flex flex-col">
           <label className="text-[#5F6774] font-semibold leading-[19.2px]">
             Job Title
           </label>
-          <Selection selectedRoles={selectedRoles} onChange={handleRolesChange} />
+          <Selection
+            selectedRoles={selectedRoles}
+            onChange={handleRolesChange}
+          />
         </div>
 
         <div className="flex flex-col">
           <label className="text-[#5F6774] font-semibold leading-[19.2px] mb-1">
-            Years of Experience
+          Years of Experience
           </label>
-          <input
-            type="number"
+          <select
             className="p-[16px] border border-[#D0D2D6] rounded-[16px] outline-none"
-            placeholder="Enter years of experience"
             value={yearsOfExperience}
             onChange={(e) => setYearsOfExperience(e.target.value)}
-          />
+          >
+            <option value="">Select years</option>
+            {Array.from({ length: 50 }, (_, i) => i + 1).map((year) => (
+              <option key={year} value={year}>
+                {year}
+              </option>
+            ))}
+          </select>
         </div>
 
         <div className="flex flex-col">
@@ -84,7 +103,9 @@ const RecruiterJobDetails: React.FC<RecruiterJobDetailsProps> = ({ onNext }) => 
             type="submit"
             disabled={!isFormValid}
             className={`text-[18px] p-[16px] rounded-[16px] h-[54px] w-full leading-[21.6px] font-semibold ${
-              isFormValid ? "bg-[#1E3A8A] text-white" : "bg-[#B9C2DB] text-[#98A4C9]"
+              isFormValid
+                ? "bg-[#1E3A8A] text-white"
+                : "bg-[#B9C2DB] text-[#98A4C9]"
             }`}
           >
             Next

@@ -35,9 +35,9 @@ const JobLocationPref: React.FC<DetailsProps> = ({ onNext, onBack }) => {
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     if (isFormValid) {
-      console.log("Form submitted with the following data:", {
-        selectedLocations,
-      });
+      // console.log("Form submitted with the following data:", {
+      //   selectedLocations,
+      // });
       onNext({ selectedLocations }); 
     }
   };
@@ -71,7 +71,7 @@ const JobLocationPref: React.FC<DetailsProps> = ({ onNext, onBack }) => {
             />
           </Space>
         </div>
-        <div className="flex justify-between gap-5">
+        <div className="flex justify-center gap-5">
           <button
             type="button"
             onClick={onBack}

@@ -13,7 +13,9 @@ const Details: React.FC<DetailsProps> = ({ onNext, onBack }) => {
   const [isFormValid, setIsFormValid] = useState(false);
 
   useEffect(() => {
-    setIsFormValid(!!selectedRoles.length && !!yearsOfExperience && !!roleLevel);
+    setIsFormValid(
+      !!selectedRoles.length && !!yearsOfExperience && !!roleLevel
+    );
   }, [selectedRoles, yearsOfExperience, roleLevel]);
 
   const handleRolesChange = (roles: string[]) => {
@@ -23,11 +25,11 @@ const Details: React.FC<DetailsProps> = ({ onNext, onBack }) => {
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     if (isFormValid) {
-      console.log("Form submitted with the following data:", {
-        selectedRoles,
-        yearsOfExperience,
-        roleLevel,
-      });
+      // console.log("Form submitted with the following data:", {
+      //   selectedRoles,
+      //   yearsOfExperience,
+      //   roleLevel,
+      // });
       onNext({
         selectedRoles,
         yearsOfExperience,
@@ -38,7 +40,7 @@ const Details: React.FC<DetailsProps> = ({ onNext, onBack }) => {
 
   return (
     <div
-      className="flex flex-col items-center justify-center rounded-lg lg:w-[700px] xl:h-[726px] gap-10 lg:border border-[#D0D2D6]"
+      className="flex flex-col items-center justify-center rounded-lg lg:w-[700px] xl:h-[726px] gap-10 lg:border border-[#D0D2D6] py-10"
       style={{ fontFamily: "lato" }}
     >
       <div
@@ -47,25 +49,36 @@ const Details: React.FC<DetailsProps> = ({ onNext, onBack }) => {
       >
         <p>Professional Details</p>
       </div>
-      <form className="flex flex-col gap-10 w-[85%] lg:w-[unset] mx-auto" onSubmit={handleSubmit}>
+      <form
+        className="flex flex-col gap-10 w-[85%] lg:w-[unset] mx-auto"
+        onSubmit={handleSubmit}
+      >
         <div className="flex flex-col">
           <label className="text-[#5F6774] font-semibold leading-[19.2px]">
             Preferred Job Roles/Titles
           </label>
-          <Selection selectedRoles={selectedRoles} onChange={handleRolesChange} />
+          <Selection
+            selectedRoles={selectedRoles}
+            onChange={handleRolesChange}
+          />
         </div>
 
         <div className="flex flex-col">
           <label className="text-[#5F6774] font-semibold leading-[19.2px] mb-1">
             Number of Years of Experience
           </label>
-          <input
-            type="number"
+          <select
             className="p-[16px] border border-[#D0D2D6] rounded-[16px] outline-none"
-            placeholder="Enter years of experience"
             value={yearsOfExperience}
             onChange={(e) => setYearsOfExperience(e.target.value)}
-          />
+          >
+            <option value="">Select years</option>
+            {Array.from({ length: 50 }, (_, i) => i + 1).map((year) => (
+              <option key={year} value={year}>
+                {year}
+              </option>
+            ))}
+          </select>
         </div>
 
         <div className="flex flex-col">
@@ -84,7 +97,7 @@ const Details: React.FC<DetailsProps> = ({ onNext, onBack }) => {
           </select>
         </div>
 
-        <div className="flex justify-between gap-5">
+        <div className="flex justify-center gap-5">
           <button
             type="button"
             onClick={onBack}

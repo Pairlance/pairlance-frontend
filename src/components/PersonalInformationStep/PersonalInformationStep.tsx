@@ -7,7 +7,10 @@ interface PersonalInformationStepProps {
   onBack?: () => void;
 }
 
-const PersonalInformationStep: React.FC<PersonalInformationStepProps> = ({ onNext, onBack }) => {
+const PersonalInformationStep: React.FC<PersonalInformationStepProps> = ({
+  onNext,
+  onBack,
+}) => {
   const [full_name, setFullName] = useState("");
   const [gender, setGender] = useState("");
   const [phoneNumber, setPhoneNumber] = useState("");
@@ -26,20 +29,21 @@ const PersonalInformationStep: React.FC<PersonalInformationStepProps> = ({ onNex
 
   // Upload photo to Cloudinary
   const uploadPhoto = async (file: File) => {
+    const cloudApi = import.meta.env.VITE_CLOUDINARY_BASE_URL;
     const formData = new FormData();
     formData.append("file", file);
     formData.append("upload_preset", "pairlance");
 
     try {
       const response = await axios.post(
-        "https://api.cloudinary.com/v1_1/dvwmkgnzz/upload",
+        `${cloudApi}`,
         formData
       );
       const uploadedUrl = response.data.secure_url;
       console.log("Uploaded Photo URL:", uploadedUrl);
       return uploadedUrl; // Return the URL of the uploaded image
     } catch (error) {
-      // console.error("Error uploading photo:", error);
+      console.error("Error uploading photo:", error);
       return null;
     }
   };
@@ -79,7 +83,7 @@ const PersonalInformationStep: React.FC<PersonalInformationStepProps> = ({ onNex
 
   const validatePhoneNumber = (value: string) => {
     const phoneRegex = /^[0-9]{10,15}$/; // Regex for valid phone number length
-  
+
     // Only show error if the user has started typing (value is not empty)
     if (value && !phoneRegex.test(value)) {
       setPhoneError("Please enter a valid phone number");
@@ -87,19 +91,25 @@ const PersonalInformationStep: React.FC<PersonalInformationStepProps> = ({ onNex
       setPhoneError(""); // Clear error if the phone number is valid or empty
     }
   };
-  
+
   useEffect(() => {
     validatePhoneNumber(phoneNumber);
   }, [phoneNumber]);
-  
-  
-  
 
   return (
-    <div className="flex flex-col justify-center items-center" style={{ fontFamily: "Lato" }}>
-      <div className="flex flex-col lg:border border-[#D0D2D6] lg:my-20 lg:w-[700px] xl:w-[95%] w-full rounded-[16px] lg:p-20 p-5 gap-10 mx-auto" style={{ fontFamily: "Lato" }}>
+    <div
+      className="flex flex-col justify-center items-center"
+      style={{ fontFamily: "Lato" }}
+    >
+      <div
+        className="flex flex-col lg:border border-[#D0D2D6] lg:my-20 lg:w-[700px] xl:w-[95%] w-full rounded-[16px] lg:p-20 p-5 gap-10 mx-auto"
+        style={{ fontFamily: "Lato" }}
+      >
         <div className="text-center mb-8">
-          <p className="text-[24px] font-bold text-[#374151] leading-[30.17px]" style={{ fontFamily: "Merriweather" }}>
+          <p
+            className="text-[24px] font-bold text-[#374151] leading-[30.17px]"
+            style={{ fontFamily: "Merriweather" }}
+          >
             Personal Information
           </p>
         </div>
@@ -115,9 +125,16 @@ const PersonalInformationStep: React.FC<PersonalInformationStepProps> = ({ onNex
           <div className="flex flex-col items-center mt-5">
             <label className="flex justify-center items-center text-[#1E3A8A] border border-[#1E3A8A] px-4 py-2 rounded-[16px] h-[54px] lg:w-[168px] text-[18px] leading-[21.6px] cursor-pointer text-center">
               Upload Photo
-              <input type="file" accept="image/*" className="hidden" onChange={handlePhotoUpload} />
+              <input
+                type="file"
+                accept="image/*"
+                className="hidden"
+                onChange={handlePhotoUpload}
+              />
             </label>
-            <p className="text-[#374151] leading-[21.6px] text-[18px]">(Optional)</p>
+            <p className="text-[#374151] leading-[21.6px] text-[18px]">
+              (Optional)
+            </p>
           </div>
         </div>
 
@@ -126,7 +143,9 @@ const PersonalInformationStep: React.FC<PersonalInformationStepProps> = ({ onNex
         {/* Form Section */}
         <form className="flex flex-col gap-10" onSubmit={handleSubmit}>
           <div className="flex flex-col">
-            <label className="text-[#5F6774] font-semibold leading-[19.2px]">Full Name</label>
+            <label className="text-[#5F6774] font-semibold leading-[19.2px]">
+              Full Name
+            </label>
             <input
               type="text"
               className="p-[16px] border border-[#D0D2D6] rounded-[16px] outline-none h-[49px]"
@@ -137,8 +156,10 @@ const PersonalInformationStep: React.FC<PersonalInformationStepProps> = ({ onNex
             />
           </div>
           <div className="flex justify-between space-x-4">
-            <div className="flex flex-col w-1/2">
-              <label className="text-[#5F6774] font-semibold leading-[19.2px] mb-1">Gender</label>
+            <div className="flex flex-col w-[50%]">
+              <label className="text-[#5F6774] font-semibold leading-[19.2px] mb-1">
+                Gender
+              </label>
               <select
                 className="p-[16px] border border-[#D0D2D6] rounded-[16px] outline-none"
                 value={gender}
@@ -149,11 +170,13 @@ const PersonalInformationStep: React.FC<PersonalInformationStepProps> = ({ onNex
                 <option value="Male">Male</option>
               </select>
             </div>
-            <div className="flex flex-col w-1/2">
-              <label className="text-[#5F6774] font-semibold leading-[19.2px] mb-1">Phone Number</label>
+            <div className="flex flex-col w-[50%]">
+              <label className="text-[#5F6774] font-semibold leading-[19.2px] mb-1">
+                Phone Number
+              </label>
               <input
                 type="tel"
-                className="p-[16px] border border-[#D0D2D6] rounded-[16px] outline-none h-[50px]"
+                className="p-[16px] border border-[#D0D2D6] rounded-[16px] outline-none"
                 placeholder="0123456789"
                 required
                 value={phoneNumber}
@@ -162,13 +185,15 @@ const PersonalInformationStep: React.FC<PersonalInformationStepProps> = ({ onNex
                   validatePhoneNumber(e.target.value);
                 }}
               />
-              {phoneError && <p className="text-red-500 text-sm">{phoneError}</p>}
+              {phoneError && (
+                <p className="text-red-500 text-sm">{phoneError}</p>
+              )}
             </div>
           </div>
           <div className="flex flex-col">
             <label className="text-gray-600 mb-1">Email Address</label>
             <input
-            id="email"
+              id="email"
               type="email"
               className="p-[16px] border border-[#D0D2D6] rounded-[16px] outline-none h-[50px]"
               placeholder="jane@example.com"
@@ -189,7 +214,9 @@ const PersonalInformationStep: React.FC<PersonalInformationStepProps> = ({ onNex
               type="submit"
               disabled={!isFormValid}
               className={`text-[18px] p-[16px] rounded-[16px] h-[54px] w-[50%] leading-[21.6px] font-semibold ${
-                isFormValid ? "bg-[#1E3A8A] text-white" : "bg-[#B9C2DB] text-[#98A4C9]"
+                isFormValid
+                  ? "bg-[#1E3A8A] text-white"
+                  : "bg-[#B9C2DB] text-[#98A4C9]"
               }`}
             >
               Next

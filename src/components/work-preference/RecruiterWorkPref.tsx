@@ -93,17 +93,17 @@ const RecruiterWorkPreferenceForm: React.FC<RecruiterWorkPreferenceProps> = ({
 
   return (
     <div
-      className="flex flex-col items-center justify-center rounded-lg lg:w-[700px] lg:h-[726px] gap-10 lg:border border-[#D0D2D6]"
+      className="flex flex-col items-cente justify-cente rounded-lg lg:w-[700px] lg:h-[726px] gap-10 lg:border border-[#D0D2D6]"
       style={{ fontFamily: "Lato" }}
     >
       <div
-        className="flex justify-center font-bold text-center text-[24px] leading-[30.17px] text-[#374151]"
+        className="flex justify-center font-bold text-center text-[24px] leading-[30.17px] text-[#374151] xl:mt-10"
         style={{ fontFamily: "Merriweather" }}
       >
         <p>Work Specifications</p>
       </div>
       <form
-        className="flex flex-col gap-10 w-[95%] lg:w-[unset] mx-auto"
+        className="flex flex-col gap-10 lg:mx-auto lg:w-[70%] w-full p-3 lg:p-[unset]"
         onSubmit={handleSubmit}
       >
         {/* Work Type Section */}
@@ -220,14 +220,14 @@ const RecruiterWorkPreferenceForm: React.FC<RecruiterWorkPreferenceProps> = ({
           <button
             type="button"
             onClick={onBack}
-            className="border border-[#1E3A8A] text-[18px] p-[16px] rounded-[16px] h-[54px] w-[195px] leading-[21.6px] font-semibold"
+            className="border border-[#1E3A8A] lg:text-[18px] p-[16px] rounded-[16px] h-[54px] w-[50%] leading-[21.6px] font-semibold"
           >
             Back
           </button>
           <button
         type="submit"
         disabled={!isFormValid || isSubmitting}
-        className={`text-[18px] p-[16px] rounded-[16px] h-[54px] w-[195px] leading-[21.6px] font-semibold ${
+        className={`lg:text-[18px] p-[16px] rounded-[16px] h-[54px] w-[50%] md:leading-[21.6px] md:font-semibold flex ${
           isFormValid
             ? "bg-[#1E3A8A] text-white"
             : "bg-[#B9C2DB] text-[#98A4C9]"
