@@ -10,19 +10,19 @@ const NavBar: React.FC = () => {
 
   useEffect(() => {
     if (isOpen) {
-      document.body.style.overflowY = "auto"; // Allow scrolling on the background
+      document.body.style.overflowY = "auto";
     } else {
-      document.body.style.overflowY = "auto"; // Enable scroll on the whole page when the menu is closed
+      document.body.style.overflowY = "auto"; 
     }
 
     return () => {
-      document.body.style.overflowY = "auto"; // Clean up on component unmount
+      document.body.style.overflowY = "auto";
     };
   }, [isOpen]);
 
   return (
     <nav className=" z-50 sticky top-0">
-      <div className="flex items-center justify-between md:h-[108px] h-[40px] px-5 md:px-20 bg-white shadow-md  z-50">
+      <div className="flex items-center justify-between md:h-[108px] h-[70px] px-5 md:px-20 bg-white shadow-sm  z-50">
         <div
           className="flex items-center space-x-2 text-[#374151]"
           style={{ fontFamily: "Georgia" }}
@@ -123,7 +123,7 @@ const NavBar: React.FC = () => {
           className={`fixed top-0 right-0 h-screen w-[50%] bg-white transform ${
             isOpen ? "translate-x-0" : "translate-x-full"
           } transition-transform duration-300 ease-in-out z-50 overflow-hidden`}
-          onClick={(e) => e.stopPropagation()} // Prevent closing when clicking inside the menu
+          onClick={(e) => e.stopPropagation()}
         >
           <div className="flex items-center justify-end md:h-[108px] h-[70px] px-5 bg-white ">
             {/* Close Icon */}

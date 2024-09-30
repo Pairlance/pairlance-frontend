@@ -1,23 +1,21 @@
 import React, { useState } from "react";
 
 interface PitchProps {
-  onNext: (stepData?: any) => void;
-  onBack?: () => void;
+  onNext: (stepData?: any) => Promise<boolean>;
+  onBack: () => void;
+  formData: { text: string }; // Add formData here
 }
 
-export const Pitch: React.FC<PitchProps> = ({ onNext, onBack }) => {
-  const [text, setText] = useState<string>('');
+export const Pitch: React.FC<PitchProps> = ({ onNext, onBack, formData }) => {
   const maxWords = 150;
+
+  const [text, setText] = useState<string>(formData.text || '');
 
   const handleChange = (event: React.ChangeEvent<HTMLTextAreaElement>) => {
     const newText = event.target.value;
     const words = newText.trim().split(/\s+/);
     if (words.length <= maxWords) {
       setText(newText);
-    } else {
-      // Truncate the text to the max word limit and update state
-      const truncatedText = words.slice(0, maxWords).join(' ');
-      setText(truncatedText);
     }
   };
 
@@ -28,7 +26,6 @@ export const Pitch: React.FC<PitchProps> = ({ onNext, onBack }) => {
 
   const wordCount = countWords(text);
 
-  // Check if user has started typing
   const isTyping = text.trim().length > 0;
 
   return (
@@ -44,6 +41,7 @@ export const Pitch: React.FC<PitchProps> = ({ onNext, onBack }) => {
             placeholder="Write a brief pitch highlighting your skills, experience, and what makes you a great fit for potential opportunities"
             value={text}
             onChange={handleChange}
+            maxLength={1000} 
           />
           <div className="flex justify-end font-normal text-[12px] text-[#5C5C5C] leading-[14.4px]">
             <p>{`${wordCount}/${maxWords} words`}</p>

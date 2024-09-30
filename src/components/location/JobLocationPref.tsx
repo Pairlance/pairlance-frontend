@@ -3,16 +3,22 @@ import { Select, Space } from "antd";
 import axios from "axios";
 import type { SelectProps } from "antd";
 
-interface DetailsProps {
-  onNext: (stepData?: any) => void;
-  onBack?: () => void;
+interface LocationPref {
+  selectedLocations: string[];
 }
 
-const JobLocationPref: React.FC<DetailsProps> = ({ onNext, onBack }) => {
-  const [selectedLocations, setSelectedLocations] = useState<string[]>([]);
+interface DetailsProps {
+  onBack?: () => void;
+  onNext: (stepData?: any) => Promise<boolean>;
+  formData: LocationPref; 
+}
+
+const JobLocationPref: React.FC<DetailsProps> = ({ onNext, onBack, formData }) => {
+  const [selectedLocations, setSelectedLocations] = useState<string[]>(formData.selectedLocations || []);
   const [isFormValid, setIsFormValid] = useState(false);
   const [locations, setLocations] = useState<string[]>([]);
   const [loading, setLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
     setIsFormValid(selectedLocations.length > 0);
@@ -24,29 +30,31 @@ const JobLocationPref: React.FC<DetailsProps> = ({ onNext, onBack }) => {
       try {
         const response = await axios.get(`${apiUrl}/api/locations`);
         setLocations(response.data.locations);
-        setLoading(false);
       } catch (error) {
+        console.error("Error fetching locations:", error);
+        setError("Failed to load locations. Please try again.");
+      } finally {
         setLoading(false);
       }
     };
     fetchLocations();
   }, []);
 
+  
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     if (isFormValid) {
-      // console.log("Form submitted with the following data:", {
-      //   selectedLocations,
-      // });
-      onNext({ selectedLocations }); 
+      onNext({ selectedLocations });
     }
   };
 
+  
   const options: SelectProps["options"] = locations.map((location) => ({
     label: location,
     value: location,
   }));
 
+  
   const handleChange = (value: string[]) => {
     setSelectedLocations(value);
   };
@@ -59,6 +67,7 @@ const JobLocationPref: React.FC<DetailsProps> = ({ onNext, onBack }) => {
       <form className="flex flex-col gap-10 w-[85%] mx-auto lg:w-[unset]" onSubmit={handleSubmit}>
         <div className="flex flex-col">
           <label className="text-[#5F6774] font-semibold leading-[19.2px]">Preferred Job Locations</label>
+          {error && <p className="text-red-500">{error}</p>} {/* Display error message */}
           <Space style={{ width: "100%" }} direction="vertical">
             <Select
               mode="multiple"
@@ -68,6 +77,8 @@ const JobLocationPref: React.FC<DetailsProps> = ({ onNext, onBack }) => {
               onChange={handleChange}
               options={options}
               loading={loading}
+              value={selectedLocations} // Ensure the selected locations are displayed
+              aria-label="Preferred job locations"
             />
           </Space>
         </div>

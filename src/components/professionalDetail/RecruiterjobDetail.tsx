@@ -1,7 +1,21 @@
 import React, { useState, useEffect } from "react";
 import Selection from "../common/Selection";
 
+// interface RecruiterJobDetailsProps {
+//   onNext: (data: {
+//     role_level: string;
+//     yearsOfExperience: string;
+//     selectedRoles: string[];
+//   }) => void;
+//   onBack?: () => void;
+// }
+
 interface RecruiterJobDetailsProps {
+  formData: {
+    years_of_experience: string;
+    role_level: string;
+    job_roles: string[];
+  };
   onNext: (data: {
     role_level: string;
     yearsOfExperience: string;
@@ -11,12 +25,13 @@ interface RecruiterJobDetailsProps {
 }
 
 const RecruiterJobDetails: React.FC<RecruiterJobDetailsProps> = ({
+  formData,
   onNext,
 }) => {
-  const [role_level, setRoleLevel] = useState("");
-  const [yearsOfExperience, setYearsOfExperience] = useState("");
+  const [role_level, setRoleLevel] = useState(formData.role_level || "");
+  const [yearsOfExperience, setYearsOfExperience] = useState(formData.years_of_experience || "");
   const [isFormValid, setIsFormValid] = useState(false);
-  const [selectedRoles, setSelectedRoles] = useState<string[]>([]);
+  const [selectedRoles, setSelectedRoles] = useState<string[]>(formData.job_roles || []);
 
   useEffect(() => {
     setIsFormValid(
@@ -71,7 +86,7 @@ const RecruiterJobDetails: React.FC<RecruiterJobDetailsProps> = ({
           <select
             // className="p-[16px] border bg-[#ffff] rounded-[16px] outline-none h-[54px]"
             className={`p-[16px] border bg-[#ffff] rounded-[16px] h-[54px] outline-none ${
-              !yearsOfExperience ? "text-[#5F6774] text-[14px]" : "text-[#000]"
+              !yearsOfExperience ? "text-[#BFBFBF] text-[14px]" : "text-[#000]"
             }`}
             value={yearsOfExperience}
             onChange={(e) => setYearsOfExperience(e.target.value)}
@@ -92,7 +107,7 @@ const RecruiterJobDetails: React.FC<RecruiterJobDetailsProps> = ({
           <select
             // className="p-[16px] border border-[#D0D2D6] bg-white rounded-[16px] h-[54px] outline-none"
             className={`p-[16px] border bg-[#ffff] rounded-[16px] h-[54px] outline-none ${
-              !role_level ? "text-[#79808A] text-[14px]" : "text-[#000]"
+              !role_level ? "text-[#BFBFBF] text-[14px]" : "text-[#000]"
             }`}
             value={role_level}
             onChange={(e) => setRoleLevel(e.target.value)}
