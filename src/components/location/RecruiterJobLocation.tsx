@@ -79,7 +79,7 @@ const RecruiterJobLocation: React.FC<RecruiterJobLocationProps> = ({
         <div className="flex flex-col w-full gap-2">
           <label className="text-[#5F6774] font-semibold leading-[19.2px] mb-1">Gender</label>
           <select
-            className="p-[16px] border border-[#D0D2D6] rounded-[16px] outline-none"
+            className="p-[16px] border bg-[#ffff] rounded-[16px] h-[54px] outline-none"
             value={gender}
             onChange={(e) => setGender(e.target.value)}
           >
