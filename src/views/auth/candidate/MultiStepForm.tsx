@@ -102,7 +102,7 @@ const MultiStepForm: React.FC = () => {
     }
   };
 
-  // Handle data update for each step
+ 
   const updateFormData = (stepData: any, step: number) => {
     setFormData((prevState) => {
       switch (step) {
@@ -124,7 +124,6 @@ const MultiStepForm: React.FC = () => {
     });
   };
 
-  // Function to move to the previous step
   const handleBack = () => {
     if (currentStep > 1) {
       scrollToTop();
@@ -132,14 +131,14 @@ const MultiStepForm: React.FC = () => {
     }
   };
 
-  // Function to handle submission of all data
+  
   const handleSubmit = async () => {
     const apiUrl = import.meta.env.VITE_BASE_URL;
   
     try {
       const formDataToSend = new FormData();
   
-      // Validation check for missing fields before appending to FormData
+     
       if (!formData.personalInfo.full_name) {
         throw new Error("Full name is required");
       }
@@ -148,9 +147,6 @@ const MultiStepForm: React.FC = () => {
       }
       if (!formData.personalInfo.email) {
         throw new Error("Email is required");
-      }
-      if (!formData.personalInfo.photo) {
-        throw new Error("Profile picture is required");
       }
       if (!formData.personalInfo.phoneNumber) {
         throw new Error("Phone number is required");
@@ -165,82 +161,78 @@ const MultiStepForm: React.FC = () => {
         throw new Error("Role level is required");
       }
   
-      
+    
       if (formData.cv) {
         formDataToSend.append("resume_url", formData.cv); 
       }
   
-      
       formDataToSend.append("full_name", formData.personalInfo.full_name);
       formDataToSend.append("gender", formData.personalInfo.gender);
       formDataToSend.append("email", formData.personalInfo.email);
-      formDataToSend.append("image_url", formData.personalInfo.photo); // Profile picture
+      
+     
+      if (formData.personalInfo.photo) {
+        formDataToSend.append("image_url", formData.personalInfo.photo);
+      }
+  
       formDataToSend.append("phone_number", formData.personalInfo.phoneNumber);
       formDataToSend.append("summary_pitch", formData.pitch.text);
       formDataToSend.append("years_of_experience", formData.details.yearsOfExperience);
       formDataToSend.append("role_level", formData.details.roleLevel);
-  
-      
       formDataToSend.append("work_type", JSON.stringify(formData.workPref.workType || []));
       formDataToSend.append("employment_type", JSON.stringify(formData.workPref.employmentType || []));
       formDataToSend.append("salary_range", formData.workPref.salaryScale || "");
       formDataToSend.append("job_locations", JSON.stringify(formData.locationPref.selectedLocations || []));
       formDataToSend.append("job_roles", JSON.stringify(formData.details.selectedRoles || []));
   
-      
-      // for (const [key, value] of formDataToSend.entries()) {
-      //   console.log(`${key}:`, value); 
-      // }
+      await axios.post(`${apiUrl}/api/upload-candidate`, formDataToSend, {
+        headers: {
+          "Content-Type": "multipart/form-data",
+        },
+      });
   
-      
-       await axios.post(
-        `${apiUrl}/api/upload-candidate`,
-        formDataToSend,
-        {
-          headers: {
-            "Content-Type": "multipart/form-data", 
-          },
-        }
-      );
+      // console.log("API response:", response);
+      // message.success("Form submitted successfully!");
   
-      // console.log("Form data submitted successfully!", response.data);
-      return true;
     } catch (error: any) {
-      // console.error("Error submitting form data", error);
+      // Log the full error response for debugging
+      // console.log("Error response:", error.response ? error.response : error);
   
-      if (error.response && error.response.data && error.response.data.errors) {
-        const serverErrors = error.response.data.errors;
+      
+      if (error.response && error.response.data) {
+        const errorMessage = error.response.data.message || "An error occurred";
+        const detailedError = error.response.data.error || "";
   
-        Object.keys(serverErrors).forEach((field) => {
-          message.error(`${field}: ${serverErrors[field]}`);
-        });
+      
+        if (detailedError) {
+          message.error(`${errorMessage}: ${detailedError}`);
+        } else {
+          message.error(errorMessage);
+        }
       } else if (error.message) {
+        message.error(error.message);
       } else {
         message.error("An unexpected error occurred");
       }
-  
       throw error; 
     }
   };
   
   
   
-  
-
-  // Function to handle step click
   const handleStepClick = (step: number) => {
     // console.log(`Step clicked: ${step}`);
     setCurrentStep(step);
   };
 
-  // Conditionally render the current step
+  
 const renderStep = () => {
   switch (currentStep) {
     case 1:
       return (
         <UploadCVStep
           onNext={handleNext}
-          formData={formData.cv} // Pass CV data
+          formData={formData.cv} 
         />
       );
     case 2:

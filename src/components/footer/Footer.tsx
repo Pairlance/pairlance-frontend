@@ -11,33 +11,40 @@ const Footer: React.FC = () => {
     e.preventDefault();
     setIsSubmitting(true);
     setMessage("");
-
+  
     try {
       const apiUrl = import.meta.env.VITE_BASE_URL;
       const response = await axios.post(`${apiUrl}/email`, {
         email,
       });
-
-      console.log("Success response:", response); // Log API success response
-      setMessage("Subscription successful!");
-
-      // Clear the message after 5 seconds
+  
+      // console.log("Success response:", response);
+      setMessage(response.data.message); 
       setTimeout(() => {
         setMessage("");
       }, 5000);
     } catch (error) {
-      console.error("Error response:", error); // Log API error response
-      setMessage("Subscription failed. Please try again.");
-
-      // Clear the message after 5 seconds
+      console.error("Error response:", error);
+  
+      
+      if (axios.isAxiosError(error) && error.response) {
+        setMessage(error.response.data.message || "Subscription failed. Please try again.");
+      } else {
+        setMessage("Subscription failed. Please try again."); 
+      }
+  
+      
       setTimeout(() => {
         setMessage("");
       }, 5000);
     } finally {
       setIsSubmitting(false);
-      setEmail(""); // Clear the input after submission
+      setEmail(""); 
     }
   };
+  
+  
+  
 
   const currentYear = new Date().getFullYear();
 
@@ -125,7 +132,6 @@ const Footer: React.FC = () => {
         </div>
       </div>
 
-      {/* Bottom - Copyright */}
       <div className="border-t border-[#EEEFF2] mt-8 pt-4 w-[90% mx-auto">
         <p className="text-center text-[12px] text-gray-400 leading-[14.4px] font-normal mt-1">
           © {currentYear} PairLance. All rights reserved.
