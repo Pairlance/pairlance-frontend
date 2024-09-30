@@ -52,7 +52,7 @@ const JobLocationPref: React.FC<DetailsProps> = ({ onNext, onBack }) => {
   };
 
   return (
-    <div className="flex flex-col items-center justify-center rounded-lg lg:w-[700px] xl:h-[726px] gap-10 lg:border border-[#D0D2D6]" style={{ fontFamily: "Lato" }}>
+    <div className="flex flex-col items-center justify-center rounded-lg lg:w-[700px] xl:h-[726px] gap-10 py-10 lg:border border-[#D0D2D6]" style={{ fontFamily: "Lato" }}>
       <div className="flex justify-center font-bold text-center text-[24px] leading-[30.17px] text-[#374151]" style={{ fontFamily: "Merriweather" }}>
         <p>Location Preference</p>
       </div>

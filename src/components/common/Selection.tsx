@@ -60,7 +60,7 @@ const Selection: React.FC<SelectionProps> = ({ selectedRoles, onChange }) => {
   };
 
   return (
-    <Space direction="vertical" style={{ width: '100%' }}>
+    <Space direction="vertical" style={{ width: '100%', height:'50px' }}>
       {error ? (
         <p>{error}</p>
       ) : (
