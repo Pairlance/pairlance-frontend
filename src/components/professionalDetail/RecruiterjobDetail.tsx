@@ -66,10 +66,10 @@ const RecruiterJobDetails: React.FC<RecruiterJobDetailsProps> = ({
 
         <div className="flex flex-col">
           <label className="text-[#5F6774] font-semibold leading-[19.2px] mb-1">
-          Years of Experience
+          Number of Years of Experience
           </label>
           <select
-            className="p-[16px] border border-[#D0D2D6] rounded-[16px] outline-none"
+            className="p-[16px] border bg-[#ffff] rounded-[16px] outline-none h-[54px]"
             value={yearsOfExperience}
             onChange={(e) => setYearsOfExperience(e.target.value)}
           >
@@ -87,7 +87,7 @@ const RecruiterJobDetails: React.FC<RecruiterJobDetailsProps> = ({
             Role Level
           </label>
           <select
-            className="p-[16px] border border-[#D0D2D6] bg-white rounded-[16px] outline-none"
+            className="p-[16px] border border-[#D0D2D6] bg-white rounded-[16px] h-[54px] outline-none"
             value={role_level}
             onChange={(e) => setRoleLevel(e.target.value)}
           >
