@@ -113,7 +113,7 @@ const RecruiterJobDetails: React.FC<RecruiterJobDetailsProps> = ({
             onChange={(e) => setRoleLevel(e.target.value)}
           >
             <option value="">Select level</option>
-            <option value="Junior">Junior</option>
+            <option value="Junior">Beginner</option>
             <option value="Intermediate">Intermediate</option>
             <option value="Expert">Expert</option>
           </select>

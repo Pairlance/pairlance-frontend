@@ -15,6 +15,7 @@ import pdficon from "./pdficon.svg";
 import uploadstate from "./uploadstate.svg";
 import goodtick from "./goodtick.svg";
 import burger from "./bugger.svg";
+import logo from "./navbar/logo.svg";
 
 
-export{twitter,linkedin,facebook,branlogo,instagram,star,primecheckcircle,howitworks,uploadicon,divider,profileholder,trash,eyeoff,pdficon, uploadstate,goodtick,burger}
+export{twitter,linkedin,facebook,branlogo,instagram,star,primecheckcircle,howitworks,uploadicon,divider,profileholder,trash,eyeoff,pdficon, uploadstate,goodtick,burger,logo}

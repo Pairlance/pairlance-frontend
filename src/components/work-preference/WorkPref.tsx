@@ -82,8 +82,6 @@ const WorkPreferenceForm: React.FC<WorkPreferenceProps> = ({
     }
   };
 
-  
-  
   const handleModalCancel = () => {
     setIsModalVisible(false);
   };
@@ -216,9 +214,7 @@ const WorkPreferenceForm: React.FC<WorkPreferenceProps> = ({
               onChange={handleSalaryScaleChange}
               className="border bg-[#ffff] rounded-[16px] p-[16px] h-[54px] outline-none"
             >
-              <option disabled>
-                Select Salary Scale
-              </option>
+              <option disabled>Select Salary Scale</option>
               {salaryOptions.map((option) => (
                 <option key={option} value={option}>
                   {option}
@@ -250,10 +246,10 @@ const WorkPreferenceForm: React.FC<WorkPreferenceProps> = ({
           </div>
         </form>
       </div>
-      <ConfirmationModal 
-                visible={isModalVisible}
-                onCancel={handleModalCancel}
-            />
+      <ConfirmationModal
+        visible={isModalVisible}
+        onCancel={handleModalCancel}
+      />
     </>
   );
 };
