@@ -23,7 +23,7 @@ interface FormData {
   workPreferences: {
     workType: string[];
     employmentType: string[];
-    salaryScale: string;
+    salary_range: string;
   };
 }
 
@@ -45,7 +45,7 @@ const RecruiterMultiStepForm: React.FC = () => {
     workPreferences: {
       workType: [],
       employmentType: [],
-      salaryScale: "",
+      salary_range: "",
     },
   });
 
@@ -71,66 +71,69 @@ const RecruiterMultiStepForm: React.FC = () => {
   };
 
   const handleDataSubmit = async (data: any): Promise<void> => {
+    let updatedFormData = { ...formData };
+  
     switch (currentStep) {
       case 1:
-        setFormData((prevData) => ({
-          ...prevData,
+        updatedFormData = {
+          ...updatedFormData,
           jobDetails: {
             years_of_experience: data.yearsOfExperience,
             role_level: data.role_level,
             job_roles: data.selectedRoles,
           },
-        }));
+        };
         break;
       case 2:
-        setFormData((prevData) => ({
-          ...prevData,
+        updatedFormData = {
+          ...updatedFormData,
           jobLocations: {
             job_locations: data.selectedLocations,
             gender: data.gender,
           },
-        }));
+        };
         break;
       case 3:
-        setFormData((prevData) => ({
-          ...prevData,
+        updatedFormData = {
+          ...updatedFormData,
           workPreferences: {
             workType: data.workType || [],
             employmentType: data.employmentType || [],
-            salaryScale: data.salaryScale || "",
+            salary_range: data.salary_range,
           },
-        }));
-
-        const submissionData = {
-          ...formData.jobDetails,
-          ...formData.jobLocations,
-          ...formData.workPreferences,
         };
-
+  
+      
+        const submissionData = {
+          ...updatedFormData.jobDetails,
+          ...updatedFormData.jobLocations,
+          ...updatedFormData.workPreferences,
+        };
+  
         await handleSubmit(submissionData);
-        return;
+        return; 
       default:
         break;
     }
-
+  
+    setFormData(updatedFormData);
     handleNext();
   };
-
+  
   const handleSubmit = async (submissionData: any) => {
     const apiUrl = import.meta.env.VITE_BASE_URL;
-
+  
     const formattedSubmissionData = {
       gender: submissionData.gender,
       years_of_experience: submissionData.years_of_experience,
       role_level: submissionData.role_level,
-      work_type: submissionData.workType, 
+      work_type: submissionData.workType,
       employment_type: submissionData.employmentType,
-      salary_range: submissionData.salaryScale, 
-      job_locations: submissionData.job_locations, 
+      salary_range: submissionData.salary_range,
+      job_locations: submissionData.job_locations,
       job_roles: submissionData.job_roles,
     };
   
-    
     // console.log("Submitting data to API:", formattedSubmissionData);
   
     try {
@@ -148,7 +151,7 @@ const RecruiterMultiStepForm: React.FC = () => {
       const candidates = response.data?.data?.candidates || [];
   
       if (candidates.length > 0) {
-        message.success("Candidates matched! Redirecting...", 2);
+        message.success("Candidates matched! Redirecting...");
         setTimeout(() => {
           navigate("/matching", {
             state: {
