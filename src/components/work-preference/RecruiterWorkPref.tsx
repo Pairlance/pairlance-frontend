@@ -54,7 +54,7 @@ const RecruiterWorkPreferenceForm: React.FC<RecruiterWorkPreferenceProps> = ({
     e.preventDefault();
 
     if (isFormValid) {
-      setIsSubmitting(true); // Disable the form during submission
+      setIsSubmitting(true);
 
       try {
         const data = { workType, employmentType, salary_range };
@@ -69,9 +69,9 @@ const RecruiterWorkPreferenceForm: React.FC<RecruiterWorkPreferenceProps> = ({
           }
         }
       } catch (error) {
-        message.error("Failed to submit the form. Please try again.");
+        // message.error("Failed to submit the form. Please try again.");
       } finally {
-        setIsSubmitting(false); // Re-enable the form after submission
+        setIsSubmitting(false);
       }
     } else {
       message.error("Please complete all required fields before submitting.");
