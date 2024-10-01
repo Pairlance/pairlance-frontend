@@ -12,22 +12,18 @@ import WorkPreferenceForm from "../../../components/work-preference/WorkPref";
 import axios from "axios";
 import { message } from "antd";
 
-// Define TypeScript interfaces for form data
+
 interface PersonalInfo {
   full_name: string;
   gender: string;
-  // phone_number: string;
   phoneNumber: string;
   email: string;
-  // image_url: string;
   photo: string;
 }
 
 interface Details {
   selectedRoles: string[];
-  // years_of_experience: string;
   yearsOfExperience: string;
-  // role_level: string;
   roleLevel: string;
 }
 
@@ -36,9 +32,6 @@ interface LocationPref {
 }
 
 interface WorkPref {
-  // work_type: string[];
-  // employment_type: string[];
-  // salary_ranges: string;
   workType: string;
   salaryScale: string;
   employmentType: string;
@@ -54,7 +47,7 @@ interface FormData {
 }
 
 const MultiStepForm: React.FC = () => {
-  const [currentStep, setCurrentStep] = useState(1); // Track the current step
+  const [currentStep, setCurrentStep] = useState(1); 
   const totalSteps = 6;
 
   const [formData, setFormData] = useState<FormData>({
@@ -80,17 +73,26 @@ const MultiStepForm: React.FC = () => {
     },
   });
 
-  // Function to move to the next step
+
+   
+   const scrollToTop = () => {
+    window.scrollTo({
+      top: 0,
+      behavior: 'auto', 
+    });
+  };
+
+ 
   const handleNext = async (stepData?: any): Promise<boolean> => {
     try {
-      // console.log("Current Step Data:", stepData);
       updateFormData(stepData, currentStep);
 
       if (currentStep < totalSteps) {
+        scrollToTop();
         setCurrentStep(currentStep + 1);
         return true;
       } else {
-        await handleSubmit(); // Wait for form submission to complete
+        await handleSubmit();
         // console.log("Form submitted successfully");
         return true;
       }
@@ -125,6 +127,7 @@ const MultiStepForm: React.FC = () => {
   // Function to move to the previous step
   const handleBack = () => {
     if (currentStep > 1) {
+      scrollToTop();
       setCurrentStep(currentStep - 1);
     }
   };
@@ -231,28 +234,66 @@ const MultiStepForm: React.FC = () => {
   };
 
   // Conditionally render the current step
-  const renderStep = () => {
-    switch (currentStep) {
-      case 1:
-        return <UploadCVStep onNext={handleNext} />;
-      case 2:
-        return (
-          <PersonalInformationStep onNext={handleNext} onBack={handleBack} />
-        );
-      case 3:
-        return <Pitch onNext={handleNext} onBack={handleBack} />;
-      case 4:
-        return <Details onNext={handleNext} onBack={handleBack} />;
-      case 5:
-        return <JobLocationPref onNext={handleNext} onBack={handleBack} />;
-      case 6:
-        return <WorkPreferenceForm onNext={handleNext} onBack={handleBack} />;
-      default:
-        return (
-          <PersonalInformationStep onNext={handleNext} onBack={handleBack} />
-        );
-    }
-  };
+const renderStep = () => {
+  switch (currentStep) {
+    case 1:
+      return (
+        <UploadCVStep
+          onNext={handleNext}
+          formData={formData.cv} // Pass CV data
+        />
+      );
+    case 2:
+      return (
+        <PersonalInformationStep
+          onNext={handleNext}
+          onBack={handleBack}
+          formData={formData.personalInfo}
+        />
+      );
+    case 3:
+      return (
+        <Pitch
+          onNext={handleNext}
+          onBack={handleBack}
+          formData={formData.pitch} 
+        />
+      );
+    case 4:
+      return (
+        <Details
+          onNext={handleNext}
+          onBack={handleBack}
+          formData={formData.details} 
+        />
+      );
+    case 5:
+      return (
+        <JobLocationPref
+          onNext={handleNext}
+          onBack={handleBack}
+          formData={formData.locationPref} 
+        />
+      );
+    case 6:
+      return (
+        <WorkPreferenceForm
+          onNext={handleNext}
+          onBack={handleBack}
+          // formData={formData.workPref} 
+        />
+      );
+    default:
+      return (
+        <PersonalInformationStep
+          onNext={handleNext}
+          onBack={handleBack}
+          formData={formData.personalInfo} 
+        />
+      );
+  }
+};
+
 
   return (
     <>

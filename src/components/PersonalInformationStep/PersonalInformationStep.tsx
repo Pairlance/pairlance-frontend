@@ -2,24 +2,37 @@ import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { profileholder } from "../../assets";
 
+interface PersonalInfo {
+  full_name: string;
+  gender: string;
+  phoneNumber: string;
+  email: string;
+  photo?: string; 
+}
+
 interface PersonalInformationStepProps {
-  onNext: (stepData?: any) => void;
+  onNext: (stepData?: any) => Promise<boolean>;
   onBack?: () => void;
+  formData: PersonalInfo; 
 }
 
 const PersonalInformationStep: React.FC<PersonalInformationStepProps> = ({
   onNext,
   onBack,
+  formData,
 }) => {
-  const [full_name, setFullName] = useState("");
-  const [gender, setGender] = useState("");
-  const [phoneNumber, setPhoneNumber] = useState("");
-  const [email, setEmail] = useState("");
+  const [full_name, setFullName] = useState(formData.full_name || "");
+  const [gender, setGender] = useState(formData.gender || "");
+  const [phoneNumber, setPhoneNumber] = useState(formData.phoneNumber || "");
+  const [email, setEmail] = useState(formData.email || "");
   const [photo, setPhoto] = useState<File | null>(null);
+  const [uploadedPhotoUrl, setUploadedPhotoUrl] = useState<string | null>(
+    formData.photo || null
+  );
   const [isFormValid, setIsFormValid] = useState(false);
   const [phoneError, setPhoneError] = useState("");
 
-  // Validate form
+  
   useEffect(() => {
     const phoneRegex = /^[0-9]{10,15}$/;
     setIsFormValid(
@@ -27,7 +40,7 @@ const PersonalInformationStep: React.FC<PersonalInformationStepProps> = ({
     );
   }, [full_name, gender, phoneNumber, email]);
 
-  // Upload photo to Cloudinary
+  
   const uploadPhoto = async (file: File) => {
     const cloudApi = import.meta.env.VITE_CLOUDINARY_BASE_URL;
     const formData = new FormData();
@@ -35,13 +48,10 @@ const PersonalInformationStep: React.FC<PersonalInformationStepProps> = ({
     formData.append("upload_preset", "pairlance");
 
     try {
-      const response = await axios.post(
-        `${cloudApi}`,
-        formData
-      );
+      const response = await axios.post(`${cloudApi}`, formData);
       const uploadedUrl = response.data.secure_url;
       console.log("Uploaded Photo URL:", uploadedUrl);
-      return uploadedUrl; // Return the URL of the uploaded image
+      return uploadedUrl;
     } catch (error) {
       console.error("Error uploading photo:", error);
       return null;
@@ -50,7 +60,9 @@ const PersonalInformationStep: React.FC<PersonalInformationStepProps> = ({
 
   const handlePhotoUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
     if (e.target.files && e.target.files.length > 0) {
-      setPhoto(e.target.files[0]);
+      const selectedPhoto = e.target.files[0];
+      setPhoto(selectedPhoto);
+      setUploadedPhotoUrl(URL.createObjectURL(selectedPhoto));
     }
   };
 
@@ -58,37 +70,29 @@ const PersonalInformationStep: React.FC<PersonalInformationStepProps> = ({
     e.preventDefault();
 
     if (isFormValid) {
-      let uploadedPhotoUrl: string | null = null;
-      if (photo) {
-        uploadedPhotoUrl = await uploadPhoto(photo);
-      }
+      let uploadedPhoto: string | null = uploadedPhotoUrl;
 
-      // console.log("Form submitted with the following data:", {
-      //   full_name,
-      //   gender,
-      //   phoneNumber,
-      //   email,
-      //   photo: uploadedPhotoUrl,
-      // });
+      if (photo) {
+        uploadedPhoto = await uploadPhoto(photo);
+      }
 
       onNext({
         full_name,
         gender,
         phoneNumber,
         email,
-        photo: uploadedPhotoUrl,
+        photo: uploadedPhoto,
       });
     }
   };
 
   const validatePhoneNumber = (value: string) => {
-    const phoneRegex = /^[0-9]{10,15}$/; // Regex for valid phone number length
+    const phoneRegex = /^[0-9]{10,15}$/;
 
-    // Only show error if the user has started typing (value is not empty)
     if (value && !phoneRegex.test(value)) {
       setPhoneError("Please enter a valid phone number");
     } else {
-      setPhoneError(""); // Clear error if the phone number is valid or empty
+      setPhoneError("");
     }
   };
 
@@ -97,19 +101,10 @@ const PersonalInformationStep: React.FC<PersonalInformationStepProps> = ({
   }, [phoneNumber]);
 
   return (
-    <div
-      className="flex flex-col justify-center items-center"
-      style={{ fontFamily: "Lato" }}
-    >
-      <div
-        className="flex flex-col lg:border border-[#D0D2D6] lg:my-20 lg:w-[700px] xl:w-[95%] w-full rounded-[16px] lg:p-20 p-5 gap-10 mx-auto"
-        style={{ fontFamily: "Lato" }}
-      >
+    <div className="flex flex-col justify-center items-center" style={{ fontFamily: "Lato" }}>
+      <div className="flex flex-col lg:border border-[#D0D2D6] lg:my-20 lg:w-[700px] xl:w-[95%] w-full rounded-[16px] lg:p-20 p-5 gap-10 mx-auto" style={{ fontFamily: "Lato" }}>
         <div className="text-center mb-8">
-          <p
-            className="text-[24px] font-bold text-[#374151] leading-[30.17px]"
-            style={{ fontFamily: "Merriweather" }}
-          >
+          <p className="text-[24px] font-bold text-[#374151] leading-[30.17px]" style={{ fontFamily: "Merriweather" }}>
             Personal Information
           </p>
         </div>
@@ -117,7 +112,7 @@ const PersonalInformationStep: React.FC<PersonalInformationStepProps> = ({
         <div className="flex items-center justify-center gap-5">
           <div>
             <img
-              src={photo ? URL.createObjectURL(photo) : profileholder}
+              src={uploadedPhotoUrl ? uploadedPhotoUrl : profileholder}
               alt="Profile"
               className="w-[120px] h-[120px] object-cover rounded-full"
             />
@@ -161,7 +156,6 @@ const PersonalInformationStep: React.FC<PersonalInformationStepProps> = ({
                 Gender
               </label>
               <select
-                // className="p-[16px] border bg-[#ffff] rounded-[16px] h-[54px] outline-none"
                 className={`p-[16px] border bg-[#ffff] rounded-[16px] h-[54px] outline-none ${
                   !gender ? "text-[#5F6774] text-[16px] text-opacity-60" : "text-black"
                 }`}
@@ -188,9 +182,7 @@ const PersonalInformationStep: React.FC<PersonalInformationStepProps> = ({
                   validatePhoneNumber(e.target.value);
                 }}
               />
-              {phoneError && (
-                <p className="text-red-500 text-sm">{phoneError}</p>
-              )}
+              {phoneError && <p className="text-red-500 text-sm">{phoneError}</p>}
             </div>
           </div>
           <div className="flex flex-col">
@@ -219,7 +211,7 @@ const PersonalInformationStep: React.FC<PersonalInformationStepProps> = ({
               className={`text-[18px] p-[16px] rounded-[16px] h-[54px] w-[50%] leading-[21.6px] font-semibold ${
                 isFormValid
                   ? "bg-[#1E3A8A] text-white"
-                  : "bg-[#B9C2DB] text-[#98A4C9]"
+                  : "bg-[#D0D2D6] text-gray-500"
               }`}
             >
               Next

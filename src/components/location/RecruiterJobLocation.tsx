@@ -4,17 +4,22 @@ import type { SelectProps } from "antd";
 import axios from "axios";
 
 interface RecruiterJobLocationProps {
+  formData: {
+    job_locations: string[]; // Make sure this is initialized correctly
+    gender: string;
+  };
   onNext: (data: { selectedLocations: string[]; gender: string }) => Promise<void>;
   onBack: () => void;
 }
 
 const RecruiterJobLocation: React.FC<RecruiterJobLocationProps> = ({
+  formData,
   onNext,
   onBack,
 }) => {
-  const [selectedLocations, setSelectedLocations] = useState<string[]>([]);
+  const [selectedLocations, setSelectedLocations] = useState<string[]>(formData.job_locations || []); // Initialize with formData
   const [isFormValid, setIsFormValid] = useState(false);
-  const [gender, setGender] = useState<string>("");
+  const [gender, setGender] = useState<string>(formData.gender || "");
   const [loading, setLoading] = useState(true);
   const [locations, setLocations] = useState<string[]>([]);
 
@@ -30,6 +35,7 @@ const RecruiterJobLocation: React.FC<RecruiterJobLocationProps> = ({
         setLocations(response.data.locations);
         setLoading(false);
       } catch (error) {
+        console.error("Error fetching locations:", error);
         setLoading(false);
       }
     };
@@ -39,10 +45,6 @@ const RecruiterJobLocation: React.FC<RecruiterJobLocationProps> = ({
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     if (isFormValid) {
-      // console.log("Form submitted with the following data:", {
-      //   selectedLocations,
-      //   gender,
-      // });
       await onNext({ selectedLocations, gender }); 
     }
   };
@@ -61,7 +63,7 @@ const RecruiterJobLocation: React.FC<RecruiterJobLocationProps> = ({
       <div className="flex justify-center font-bold text-center text-[24px] leading-[30.17px] text-[#374151]" style={{ fontFamily: "Merriweather" }}>
         <p>Gender & Location Preferences</p>
       </div>
-      <form className="flex flex-col gap-6 w-[90%] lg:w-[55%]  mx-auto" onSubmit={handleSubmit}>
+      <form className="flex flex-col gap-6 w-[90%] lg:w-[55%] mx-auto" onSubmit={handleSubmit}>
         <div className="flex flex-col gap-2">
           <label className="text-[#5F6774] font-semibold leading-[19.2px]">Job Location(s)</label>
           <Space style={{ width: "100%" }} direction="vertical">
@@ -73,16 +75,14 @@ const RecruiterJobLocation: React.FC<RecruiterJobLocationProps> = ({
               onChange={handleChange}
               options={options}
               loading={loading}
+              value={selectedLocations} // Set the selected locations here
             />
           </Space>
         </div>
         <div className="flex flex-col w-full gap-2">
           <label className="text-[#5F6774] font-semibold leading-[19.2px] mb-1">Gender</label>
           <select
-            // className="p-[16px] border bg-[#ffff] rounded-[16px] h-[54px] outline-none"
-            className={`p-[16px] border bg-[#ffff] rounded-[16px] h-[54px] outline-none ${
-              !gender ? "text-[#5F6774] text-[14px]" : "text-[#000]"
-            }`}
+            className={`p-[16px] border bg-[#ffff] rounded-[16px] h-[54px] outline-none ${!gender ? "text-[#BFBFBF] text-[13px]" : "text-[#000]"}`}
             value={gender}
             onChange={(e) => setGender(e.target.value)}
           >

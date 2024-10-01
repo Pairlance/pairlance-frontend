@@ -121,7 +121,7 @@ const Footer: React.FC = () => {
               {isSubmitting ? "Subscribing..." : "Subscribe"}
             </button>
           </form>
-          {message && <p className="text-[16px] mt-2 text-[green]">{message}</p>}
+          {message && <p className="text-[16px] mt-2 text-[#BFBF]">{message}</p>}
         </div>
       </div>
 

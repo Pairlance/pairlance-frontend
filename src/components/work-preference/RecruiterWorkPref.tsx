@@ -2,7 +2,13 @@ import React, { useState, useEffect } from "react";
 import { message } from "antd";
 import { useNavigate } from "react-router-dom";
 
+// Update the interface to include formData
 interface RecruiterWorkPreferenceProps {
+  formData: {
+    workType: string[]; // Add this line
+    employmentType: string[]; // Add this line
+    salaryScale: string | undefined; // Add this line
+  };
   onBack?: () => void;
   onNext?: (data: {
     workType: string[];
@@ -12,12 +18,13 @@ interface RecruiterWorkPreferenceProps {
 }
 
 const RecruiterWorkPreferenceForm: React.FC<RecruiterWorkPreferenceProps> = ({
+  formData, // Destructure formData from props
   onBack,
   onNext,
 }) => {
-  const [workType, setWorkType] = useState<string[]>([]);
-  const [employmentType, setEmploymentType] = useState<string[]>([]);
-  const [salaryScale, setSalaryScale] = useState<string | undefined>(undefined);
+  const [workType, setWorkType] = useState<string[]>(formData.workType || []); // Initialize with formData
+  const [employmentType, setEmploymentType] = useState<string[]>(formData.employmentType || []); // Initialize with formData
+  const [salaryScale, setSalaryScale] = useState<string | undefined>(formData.salaryScale); // Initialize with formData
   const [isFormValid, setIsFormValid] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const navigate = useNavigate();
@@ -78,6 +85,7 @@ const RecruiterWorkPreferenceForm: React.FC<RecruiterWorkPreferenceProps> = ({
   };
 
   const salaryOptions = [
+    "select salary",
     "50,000 - 100,000",
     "100,000 - 200,000",
     "200,000 - 300,000",
@@ -93,7 +101,7 @@ const RecruiterWorkPreferenceForm: React.FC<RecruiterWorkPreferenceProps> = ({
 
   return (
     <div
-      className="flex flex-col items-cente justify-cente rounded-lg lg:w-[700px] lg:h-[726px] gap-10 lg:border border-[#D0D2D6]"
+      className="flex flex-col items-center justify-center rounded-lg lg:w-[700px] lg:h-[726px] gap-10 lg:border border-[#D0D2D6]"
       style={{ fontFamily: "Lato" }}
     >
       <div
@@ -225,16 +233,16 @@ const RecruiterWorkPreferenceForm: React.FC<RecruiterWorkPreferenceProps> = ({
             Back
           </button>
           <button
-        type="submit"
-        disabled={!isFormValid || isSubmitting}
-        className={`lg:text-[18px] p-[16px] rounded-[16px] h-[54px] w-[50%] md:leading-[21.6px] md:font-semibold flex ${
-          isFormValid
-            ? "bg-[#1E3A8A] text-white"
-            : "bg-[#B9C2DB] text-[#98A4C9]"
-        }`}
-      >
-        {isSubmitting ? "Saving..." : "Save and Proceed"}
-      </button>
+            type="submit"
+            disabled={!isFormValid || isSubmitting}
+            className={`lg:text-[18px] p-[16px] rounded-[16px] h-[54px] w-[50%] md:leading-[21.6px] md:font-semibold ${
+              isFormValid && !isSubmitting
+                ? "bg-[#1E3A8A] text-white"
+                : "bg-[#D0D2D6] text-[#A3A3A3]"
+            }`}
+          >
+            {isSubmitting ? "Submitting..." : "Next"}
+          </button>
         </div>
       </form>
     </div>

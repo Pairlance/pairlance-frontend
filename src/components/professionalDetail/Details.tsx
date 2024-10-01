@@ -1,15 +1,22 @@
 import React, { useState, useEffect } from "react";
 import Selection from "../common/Selection";
 
-interface DetailsProps {
-  onNext: (stepData?: any) => void;
-  onBack?: () => void;
+interface Detail {
+  selectedRoles: string[];
+  yearsOfExperience: string;
+  roleLevel: string;
 }
 
-const Details: React.FC<DetailsProps> = ({ onNext, onBack }) => {
-  const [selectedRoles, setSelectedRoles] = useState<string[]>([]);
-  const [yearsOfExperience, setYearsOfExperience] = useState("");
-  const [roleLevel, setRoleLevel] = useState("");
+interface DetailsProps {
+  onNext: (stepData?: Detail) => void; 
+  onBack?: () => void;
+  formData: Detail;
+}
+
+const Details: React.FC<DetailsProps> = ({ onNext, onBack, formData }) => {
+  const [selectedRoles, setSelectedRoles] = useState<string[]>(formData.selectedRoles || []);
+  const [yearsOfExperience, setYearsOfExperience] = useState(formData.yearsOfExperience || "");
+  const [roleLevel, setRoleLevel] = useState(formData.roleLevel || "");
   const [isFormValid, setIsFormValid] = useState(false);
 
   useEffect(() => {
@@ -25,11 +32,6 @@ const Details: React.FC<DetailsProps> = ({ onNext, onBack }) => {
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     if (isFormValid) {
-      // console.log("Form submitted with the following data:", {
-      //   selectedRoles,
-      //   yearsOfExperience,
-      //   roleLevel,
-      // });
       onNext({
         selectedRoles,
         yearsOfExperience,
@@ -64,38 +66,35 @@ const Details: React.FC<DetailsProps> = ({ onNext, onBack }) => {
         </div>
 
         <div className="flex flex-col">
-  <label className="text-[#5F6774] font-semibold leading-[19.2px] mb-1">
-    Number of Years of Experience
-  </label>
-  <select
-    className={`p-[16px] border bg-[#ffff] rounded-[16px] h-[54px] outline-none ${
-      !yearsOfExperience ? "text-[#79808A] text-[14px] text-opacity-60" : "text-black"
-    }`}
-    value={yearsOfExperience}
-    onChange={(e) => setYearsOfExperience(e.target.value)}
-  >
-    <option value="" disabled hidden>
-      Select years
-    </option>
-    {Array.from({ length: 10 }, (_, i) => i + 1).map((year) => (
-      <option key={year} value={year}>
-        {year}
-      </option>
-    ))}
-  </select>
-</div>
-
-
-
+          <label className="text-[#5F6774] font-semibold leading-[19.2px] mb-1">
+            Number of Years of Experience
+          </label>
+          <select
+            className={`p-[16px] border bg-[#ffff] rounded-[16px] h-[54px] outline-none ${
+              !yearsOfExperience ? "text-[#79808A] text-[14px] text-opacity-60" : "text-black"
+            }`}
+            value={yearsOfExperience}
+            onChange={(e) => setYearsOfExperience(e.target.value)}
+          >
+            <option value="" disabled hidden>
+              Select years
+            </option>
+            {Array.from({ length: 10 }, (_, i) => i + 1).map((year) => (
+              <option key={year} value={year}>
+                {year}
+              </option>
+            ))}
+          </select>
+        </div>
 
         <div className="flex flex-col">
           <label className="text-[#5F6774] font-semibold leading-[19.2px] mb-1">
             Role Level
           </label>
           <select
-           className={`p-[16px] border bg-[#ffff] rounded-[16px] h-[54px] outline-none ${
-            !roleLevel ? "text-[#79808A] text-[14px] text-opacity-60" : "text-[#000]"
-          }`}
+            className={`p-[16px] border bg-[#ffff] rounded-[16px] h-[54px] outline-none ${
+              !roleLevel ? "text-[#79808A] text-[14px] text-opacity-60" : "text-[#000]"
+            }`}
             value={roleLevel}
             onChange={(e) => setRoleLevel(e.target.value)}
           >
