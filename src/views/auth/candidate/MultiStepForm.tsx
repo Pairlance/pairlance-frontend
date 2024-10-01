@@ -12,7 +12,6 @@ import WorkPreferenceForm from "../../../components/work-preference/WorkPref";
 import axios from "axios";
 import { message } from "antd";
 
-
 interface PersonalInfo {
   full_name: string;
   gender: string;
@@ -47,7 +46,7 @@ interface FormData {
 }
 
 const MultiStepForm: React.FC = () => {
-  const [currentStep, setCurrentStep] = useState(1); 
+  const [currentStep, setCurrentStep] = useState(1);
   const totalSteps = 6;
 
   const [formData, setFormData] = useState<FormData>({
@@ -73,55 +72,50 @@ const MultiStepForm: React.FC = () => {
     },
   });
 
-
-   
-   const scrollToTop = () => {
+  const scrollToTop = () => {
     window.scrollTo({
       top: 0,
-      behavior: 'auto', 
+      behavior: 'auto',
     });
   };
 
- 
   const handleNext = async (stepData?: any): Promise<boolean> => {
     try {
-      updateFormData(stepData, currentStep);
+        const updatedFormData = updateFormData(stepData, currentStep);
+        setFormData(updatedFormData);
 
-      if (currentStep < totalSteps) {
-        scrollToTop();
-        setCurrentStep(currentStep + 1);
-        return true;
-      } else {
-        await handleSubmit();
-        // console.log("Form submitted successfully");
-        return true;
-      }
+        if (currentStep < totalSteps) {
+            scrollToTop();
+            setCurrentStep(currentStep + 1);
+        } else {
+            await handleSubmit(updatedFormData);
+        }
+
+        return true; 
     } catch (error) {
-      // console.error("Submission failed", error);
-      return false;
+        // console.error("Error moving to next step or submitting", error);
+        return false; 
     }
-  };
+};
 
- 
+
   const updateFormData = (stepData: any, step: number) => {
-    setFormData((prevState) => {
-      switch (step) {
-        case 1:
-          return { ...prevState, cv: stepData };
-        case 2:
-          return { ...prevState, personalInfo: stepData };
-        case 3:
-          return { ...prevState, pitch: stepData };
-        case 4:
-          return { ...prevState, details: stepData };
-        case 5:
-          return { ...prevState, locationPref: stepData };
-        case 6:
-          return { ...prevState, workPref: stepData };
-        default:
-          return prevState;
-      }
-    });
+    switch (step) {
+      case 1:
+        return { ...formData, cv: stepData };
+      case 2:
+        return { ...formData, personalInfo: stepData };
+      case 3:
+        return { ...formData, pitch: stepData };
+      case 4:
+        return { ...formData, details: stepData };
+      case 5:
+        return { ...formData, locationPref: stepData };
+      case 6:
+        return { ...formData, workPref: stepData };
+      default:
+        return formData;
+    }
   };
 
   const handleBack = () => {
@@ -131,79 +125,67 @@ const MultiStepForm: React.FC = () => {
     }
   };
 
-  
-  const handleSubmit = async () => {
+  const handleSubmit = async (updatedFormData: FormData) => {
     const apiUrl = import.meta.env.VITE_BASE_URL;
-  
+
     try {
       const formDataToSend = new FormData();
-  
-     
-      if (!formData.personalInfo.full_name) {
+
+      // Validate required fields
+      if (!updatedFormData.personalInfo.full_name) {
         throw new Error("Full name is required");
       }
-      if (!formData.personalInfo.gender) {
+      if (!updatedFormData.personalInfo.gender) {
         throw new Error("Gender is required");
       }
-      if (!formData.personalInfo.email) {
+      if (!updatedFormData.personalInfo.email) {
         throw new Error("Email is required");
       }
-      if (!formData.personalInfo.phoneNumber) {
+      if (!updatedFormData.personalInfo.phoneNumber) {
         throw new Error("Phone number is required");
       }
-      if (!formData.pitch.text) {
+      if (!updatedFormData.pitch.text) {
         throw new Error("Summary pitch is required");
       }
-      if (!formData.details.yearsOfExperience) {
+      if (!updatedFormData.details.yearsOfExperience) {
         throw new Error("Years of experience is required");
       }
-      if (!formData.details.roleLevel) {
+      if (!updatedFormData.details.roleLevel) {
         throw new Error("Role level is required");
       }
-  
-    
-      if (formData.cv) {
-        formDataToSend.append("resume_url", formData.cv); 
+
+      // Append data to FormData
+      if (updatedFormData.cv) {
+        formDataToSend.append("resume_url", updatedFormData.cv);
       }
-  
-      formDataToSend.append("full_name", formData.personalInfo.full_name);
-      formDataToSend.append("gender", formData.personalInfo.gender);
-      formDataToSend.append("email", formData.personalInfo.email);
-      
-     
-      if (formData.personalInfo.photo) {
-        formDataToSend.append("image_url", formData.personalInfo.photo);
+      formDataToSend.append("full_name", updatedFormData.personalInfo.full_name);
+      formDataToSend.append("gender", updatedFormData.personalInfo.gender);
+      formDataToSend.append("email", updatedFormData.personalInfo.email);
+      if (updatedFormData.personalInfo.photo) {
+        formDataToSend.append("image_url", updatedFormData.personalInfo.photo);
       }
-  
-      formDataToSend.append("phone_number", formData.personalInfo.phoneNumber);
-      formDataToSend.append("summary_pitch", formData.pitch.text);
-      formDataToSend.append("years_of_experience", formData.details.yearsOfExperience);
-      formDataToSend.append("role_level", formData.details.roleLevel);
-      formDataToSend.append("work_type", JSON.stringify(formData.workPref.workType || []));
-      formDataToSend.append("employment_type", JSON.stringify(formData.workPref.employmentType || []));
-      formDataToSend.append("salary_range", formData.workPref.salaryScale || "");
-      formDataToSend.append("job_locations", JSON.stringify(formData.locationPref.selectedLocations || []));
-      formDataToSend.append("job_roles", JSON.stringify(formData.details.selectedRoles || []));
-  
+      formDataToSend.append("phone_number", updatedFormData.personalInfo.phoneNumber);
+      formDataToSend.append("summary_pitch", updatedFormData.pitch.text);
+      formDataToSend.append("years_of_experience", updatedFormData.details.yearsOfExperience);
+      formDataToSend.append("role_level", updatedFormData.details.roleLevel);
+      formDataToSend.append("work_type", JSON.stringify(updatedFormData.workPref.workType || []));
+      formDataToSend.append("employment_type", JSON.stringify(updatedFormData.workPref.employmentType || []));
+      formDataToSend.append("salary_range", updatedFormData.workPref.salaryScale || "");
+      formDataToSend.append("job_locations", JSON.stringify(updatedFormData.locationPref.selectedLocations || []));
+      formDataToSend.append("job_roles", JSON.stringify(updatedFormData.details.selectedRoles || []));
+
       await axios.post(`${apiUrl}/api/upload-candidate`, formDataToSend, {
         headers: {
           "Content-Type": "multipart/form-data",
         },
       });
-  
-      // console.log("API response:", response);
+
       // message.success("Form submitted successfully!");
-  
+
     } catch (error: any) {
-      // Log the full error response for debugging
-      // console.log("Error response:", error.response ? error.response : error);
-  
-      
       if (error.response && error.response.data) {
         const errorMessage = error.response.data.message || "An error occurred";
         const detailedError = error.response.data.error || "";
-  
-      
         if (detailedError) {
           message.error(`${errorMessage}: ${detailedError}`);
         } else {
@@ -214,86 +196,72 @@ const MultiStepForm: React.FC = () => {
       } else {
         message.error("An unexpected error occurred");
       }
-      throw error; 
+      throw error;
     }
   };
-  
-  
-  
+
   const handleStepClick = (step: number) => {
-    // console.log(`Step clicked: ${step}`);
     setCurrentStep(step);
   };
 
-  
-const renderStep = () => {
-  switch (currentStep) {
-    case 1:
-      return (
-        <UploadCVStep
-          onNext={handleNext}
-          formData={formData.cv} 
-        />
-      );
-    case 2:
-      return (
-        <PersonalInformationStep
-          onNext={handleNext}
-          onBack={handleBack}
-          formData={formData.personalInfo}
-        />
-      );
-    case 3:
-      return (
-        <Pitch
-          onNext={handleNext}
-          onBack={handleBack}
-          formData={formData.pitch} 
-        />
-      );
-    case 4:
-      return (
-        <Details
-          onNext={handleNext}
-          onBack={handleBack}
-          formData={formData.details} 
-        />
-      );
-    case 5:
-      return (
-        <JobLocationPref
-          onNext={handleNext}
-          onBack={handleBack}
-          formData={formData.locationPref} 
-        />
-      );
-    case 6:
-      return (
-        <WorkPreferenceForm
-          onNext={handleNext}
-          onBack={handleBack}
-          // formData={formData.workPref} 
-        />
-      );
-    default:
-      return (
-        <PersonalInformationStep
-          onNext={handleNext}
-          onBack={handleBack}
-          formData={formData.personalInfo} 
-        />
-      );
-  }
-};
-
+  const renderStep = () => {
+    switch (currentStep) {
+      case 1:
+        return (
+          <UploadCVStep
+            onNext={handleNext}
+            formData={formData.cv}
+          />
+        );
+      case 2:
+        return (
+          <PersonalInformationStep
+            onNext={handleNext}
+            onBack={handleBack}
+            formData={formData.personalInfo}
+          />
+        );
+      case 3:
+        return (
+          <Pitch
+            onNext={handleNext}
+            onBack={handleBack}
+            formData={formData.pitch}
+          />
+        );
+      case 4:
+        return (
+          <Details
+            onNext={handleNext}
+            onBack={handleBack}
+            formData={formData.details}
+          />
+        );
+      case 5:
+        return (
+          <JobLocationPref
+            onNext={handleNext}
+            onBack={handleBack}
+            formData={formData.locationPref}
+          />
+        );
+      case 6:
+        return (
+          <WorkPreferenceForm
+            onNext={handleNext}
+            onBack={handleBack}
+            // formData={formData.workPref}
+          />
+        );
+      default:
+        return null;
+    }
+  };
 
   return (
     <>
       <NavBar />
-      <div
-        className="flex flex-col lg:justify-center lg:items-center"
-        style={{ fontFamily: "Lato" }}
-      >
+      <div className="flex flex-col lg:justify-center lg:items-center" style={{ fontFamily: "Lato" }}>
         <div className="w-full">
           <HeroBanner
             backgroundImage="/src/assets/hero2.jpg"
@@ -309,12 +277,12 @@ const renderStep = () => {
             completedColor="#1E3A8A"
             upcomingColor="#FFFF"
             borderColor="#1E3A8A"
-            onStepClick={handleStepClick} 
+            onStepClick={handleStepClick}
           />
         </div>
 
         <div className="my-20 lg:w-[700px]">
-          {renderStep()} 
+          {renderStep()}
         </div>
       </div>
       <Footer />

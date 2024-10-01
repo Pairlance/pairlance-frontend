@@ -13,7 +13,7 @@ const WorkPreferenceForm: React.FC<WorkPreferenceProps> = ({
 }) => {
   const [workType, setWorkType] = useState<string[]>([]);
   const [employmentType, setEmploymentType] = useState<string[]>([]);
-  const [salaryScale, setSalaryScale] = useState<string | undefined>(undefined);
+  const [salaryScale, setSalaryScale] = useState("");
   const [isFormValid, setIsFormValid] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false); // New state for managing submission
   const [isModalVisible, setIsModalVisible] = useState(false);
@@ -89,7 +89,6 @@ const WorkPreferenceForm: React.FC<WorkPreferenceProps> = ({
   };
 
   const salaryOptions = [
-    "select salary",
     "50,000 - 100,000",
     "100,000 - 200,000",
     "200,000 - 300,000",
@@ -217,9 +216,9 @@ const WorkPreferenceForm: React.FC<WorkPreferenceProps> = ({
               onChange={handleSalaryScaleChange}
               className="border bg-[#ffff] rounded-[16px] p-[16px] h-[54px] outline-none"
             >
-              <option value="" disabled>
+              {/* <option value="" disabled>
                 Select Salary Scale
-              </option>
+              </option> */}
               {salaryOptions.map((option) => (
                 <option key={option} value={option}>
                   {option}
