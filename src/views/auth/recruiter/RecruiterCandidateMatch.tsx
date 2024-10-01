@@ -128,7 +128,7 @@ const RecruiterCandidateMatch: React.FC = () => {
           </div>
         </div>
 
-        <div className="lg:w-[60%] w-full m-auto h-[775px lg:border-none border border-[#D0D2D6] rounded-[16px]">
+        <div className="lg:w-[60%] w-full m-auto h-[100%] lg:border-none border border-[#D0D2D6] rounded-[16px]">
           <Carousel arrows={true} className=" ">
             {/* <div className=" w-[50% justify-center items-center mx-auto"> */}
             {candidates.map((candidate) => (

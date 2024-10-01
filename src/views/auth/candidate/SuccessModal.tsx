@@ -28,10 +28,10 @@ const ConfirmationModal: React.FC<ConfirmationModalProps> = ({ visible, onCancel
         <p className="text-center text-[#5F6774] text-[18px] mb-6 leading-[21.6px] lg:w-[476px]">
           Recruiter will reach out to you if you are successfully matched!.
         </p>
-        <div className="flex flex-col lg:flex-row lg:space-x-4 gap-5 lg:gap-0 w-[50%]">
+        <div className="flex flex-col lg:flex-row lg:space-x-4 gap-5 lg:gap-0 w-[60%]">
           <button
             onClick={() => (window.location.href = "/")}
-            className="border bg-[#1E3A8A] text-[#ffff] p-[16px] h-[54px] rounded-[16px] w-full"
+            className="border bg-[#1E3A8A] text-[#ffff] p-[16px] h-[54px] text-[14px] rounded-[16px] w-full"
           >
             Return to Homepage
           </button>
