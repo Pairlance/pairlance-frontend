@@ -216,9 +216,9 @@ const WorkPreferenceForm: React.FC<WorkPreferenceProps> = ({
               onChange={handleSalaryScaleChange}
               className="border bg-[#ffff] rounded-[16px] p-[16px] h-[54px] outline-none"
             >
-              {/* <option value="" disabled>
+              <option disabled>
                 Select Salary Scale
-              </option> */}
+              </option>
               {salaryOptions.map((option) => (
                 <option key={option} value={option}>
                   {option}
