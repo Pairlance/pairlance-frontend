@@ -1,5 +1,5 @@
 import React from 'react';
-import { branlogo } from '../../assets';
+import { logo } from '../../assets';
 
 const MatchingNavBar: React.FC = () => {
   return (
@@ -7,7 +7,7 @@ const MatchingNavBar: React.FC = () => {
       <div className="flex items-center space-x-2 text-[#374151]" style={{fontFamily:"Georgia"}}>
       
         <div className="flex items-center">
-          <img src={branlogo} alt="Brand logo" width={45} height={64}/>
+          <img src={logo} alt="Brand logo" width={45} height={64}/>
           <span className="text-[28.2px] font-bold leading-[32.05px]" >PairLance</span>
         </div>
       </div>

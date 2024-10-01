@@ -9,7 +9,7 @@ import ShortlistModal from "../../../components/matchingCards/ShortlistModal";
 import "./RecruiterCandidateMatch.css";
 import NavBar from "../../../components/navBar/NavBar";
 import { Candidate } from "../../../types";
-import { burger } from "../../../assets";
+import { burger, profileholder } from "../../../assets";
 
 const RecruiterCandidateMatch: React.FC = () => {
   const location = useLocation();
@@ -22,6 +22,7 @@ const RecruiterCandidateMatch: React.FC = () => {
   );
   const [isShortlistModalOpen, setIsShortlistModalOpen] = useState(false);
   const [recruiterId, setRecruiterId] = useState<string>(""); // State for recruiterId
+  const [currentSlide, setCurrentSlide] = useState(0);
 
   useEffect(() => {
     const candidatesFromState = location.state?.candidates || [];
@@ -72,6 +73,12 @@ const RecruiterCandidateMatch: React.FC = () => {
     } catch (error) {
       // console.error("Submission failed", error);
     }
+  };
+
+ 
+  
+  const handleSlideChange = (current: React.SetStateAction<number>) => {
+    setCurrentSlide(current);
   };
 
   return (
@@ -129,58 +136,68 @@ const RecruiterCandidateMatch: React.FC = () => {
         </div>
 
         <div className="lg:w-[60%] w-full m-auto h-[100%] lg:border-none border border-[#D0D2D6] rounded-[16px]">
-          <Carousel arrows={true} className=" ">
-            {/* <div className=" w-[50% justify-center items-center mx-auto"> */}
-            {candidates.map((candidate) => (
-              <div
-                key={candidate.id}
-                className="relative p-5 mb-2 w-[30%"
-              >
-                <div className="bg-[#ffff] p-5 rounded-[16px]">
-                  <div className="flex items-center space-x-4">
-                    <img
-                      src={candidate.image_url}
-                      alt={`${candidate.full_name}'s profile`}
-                      className="w-[150px] h-[150px] rounded-[16px] object-cover"
-                    />
-                    <div>
-                      <h2 className="text-lg font-semibold">
-                        {candidate.full_name}
-                      </h2>
-                      <p className="text-gray-500">
-                        {candidate.job_roles.join(", ")}
-                      </p>
-                    </div>
-                  </div>
-
-                  <div className="mt-4 lg:border-t-[1px]">
-                    <h3 className="font-semibold text-gray-700">
-                      Pitch/Summary:
-                    </h3>
-                    <p className="text-gray-600">{candidate.summary_pitch}</p>
-                  </div>
-
-                  <div className="mt-4 flex flex-col lg:flex-row justify-end gap-[20px]">
-                    <button
-                      title="View candidate's CV"
-                      onClick={() => toggleModal(candidate)}
-                      className="flex justify-center items-center lg:w-[168px] border border-[#1E3A8A] text-[#1E3A8A] text-[18px] px-[16px] rounded-[16px] h-[54px] leading-[21.6px]"
-                    >
-                      Preview CV
-                    </button>
-                    <button
-                      title="Add candidate to shortlist"
-                      onClick={() => handleAddToShortlist(candidate)}
-                      className="flex justify-center items-center lg:w-[168px] border bg-[#1E3A8A] text-[#ffff] text-[18px] px-[16px] rounded-[16px] h-[54px] leading-[21.6px]"
-                    >
-                      ShortList
-                    </button>
-                  </div>
-                </div>
+        <Carousel
+      arrows={candidates.length > 1} // Disable arrows when only one candidate
+      beforeChange={(_, next) => handleSlideChange(next)}
+      infinite={false} // Ensure the carousel stops at the end
+      className=" "
+    >
+      {candidates.map((candidate, index) => (
+        <div
+          key={candidate.id}
+          className="relative p-5 mb-2 w-[30%]"
+        >
+          <div className="bg-[#ffff] p-5 rounded-[16px]">
+            <div className="flex items-center space-x-4">
+              <img
+                src={candidate.image_url || profileholder} // Fallback to placeholder image
+                alt={`${candidate.full_name}'s profile`}
+                className="w-[100px] h-[100px] rounded-[16px] object-cover"
+              />
+              <div>
+                <h2 className="text-lg font-semibold">
+                  {candidate.full_name}
+                </h2>
+                <p className="text-gray-500">
+                  {candidate.job_roles.join(", ")}
+                </p>
               </div>
-            ))}
-            {/* </div> */}
-          </Carousel>
+            </div>
+
+            <div className="mt-4 lg:border-t-[1px]">
+              <h3 className="font-semibold text-gray-700">
+                Pitch/Summary:
+              </h3>
+              <p className="text-gray-600">{candidate.summary_pitch}</p>
+            </div>
+
+            <div className="mt-4 flex flex-col lg:flex-row justify-end gap-[20px]">
+              <button
+                title="View candidate's CV"
+                onClick={() => toggleModal(candidate)}
+                className="flex justify-center items-center lg:w-[168px] border border-[#1E3A8A] text-[#1E3A8A] text-[18px] px-[16px] rounded-[16px] h-[54px] leading-[21.6px]"
+              >
+                Preview CV
+              </button>
+              <button
+                title="Add candidate to shortlist"
+                onClick={() => handleAddToShortlist(candidate)}
+                className="flex justify-center items-center lg:w-[168px] border bg-[#1E3A8A] text-[#ffff] text-[18px] px-[16px] rounded-[16px] h-[54px] leading-[21.6px]"
+              >
+                ShortList
+              </button>
+            </div>
+          </div>
+
+          {/* Indicator or message when reaching the end */}
+          {candidates.length > 1 && index === candidates.length - 1 && currentSlide === index && (
+            <div className="text-center text-gray-500 mt-2">
+              You have reached the end of the candidates list.
+            </div>
+          )}
+        </div>
+      ))}
+    </Carousel>
         </div>
       </div>
 
