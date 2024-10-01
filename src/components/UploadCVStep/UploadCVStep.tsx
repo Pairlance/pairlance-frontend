@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Modal } from "antd";
 import { divider, eyeoff, pdficon, trash, uploadicon, uploadstate } from "../../assets";
 
@@ -11,9 +11,16 @@ const UploadCVStep: React.FC<UploadCVProps> = ({ onNext, formData }) => {
   const [selectedFile, setSelectedFile] = useState<File | null>(formData);
   const [isUploading, setIsUploading] = useState<boolean>(false);
   const [uploadProgress, setUploadProgress] = useState<number>(0);
-  const [isUploadSuccessful, setIsUploadSuccessful] = useState<boolean>(false);
+  const [isUploadSuccessful, setIsUploadSuccessful] = useState<boolean>(!!formData);
   const [modalVisible, setModalVisible] = useState(false);
   const [fileURL, setFileURL] = useState<string>("");
+
+  useEffect(() => {
+    if (formData) {
+      setSelectedFile(formData);
+      setIsUploadSuccessful(true);
+    }
+  }, [formData]);
 
   const handleDrop = (event: React.DragEvent<HTMLDivElement>) => {
     event.preventDefault();
@@ -55,9 +62,9 @@ const UploadCVStep: React.FC<UploadCVProps> = ({ onNext, formData }) => {
           setIsUploadSuccessful(true);
           return 100;
         }
-        return prev + 10; 
+        return prev + 10;
       });
-    }, 100); 
+    }, 100);
   };
 
   const handleNext = () => {
