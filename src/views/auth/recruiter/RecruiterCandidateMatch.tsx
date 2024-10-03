@@ -137,9 +137,9 @@ const RecruiterCandidateMatch: React.FC = () => {
 
         <div className="lg:w-[60%] w-full m-auto h-[100%] lg:border-none border border-[#D0D2D6] rounded-[16px]">
         <Carousel
-      arrows={candidates.length > 1} // Disable arrows when only one candidate
+      arrows={candidates.length > 1}
       beforeChange={(_, next) => handleSlideChange(next)}
-      infinite={false} // Ensure the carousel stops at the end
+      infinite={false} 
       className=" "
     >
       {candidates.map((candidate, index) => (

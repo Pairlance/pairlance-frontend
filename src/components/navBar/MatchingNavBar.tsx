@@ -11,8 +11,6 @@ const MatchingNavBar: React.FC = () => {
           <span className="text-[28.2px] font-bold leading-[32.05px]" >PairLance</span>
         </div>
       </div>
-
-      
       <div>
         <a href="mailto:support@pairlance.com">
         <button
